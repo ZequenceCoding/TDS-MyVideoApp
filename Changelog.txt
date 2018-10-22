@@ -1,0 +1,35 @@
+Changelog:
+Update 0.0.3 (22/10/2018 - 21:42) - Beginning #3 - All frames and libraries added
+TO-DO:
+1. Añadir el botón de exit y el de minimizar en forma de labels arriba a la derecha. (Esta ventana obligatoriamente no se podrá desplazar ni maximizar)
+//Nota: La ventana tendrá el tamaño fijo.
+2. Añadir la funcionalidad de calendario en la fecha de cumpleaños y que aparezca en el sitio correspondiente.
+4. Añadir funcionalidad de registro:
+	4.1 Comprobar los campos obligatorios
+		4.1.1 Si no se cumplimenta un campo poner los labels en rojo.
+	4.2 Si se registra correctamente display alertFrame.
+		4.2.1 Obligatorio darle a Ok! para continuar con la aplicación
+5. Añadir funcionalidad de login
+	5.1 Si el login es correcto abrir ventana AppFrame
+	5.2 Si el login es incorrecto mostrar mensaje en rojo de error.
+6. Añadir funcionalidad de recuperación de contraseña.
+	6.1 #To-Do ventana de recuperación (Not worth it right now)
+8. Añadir display flotante para el panel de usuario (Arriba a la derecha) con las funciones premium y logout de momento.
+9. Añadir las imágenes que quedan (Play list, remove list, displayPanel, search)
+
+//Funcionalidad de la aplicación:
+10. Movernos entre frames con la lista de la izquierda.
+11. Crear listas
+12. Mostrar listas, play y remove lista.
+13. #More to come#
+
+
+#Horas de trabajo actuales empleadas en el diseño de la aplicación: 8. (No tanto de implementación sino de diseño y decisión)
+
+--Changelog 20/10/2018 17:56
+	-Añadido paquete launcher con la clase lanzador funcionante.
+
+--Changelog 19/10/2018 21:42
+	-DONE:
+		-3. Pasar el texto del checkbox a un label, subrayarlo y hacer que cuando se haga click aparezcan los terminos y condiciones.
+		-7. Subrayar el label "forgot your password".
