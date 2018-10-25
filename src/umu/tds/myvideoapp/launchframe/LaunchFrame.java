@@ -6,12 +6,14 @@
 package umu.tds.myvideoapp.launchframe;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -47,7 +49,11 @@ public class LaunchFrame extends javax.swing.JFrame {
         registerButton.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseReleased(MouseEvent arg0) {
-        		
+        		if (checkFields()) {
+        			//register
+        		} else {
+        			// alert
+        		}
         	}
         });
         nameLabel = new javax.swing.JLabel();
@@ -68,8 +74,8 @@ public class LaunchFrame extends javax.swing.JFrame {
         jSeparator8 = new javax.swing.JSeparator();
         jSeparator9 = new javax.swing.JSeparator();
         usernameField = new javax.swing.JTextField();
-        passwordField = new javax.swing.JTextField();
-        repeatPasswordField = new javax.swing.JTextField();
+        passwordField = new javax.swing.JPasswordField();
+        repeatPasswordField = new javax.swing.JPasswordField();
         termsAndCondsCheckBox = new javax.swing.JCheckBox();
         titleLabel = new javax.swing.JLabel();
         infoLabel = new javax.swing.JLabel();
@@ -82,7 +88,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         loginButton = new javax.swing.JButton();
-        passwordTextField = new javax.swing.JPasswordField();
+        passwordLoginField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MyVideoApp");
@@ -116,7 +122,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         registerButton.setText("Registrarme");
         registerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registerButtonActionPerformed(evt);
+                //registerButtonActionPerformed(evt);
             }
         });
 
@@ -154,11 +160,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         nameField.setBorder(null);
         nameField.setDisabledTextColor(new java.awt.Color(102, 102, 102));
         nameField.setSelectionColor(new java.awt.Color(0, 153, 204));
-        nameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameFieldActionPerformed(evt);
-            }
-        });
+
 
         jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -168,11 +170,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         surnameField.setBorder(null);
         surnameField.setDisabledTextColor(new java.awt.Color(102, 102, 102));
         surnameField.setSelectionColor(new java.awt.Color(0, 153, 204));
-        surnameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                surnameFieldActionPerformed(evt);
-            }
-        });
+
 
         emailField.setBackground(new java.awt.Color(65, 65, 65));
         emailField.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
@@ -180,11 +178,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         emailField.setBorder(null);
         emailField.setDisabledTextColor(new java.awt.Color(102, 102, 102));
         emailField.setSelectionColor(new java.awt.Color(0, 153, 204));
-        emailField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailFieldActionPerformed(evt);
-            }
-        });
+
 
         jSeparator4.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -202,39 +196,22 @@ public class LaunchFrame extends javax.swing.JFrame {
         usernameField.setForeground(new java.awt.Color(153, 153, 153));
         usernameField.setBorder(null);
         usernameField.setSelectionColor(new java.awt.Color(0, 153, 204));
-        usernameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameFieldActionPerformed(evt);
-            }
-        });
+
 
         passwordField.setBackground(new java.awt.Color(65, 65, 65));
         passwordField.setForeground(new java.awt.Color(153, 153, 153));
         passwordField.setBorder(null);
         passwordField.setSelectionColor(new java.awt.Color(0, 153, 204));
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
-            }
-        });
+
 
         repeatPasswordField.setBackground(new java.awt.Color(65, 65, 65));
         repeatPasswordField.setForeground(new java.awt.Color(153, 153, 153));
         repeatPasswordField.setBorder(null);
         repeatPasswordField.setSelectionColor(new java.awt.Color(0, 153, 204));
-        repeatPasswordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                repeatPasswordFieldActionPerformed(evt);
-            }
-        });
 
         termsAndCondsCheckBox.setBackground(new java.awt.Color(65, 65, 65));
         termsAndCondsCheckBox.setForeground(new java.awt.Color(0, 153, 204));
-        termsAndCondsCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                termsAndCondsCheckBoxActionPerformed(evt);
-            }
-        });
+
 
         titleLabel.setBackground(new java.awt.Color(65, 65, 65));
         titleLabel.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
@@ -364,7 +341,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         loginPanel.setMaximumSize(new java.awt.Dimension(420, 2160));
         loginPanel.setPreferredSize(new java.awt.Dimension(330, 501));
 
-        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LaunchFrame/logo64.png"))); // NOI18N
+        //logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LaunchFrame/logo64.png"))); // NOI18N
 
         usernameLabel.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         usernameLabel.setForeground(new java.awt.Color(0, 153, 204));
@@ -383,11 +360,6 @@ public class LaunchFrame extends javax.swing.JFrame {
         userTextField.setBorder(null);
         userTextField.setDisabledTextColor(new java.awt.Color(102, 102, 102));
         userTextField.setSelectionColor(new java.awt.Color(0, 153, 204));
-        userTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userTextFieldActionPerformed(evt);
-            }
-        });
 
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -395,11 +367,11 @@ public class LaunchFrame extends javax.swing.JFrame {
 
         loginButton.setText("Login");
 
-        passwordTextField.setBackground(new java.awt.Color(50, 50, 50));
-        passwordTextField.setForeground(new java.awt.Color(153, 153, 153));
-        passwordTextField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        passwordTextField.setText("yourpassword");
-        passwordTextField.setBorder(null);
+        passwordLoginField.setBackground(new java.awt.Color(50, 50, 50));
+        passwordLoginField.setForeground(new java.awt.Color(153, 153, 153));
+        passwordLoginField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        passwordLoginField.setText("yourpassword");
+        passwordLoginField.setBorder(null);
         
         forgotLabel = new JLabel("<HTML><U>Forgot your password? </U></HTML>");
         forgotLabel.setForeground(new java.awt.Color(0, 153, 204));
@@ -429,7 +401,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         					.addGap(58)
         					.addGroup(loginPanelLayout.createParallelGroup(Alignment.TRAILING)
         						.addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
-        						.addComponent(passwordTextField, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(passwordLoginField, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
         						.addComponent(userTextField, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
         						.addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE))))
         			.addContainerGap(67, Short.MAX_VALUE))
@@ -454,7 +426,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         			.addGap(20)
         			.addComponent(passwordLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(passwordTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addComponent(passwordLoginField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
         			.addGap(11)
@@ -518,42 +490,6 @@ public class LaunchFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void userTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_userTextFieldActionPerformed
-
-    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_registerButtonActionPerformed
-
-    private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameFieldActionPerformed
-
-    private void surnameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surnameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_surnameFieldActionPerformed
-
-    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_emailFieldActionPerformed
-
-    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernameFieldActionPerformed
-
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
-
-    private void repeatPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_repeatPasswordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_repeatPasswordFieldActionPerformed
-
-    private void termsAndCondsCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_termsAndCondsCheckBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_termsAndCondsCheckBoxActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -610,13 +546,13 @@ public class LaunchFrame extends javax.swing.JFrame {
     private javax.swing.JTextField nameField;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JLabel passLabel;
-    private javax.swing.JTextField passwordField;
+    private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel passwordLabel;
-    private javax.swing.JPasswordField passwordTextField;
+    private javax.swing.JPasswordField passwordLoginField;
     private javax.swing.JButton registerButton;
     private javax.swing.JPanel registerPanel;
     private javax.swing.JLabel repeatPassLabel;
-    private javax.swing.JTextField repeatPasswordField;
+    private javax.swing.JPasswordField repeatPasswordField;
     private javax.swing.JPanel separatorPanel;
     private javax.swing.JTextField surnameField;
     private javax.swing.JLabel surnameLabel;
@@ -634,4 +570,68 @@ public class LaunchFrame extends javax.swing.JFrame {
 	public void mostrarVentana() {
 		setVisible(true);		
 	}
+
+	private boolean checkFields() {
+		boolean ok=true;
+		ocultarErrores();
+
+		if (nameField.getText().trim().isEmpty()) {
+			nameLabel.setForeground(new java.awt.Color(190, 0, 0));
+			ok=false;
+		}
+
+		if (emailField.getText().trim().isEmpty()) {
+			emailLabel.setForeground(new java.awt.Color(190, 0, 0));
+			ok=false;
+		}
+		
+		if (usernameField.getText().trim().isEmpty()) {
+			userLabel.setForeground(new java.awt.Color(190, 0, 0));
+			ok=false;
+		}
+		
+		/*if (ControladorUsuarios.getUnicaInstancia().esUsuarioRegistrado(usernameField.getText())) {
+			//warningExiste.setVisible(true); 
+			ok=false;		
+		}*/
+		
+		String password = new String(passwordField.getPassword());
+		String password2 = new String(repeatPasswordField.getPassword());
+		
+		if (password.equals("")) {
+			passLabel.setForeground(new java.awt.Color(190, 0, 0)); 
+			ok = false;
+		} 
+		
+		if (password2.equals("")) {
+			repeatPassLabel.setForeground(new java.awt.Color(190, 0, 0)); 
+			ok = false;
+		} 
+		
+		if (!termsAndCondsCheckBox.isSelected()) {
+			ok = false;
+		}
+		//if (!ok) warningAll.setVisible(true);
+		
+		/*if (ok && (!(txtEdad.getText().matches("[0-9]+")))) {
+			//warningEdadNumerica.setVisible(true);
+			ok=false;
+		}*/
+		
+		if (!password.equals(password2)) {
+			passLabel.setForeground(new java.awt.Color(190, 0, 0));
+			repeatPassLabel.setForeground(new java.awt.Color(190, 0, 0));
+			ok = false;
+		}
+		
+		return ok;
+	}
+	
+	private void ocultarErrores() {
+		nameLabel.setForeground(new java.awt.Color(255, 255, 255));
+		emailLabel.setForeground(new java.awt.Color(255, 255, 255));
+		userLabel.setForeground(new java.awt.Color(255, 255, 255));
+		passLabel.setForeground(new java.awt.Color(255, 255, 255));
+		repeatPassLabel.setForeground(new java.awt.Color(255, 255, 255));
+	} 
 }
