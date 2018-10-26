@@ -1,7 +1,11 @@
 package umu.tds.myvideoapp.dao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import tds.driver.FactoriaServicioPersistencia;
@@ -12,79 +16,92 @@ import beans.Propiedad;
 
 public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 
-	private static ServicioPersistencia servPersistencia;
-	private static AdaptadorUsuarioTDS unicaInstancia = null;
+	private ServicioPersistencia servPersistencia;
 	
-	public static AdaptadorUsuarioTDS getUnicaInstancia() { // patron singleton
-		if (unicaInstancia == null)
-			return new AdaptadorUsuarioTDS();
-		else
-			return unicaInstancia;
-	}
-
-	private AdaptadorUsuarioTDS() { 
+	public AdaptadorUsuarioTDS() { 
 		servPersistencia = FactoriaServicioPersistencia.getInstance().getServicioPersistencia(); 
+	}	
+	
+	private Usuario entidadToUsuario(Entidad eUsuario) {
+		
+		String username = servPersistencia.recuperarPropiedadEntidad(eUsuario, "username");
+		String password = servPersistencia.recuperarPropiedadEntidad(eUsuario, "password");
+		
+		String nombre = servPersistencia.recuperarPropiedadEntidad(eUsuario, "nombre");
+		String apellidos = servPersistencia.recuperarPropiedadEntidad(eUsuario, "apellidos");
+
+		String fechaNac = servPersistencia.recuperarPropiedadEntidad(eUsuario, "fechaNac");
+		String email = servPersistencia.recuperarPropiedadEntidad(eUsuario, "email");
+		
+		
+	    Date date = null;
+		try {
+			date = new SimpleDateFormat("yyyy/mm/dd").parse(fechaNac);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}  
+		
+		Usuario Usuario = new Usuario(username, password, nombre, apellidos, date, email);
+		Usuario.setId(eUsuario.getId());
+		return Usuario;
 	}
 	
-	@Override
-	public void registrarUsuario(Usuario usuario) {
-		Entidad eUsuario;
-		boolean existe = true; 
-		
-		// Si la entidad est� registrada no la registra de nuevo
-		try {
-			eUsuario = servPersistencia.recuperarEntidad(usuario.getCodigo());
-		} catch (NullPointerException e) {
-			existe = false;
-		}
-		if (existe) return;
+	private Entidad UsuarioToEntidad(Usuario Usuario) {
+		Entidad  eUsuario = new Entidad();
+		eUsuario.setNombre("Usuario"); 
+	
+		eUsuario.setPropiedades(
+				new ArrayList<Propiedad>(Arrays.asList(
+						new Propiedad("username", Usuario.getUsername()),
+						new Propiedad("password", Usuario.getPassword()),
+						
+						new Propiedad("nombre", Usuario.getNombre()), 
+						new Propiedad("apellidos", Usuario.getApellidos()),
 
-		// registrar primero los atributos que son objetos
-//		AdaptadorVentaTDS adaptadorVenta = AdaptadorVentaTDS.getUnicaInstancia();
-//		for (Venta v : cliente.getVentas())
-//			adaptadorVenta.registrarVenta(v);
-
-		// crear entidad Cliente
-		eUsuario = new Entidad();
-		eUsuario.setNombre("usuario");
-		eUsuario.setPropiedades(new ArrayList<Propiedad>(
-				Arrays.asList(new Propiedad("nombre", usuario.getNombre()),
-						new Propiedad("apellidos", usuario.getApellidos()),
-						new Propiedad("email", usuario.getEmail()),
-						new Propiedad("fechaNac", usuario.getFechaNac().toString()),
-						new Propiedad("username", usuario.getUsername()),
-						new Propiedad("password", usuario.getPassword()),
-						new Propiedad("premium", String.valueOf(usuario.isPremium())))));
-		
-		// registrar entidad cliente
+						new Propiedad("email", Usuario.getEmail()),
+						new Propiedad("fechaNac", Usuario.getFechaNac().toString())						
+						))
+				);
+		return eUsuario;
+	}
+	
+	public void registrarUsuario(Usuario Usuario) {
+		Entidad  eUsuario = this.UsuarioToEntidad(Usuario);
 		eUsuario = servPersistencia.registrarEntidad(eUsuario);
-		// asignar identificador unico
-		// Se aprovecha el que genera el servicio de persistencia
-		usuario.setCodigo(eUsuario.getId()); 		
+		Usuario.setId(eUsuario.getId());
 	}
-
-	@Override
-	public void borrarUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
+	
+	public boolean borrarUsuario(Usuario Usuario) {
+		Entidad eUsuario;
+		eUsuario = servPersistencia.recuperarEntidad(Usuario.getId());
+		return servPersistencia.borrarEntidad(eUsuario);
+	}
+	
+	/**
+	 * Permite que un Usuario modifique su perfil: email y password
+	 */
+	public void modificarUsuario(Usuario Usuario ) {
+		Entidad eUsuario = servPersistencia.recuperarEntidad(Usuario.getId());
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "password");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "password",Usuario.getPassword());
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "email");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "email",Usuario.getEmail());
+	}
+	
+	public Usuario recuperarUsuario(int id) {
+		Entidad eUsuario = servPersistencia.recuperarEntidad(id);
+		return entidadToUsuario(eUsuario);
+	}
+	
+	public List<Usuario> getAll() {
+		List<Entidad> entidades = servPersistencia.recuperarEntidades("Usuario");
 		
-	}
-
-	@Override
-	public void modificarUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
+		List<Usuario> Usuarios  = new LinkedList<Usuario>();
 		
+		for (Entidad eUsuario : entidades) {
+			Usuarios.add(recuperarUsuario(eUsuario.getId()));
+		}
+		
+		return Usuarios;
 	}
-
-	@Override
-	public Usuario recuperarUsuario(int codigo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Usuario> recuperarTodosUsuarios() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

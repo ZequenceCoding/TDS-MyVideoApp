@@ -5,15 +5,20 @@
  */
 package umu.tds.myvideoapp.launchframe;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import umu.tds.myvideoapp.controlador.ControladorUsuarios;
 
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
+
 import javax.swing.JPanel;
 
 import java.awt.GridBagLayout;
@@ -27,10 +32,12 @@ import java.awt.Insets;
 @SuppressWarnings("serial")
 public class LaunchFrame extends javax.swing.JFrame {
 
+	JFrame ventana;
     /**
      * Creates new form LaunchFrame
      */
     public LaunchFrame() {
+    	ventana = new JFrame();
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -52,9 +59,15 @@ public class LaunchFrame extends javax.swing.JFrame {
         	@Override
         	public void mouseReleased(MouseEvent arg0) {
         		if (checkFields()) {
-        			//register
-        		} else {
-        			// alert
+        			boolean registrado = false;
+        			Date fechaNac = new Date();
+        			registrado = ControladorUsuarios.getUnicaInstancia().registrarUsuario(usernameField.getText(), passwordField.getPassword().toString(), nameField.getText(), surnameField.getText(), fechaNac, emailField.getText());
+        			
+        			if (registrado) {
+        				JOptionPane.showMessageDialog(ventana, "Usuario registrado con éxito.", "Registro", JOptionPane.INFORMATION_MESSAGE);
+        			} else {
+        				JOptionPane.showMessageDialog(ventana, "No se ha podido registrar el usuario. \n", "Registro", JOptionPane.ERROR_MESSAGE);
+        			}	
         		}
         	}
         });

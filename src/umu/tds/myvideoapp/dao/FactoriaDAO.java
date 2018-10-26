@@ -3,9 +3,9 @@ package umu.tds.myvideoapp.dao;
 //Define una factoria abstracta que devuelve todos los DAO de la aplicacion
 
 public abstract class FactoriaDAO {
-	private static FactoriaDAO unicaInstancia;
+	private static FactoriaDAO unicaInstancia = null;
 	
-	public static final String DAO_TDS = "persistencia.TDSFactoriaDAO";
+	public static final String DAO_TDS = "umu.tds.myvideoapp.dao.TDSFactoriaDAO";
 		
 	/** 
 	 * Crea un tipo de factoria DAO.
@@ -13,7 +13,8 @@ public abstract class FactoriaDAO {
 	 */
 	public static FactoriaDAO getInstancia(String tipo) throws DAOException{
 		if (unicaInstancia == null)
-			try { unicaInstancia=(FactoriaDAO) Class.forName(tipo).newInstance();
+			try {
+				unicaInstancia=(FactoriaDAO) Class.forName(tipo).newInstance();
 			} catch (Exception e) {	
 				throw new DAOException(e.getMessage());
 			} 
@@ -22,8 +23,7 @@ public abstract class FactoriaDAO {
 
 
 	public static FactoriaDAO getInstancia() throws DAOException{
-			if (unicaInstancia == null) return getInstancia (FactoriaDAO.DAO_TDS);
-					else return unicaInstancia;
+			return getInstancia(FactoriaDAO.DAO_TDS);
 		}
 
 	/* Constructor */

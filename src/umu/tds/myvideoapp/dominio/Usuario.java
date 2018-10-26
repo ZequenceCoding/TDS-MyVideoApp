@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Usuario {
 	
-	private int codigo;
+	private int id;
 	private boolean premium;
 	private String username;
 	private String password;
@@ -14,7 +14,7 @@ public class Usuario {
 	private String email;
 	
 	public Usuario(String username, String password, String nombre, String apellidos, Date fechaNac, String email) {
-		this.codigo = 0;
+		this.id = 0;
 		this.premium = false;
 		this.username = username;
 		this.password = password;
@@ -25,8 +25,8 @@ public class Usuario {
 	}
 	
 	// Gets and Sets
-	public int getCodigo() {
-		return codigo;
+	public int getId() {
+		return id;
 	}
 	public boolean isPremium() {
 		return premium;
@@ -53,8 +53,8 @@ public class Usuario {
 		return email;
 	}
 
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+	public void setId(int id) {
+		this.id = id;
 		
 	}
 	

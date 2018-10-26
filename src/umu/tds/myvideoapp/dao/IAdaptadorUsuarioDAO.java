@@ -6,9 +6,9 @@ import umu.tds.myvideoapp.dominio.Usuario;
 
 public interface IAdaptadorUsuarioDAO {
 
-	public void registrarUsuario(Usuario usuario);
-	public void borrarUsuario(Usuario usuario);
-	public void modificarUsuario(Usuario usuario);
-	public Usuario recuperarUsuario(int codigo);
-	public List<Usuario> recuperarTodosUsuarios();
+	void registrarUsuario(Usuario usuario);
+	boolean borrarUsuario(Usuario usuario);
+	void modificarUsuario(Usuario usuario);
+	Usuario recuperarUsuario(int codigo);
+	List<Usuario> getAll();
 }
