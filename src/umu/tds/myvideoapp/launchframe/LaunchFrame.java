@@ -7,6 +7,8 @@ package umu.tds.myvideoapp.launchframe;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import umu.tds.myvideoapp.controlador.ControladorUsuarios;
+
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -590,10 +592,10 @@ public class LaunchFrame extends javax.swing.JFrame {
 			ok=false;
 		}
 		
-		/*if (ControladorUsuarios.getUnicaInstancia().esUsuarioRegistrado(usernameField.getText())) {
+		if (ControladorUsuarios.getUnicaInstancia().esUsuarioRegistrado(usernameField.getText())) {
 			//warningExiste.setVisible(true); 
 			ok=false;		
-		}*/
+		}
 		
 		String password = new String(passwordField.getPassword());
 		String password2 = new String(repeatPasswordField.getPassword());
