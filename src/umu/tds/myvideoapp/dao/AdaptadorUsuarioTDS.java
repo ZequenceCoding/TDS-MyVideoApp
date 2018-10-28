@@ -48,7 +48,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 	
 	private Entidad UsuarioToEntidad(Usuario Usuario) {
 		Entidad  eUsuario = new Entidad();
-		eUsuario.setNombre("Usuario"); 
+		eUsuario.setNombre("usuario"); 
 	
 		eUsuario.setPropiedades(
 				new ArrayList<Propiedad>(Arrays.asList(
@@ -94,7 +94,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 	}
 	
 	public List<Usuario> getAll() {
-		List<Entidad> entidades = servPersistencia.recuperarEntidades("Usuario");
+		List<Entidad> entidades = servPersistencia.recuperarEntidades("usuario");
 		
 		List<Usuario> Usuarios  = new LinkedList<Usuario>();
 		
