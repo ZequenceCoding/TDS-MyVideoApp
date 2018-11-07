@@ -1,6 +1,5 @@
 package umu.tds.myvideoapp.dominio;
 
-import java.util.Date;
 
 public class Usuario {
 	
@@ -10,17 +9,17 @@ public class Usuario {
 	private String password;
 	private String nombre;
 	private String apellidos;
-	private Date fechaNac;
+	//private Date fechaNac;
 	private String email;
 	
-	public Usuario(String username, String password, String nombre, String apellidos, Date fechaNac, String email) {
+	public Usuario(String username, String password, String nombre, String apellidos, String email) {
 		this.id = 0;
 		this.premium = false;
 		this.username = username;
 		this.password = password;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
-		this.fechaNac = fechaNac;
+		//this.fechaNac = fechaNac;
 		this.email = email;
 	}
 	
@@ -46,9 +45,9 @@ public class Usuario {
 	public String getApellidos() {
 		return apellidos;
 	}
-	public Date getFechaNac() {
+	/*public Date getFechaNac() {
 		return fechaNac;
-	}
+	}*/
 	public String getEmail() {
 		return email;
 	}

@@ -1,10 +1,7 @@
 package umu.tds.myvideoapp.dao;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,18 +27,18 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		String nombre = servPersistencia.recuperarPropiedadEntidad(eUsuario, "nombre");
 		String apellidos = servPersistencia.recuperarPropiedadEntidad(eUsuario, "apellidos");
 
-		String fechaNac = servPersistencia.recuperarPropiedadEntidad(eUsuario, "fechaNac");
+		//String fechaNac = servPersistencia.recuperarPropiedadEntidad(eUsuario, "fechaNac");
 		String email = servPersistencia.recuperarPropiedadEntidad(eUsuario, "email");
 		
 		
-	    Date date = null;
+	   /* Date date = null;
 		try {
 			date = new SimpleDateFormat("yyyy/mm/dd").parse(fechaNac);
 		} catch (ParseException e) {
 			e.printStackTrace();
-		}  
+		}*/  
 		
-		Usuario Usuario = new Usuario(username, password, nombre, apellidos, date, email);
+		Usuario Usuario = new Usuario(username, password, nombre, apellidos, /*date,*/ email);
 		Usuario.setId(eUsuario.getId());
 		return Usuario;
 	}
@@ -58,8 +55,8 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 						new Propiedad("nombre", Usuario.getNombre()), 
 						new Propiedad("apellidos", Usuario.getApellidos()),
 
-						new Propiedad("email", Usuario.getEmail()),
-						new Propiedad("fechaNac", Usuario.getFechaNac().toString())						
+						new Propiedad("email", Usuario.getEmail())
+						//new Propiedad("fechaNac", Usuario.getFechaNac().toString())						
 						))
 				);
 		return eUsuario;

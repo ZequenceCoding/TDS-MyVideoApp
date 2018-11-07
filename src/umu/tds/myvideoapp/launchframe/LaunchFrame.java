@@ -8,6 +8,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import umu.tds.myvideoapp.appframe.AppFrame;
 import umu.tds.myvideoapp.controlador.ControladorUsuarios;
 
 import javax.swing.GroupLayout;
@@ -17,7 +18,6 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Date;
 
 import javax.swing.JPanel;
 
@@ -58,11 +58,12 @@ public class LaunchFrame extends javax.swing.JFrame {
         registerButton.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseReleased(MouseEvent arg0) {
-        		if (checkFields()) {
+        		if (checkRegisterFields()) {
         			boolean registrado = false;
-        			Date fechaNac = new Date();
-        			registrado = ControladorUsuarios.getUnicaInstancia().registrarUsuario(usernameField.getText(), passwordField.getPassword().toString(), nameField.getText(), surnameField.getText(), fechaNac, emailField.getText());
-        			
+        			//Date fechaNac = new Date();
+        			System.out.println("Entro");
+        			registrado = ControladorUsuarios.getUnicaInstancia().registrarUsuario(usernameField.getText(), passwordField.getPassword().toString(), nameField.getText(), surnameField.getText(), emailField.getText());
+        			System.out.println("Salgo: " + registrado); 
         			if (registrado) {
         				JOptionPane.showMessageDialog(ventana, "Usuario registrado con éxito.", "Registro", JOptionPane.INFORMATION_MESSAGE);
         			} else {
@@ -79,7 +80,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         passLabel = new javax.swing.JLabel();
         repeatPassLabel = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
-        jSeparator3 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator(); 
         surnameField = new javax.swing.JTextField();
         emailField = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
@@ -102,8 +103,25 @@ public class LaunchFrame extends javax.swing.JFrame {
         userTextField = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        loginButton = new javax.swing.JButton();
         passwordLoginField = new javax.swing.JPasswordField();
+        loginButton = new javax.swing.JButton();
+        loginButton.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseReleased(MouseEvent arg0) {
+        		boolean login;
+        		login = ControladorUsuarios.getUnicaInstancia().loginUsuario(
+        				userTextField.getText(), passwordLoginField.getPassword().toString());
+        			
+        		if (login) {
+        			AppFrame ventanaPrincipal = new AppFrame();
+        			ventanaPrincipal.setVisible(true);
+        			dispose();
+        		} else {
+        			JOptionPane.showMessageDialog(ventana, "No se ha podido efectuar el login. \n", "Login", JOptionPane.ERROR_MESSAGE);	
+        		}
+        	}
+        });
+        
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MyVideoApp");
@@ -586,7 +604,7 @@ public class LaunchFrame extends javax.swing.JFrame {
 		setVisible(true);		
 	}
 
-	private boolean checkFields() {
+	private boolean checkRegisterFields() {
 		boolean ok=true;
 		ocultarErrores();
 
@@ -606,7 +624,7 @@ public class LaunchFrame extends javax.swing.JFrame {
 		}
 		
 		if (ControladorUsuarios.getUnicaInstancia().esUsuarioRegistrado(usernameField.getText())) {
-			//warningExiste.setVisible(true); 
+			usernameLabel.setForeground(new java.awt.Color(190, 0, 0));
 			ok=false;		
 		}
 		
@@ -626,19 +644,13 @@ public class LaunchFrame extends javax.swing.JFrame {
 		if (!termsAndCondsCheckBox.isSelected()) {
 			ok = false;
 		}
-		//if (!ok) warningAll.setVisible(true);
-		
-		/*if (ok && (!(txtEdad.getText().matches("[0-9]+")))) {
-			//warningEdadNumerica.setVisible(true);
-			ok=false;
-		}*/
 		
 		if (!password.equals(password2)) {
 			passLabel.setForeground(new java.awt.Color(190, 0, 0));
 			repeatPassLabel.setForeground(new java.awt.Color(190, 0, 0));
 			ok = false;
 		}
-		
+		System.out.println(ok);
 		return ok;
 	}
 	

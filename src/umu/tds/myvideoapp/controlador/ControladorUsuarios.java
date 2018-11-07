@@ -1,7 +1,5 @@
 package umu.tds.myvideoapp.controlador;
 
-import java.util.Date;
-
 import umu.tds.myvideoapp.dao.DAOException;
 import umu.tds.myvideoapp.dao.FactoriaDAO;
 import umu.tds.myvideoapp.dao.IAdaptadorUsuarioDAO;
@@ -40,8 +38,10 @@ public class ControladorUsuarios {
 		Usuario usuario = CatalogoUsuarios.getUnicaInstancia().getUsuario(username);
 		if (usuario != null && usuario.getPassword().equals(password)) {
 				this.usuarioActual = usuario;
+				System.out.println("Login usuario true");
 				return true;
 		}
+		System.out.println("Login usuario false");
 		return false;
 	}
 	
@@ -49,11 +49,10 @@ public class ControladorUsuarios {
 									String password, 
 									String nombre,
 									String apellidos,
-									Date fechaNac,
 									String email) {
 
 			if (esUsuarioRegistrado(username)) return false;
-			Usuario Usuario = new Usuario(username, password, nombre, apellidos, fechaNac, email);
+			Usuario Usuario = new Usuario(username, password, nombre, apellidos, email);
 			
 			IAdaptadorUsuarioDAO usuarioDAO = factoria.getUsuarioDAO(); /*Adaptador DAO para almacenar el nuevo Usuario en la BD*/
 			usuarioDAO.registrarUsuario(Usuario);
