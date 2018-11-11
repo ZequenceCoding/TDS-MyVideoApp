@@ -62,7 +62,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         			boolean registrado = false;
         			//Date fechaNac = new Date();
         			System.out.println("Entro");
-        			registrado = ControladorUsuarios.getUnicaInstancia().registrarUsuario(usernameField.getText(), passwordField.getPassword().toString(), nameField.getText(), surnameField.getText(), emailField.getText());
+        			registrado = ControladorUsuarios.getUnicaInstancia().registrarUsuario(usernameField.getText(), new String(passwordField.getPassword()), nameField.getText(), surnameField.getText(), emailField.getText());
         			System.out.println("Salgo: " + registrado); 
         			if (registrado) {
         				JOptionPane.showMessageDialog(ventana, "Usuario registrado con éxito.", "Registro", JOptionPane.INFORMATION_MESSAGE);
@@ -110,7 +110,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         	public void mouseReleased(MouseEvent arg0) {
         		boolean login;
         		login = ControladorUsuarios.getUnicaInstancia().loginUsuario(
-        				userTextField.getText(), passwordLoginField.getPassword().toString());
+        				userTextField.getText(), new String(passwordLoginField.getPassword()));
         			
         		if (login) {
         			AppFrame ventanaPrincipal = new AppFrame();
