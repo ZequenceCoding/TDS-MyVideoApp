@@ -10,5 +10,5 @@ public interface IAdaptadorUsuarioDAO {
 	boolean borrarUsuario(Usuario usuario);
 	void modificarUsuario(Usuario usuario);
 	Usuario recuperarUsuario(int codigo);
-	List<Usuario> getAll();
+	List<Usuario> recuperarTodosUsuarios();
 }

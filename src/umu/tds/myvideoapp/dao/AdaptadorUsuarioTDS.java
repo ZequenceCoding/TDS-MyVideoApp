@@ -90,7 +90,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		return entidadToUsuario(eUsuario);
 	}
 	
-	public List<Usuario> getAll() {
+	public List<Usuario> recuperarTodosUsuarios() {
 		List<Entidad> entidades = servPersistencia.recuperarEntidades("usuario");
 		
 		List<Usuario> Usuarios  = new LinkedList<Usuario>();
