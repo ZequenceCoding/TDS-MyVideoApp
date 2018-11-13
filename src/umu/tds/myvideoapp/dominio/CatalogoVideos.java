@@ -15,7 +15,7 @@ import umu.tds.myvideoapp.dao.IAdaptadorVideoDAO;
  * directamente la base de datos
  */
 public class CatalogoVideos {
-	private Map<String, umu.tds.myvideoapp.dominio.Video> videos;
+	private Map<String, Video> videos;
 	private static CatalogoVideos unicaInstancia = new CatalogoVideos();
 
 	private FactoriaDAO dao;
