@@ -17,7 +17,7 @@ import umu.tds.myvideoapp.dao.IAdaptadorVideoDAO;
  * directamente la base de datos
  */
 public class CatalogoVideos {
-	private Map<String, umu.tds.myvideoapp.dominio.Video> Video; 
+	private Map<String, umu.tds.myvideoapp.dominio.Video> videos; 
 	private static CatalogoVideos unicaInstancia = new CatalogoVideos();
 	
 	private FactoriaDAO dao;
@@ -27,7 +27,7 @@ public class CatalogoVideos {
 		try {
   			dao = FactoriaDAO.getInstancia(FactoriaDAO.DAO_TDS);
   			adaptadorVideo = dao.getVideoDAO();
-  			Video = new HashMap<String,Video>();
+  			videos = new HashMap<String,Video>();
   			this.cargarCatalogo();
   		} catch (DAOException eDAO) {
   			eDAO.printStackTrace();
@@ -41,33 +41,33 @@ public class CatalogoVideos {
 	/*devuelve todos los Usuarios*/
 	public List<Video> getVideos(){
 		ArrayList<Video> lista = new ArrayList<Video>();
-		for (Video c:Video.values()) 
+		for (Video c:videos.values()) 
 			lista.add(c);
 		return lista;
 	}
 	
 	public Video getVideo(int codigo) {
-		for (Video p : Video.values()) {
+		for (Video p : videos.values()) {
 			if (p.getCodigo()==codigo) return p;
 		}
 		return null;
 	}
 	public Video getVideo(String titulo) {
-		return Video.get(titulo); 
+		return videos.get(titulo); 
 	}
 	
 	public void addVideo(Video vid) {
-		Video.put(vid.getTitulo(),vid);
+		videos.put(vid.getTitulo(),vid);
 	}
 	public void removeVideo(Video vid) {
-		Video.remove(vid.getTitulo());
+		videos.remove(vid.getTitulo());
 	}
 	
 	/*Recupera todos los Usuarios para trabajar con ellos en memoria*/
 	private void cargarCatalogo() throws DAOException {
 		 List<Video> UsuariosBD = adaptadorVideo.recuperarTodosVideos();
 		 for (Video pro: UsuariosBD) 
-			     Video.put(pro.getTitulo(),pro);
+			     videos.put(pro.getTitulo(),pro);
 	}
 	
 }
