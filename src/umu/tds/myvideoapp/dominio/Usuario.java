@@ -1,5 +1,7 @@
 package umu.tds.myvideoapp.dominio;
 
+import java.util.LinkedList;
+import java.util.List;
 
 public class Usuario {
 	
@@ -11,6 +13,7 @@ public class Usuario {
 	private String apellidos;
 	//private Date fechaNac;
 	private String email;
+	private List<ListaVideos> listasVideos;
 	
 	public Usuario(String username, String password, String nombre, String apellidos, String email) {
 		this.id = 0;
@@ -21,8 +24,20 @@ public class Usuario {
 		this.apellidos = apellidos;
 		//this.fechaNac = fechaNac;
 		this.email = email;
+		this.listasVideos = new LinkedList<ListaVideos>();
 	}
 	
+	public void addListaVideos(ListaVideos listaVideos) {
+		listasVideos.add(listaVideos);
+	}
+	
+	public ListaVideos getListaVideos(String nombreLista) {
+		for (ListaVideos listaVideos : listasVideos) {
+			if(listaVideos.getNombreLista().equals(nombreLista))
+				return listaVideos;
+		}
+		return null;
+	}
 	// Gets and Sets
 	public int getId() {
 		return id;
@@ -54,7 +69,6 @@ public class Usuario {
 
 	public void setId(int id) {
 		this.id = id;
-		
 	}
 	
 }

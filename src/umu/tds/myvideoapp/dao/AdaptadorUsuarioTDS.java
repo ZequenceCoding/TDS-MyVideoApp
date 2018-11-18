@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
 import umu.tds.myvideoapp.dominio.Usuario;
 import beans.Entidad;
@@ -14,9 +13,14 @@ import beans.Propiedad;
 public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 
 	private ServicioPersistencia servPersistencia;
+	private static AdaptadorUsuarioTDS unicaInstancia = null;
+
 	
-	public AdaptadorUsuarioTDS() { 
-		servPersistencia = FactoriaServicioPersistencia.getInstance().getServicioPersistencia(); 
+	public static AdaptadorUsuarioTDS getUnicaInstancia() { // patron singleton
+		if (unicaInstancia == null)
+			return new AdaptadorUsuarioTDS();
+		else
+			return unicaInstancia;
 	}	
 	
 	private Usuario entidadToUsuario(Entidad eUsuario) {

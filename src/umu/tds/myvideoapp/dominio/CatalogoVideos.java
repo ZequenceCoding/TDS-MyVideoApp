@@ -52,23 +52,23 @@ public class CatalogoVideos {
 		return null;
 	}
 
-	public Video getVideo(String titulo) {
-		return videos.get(titulo);
+	public Video getVideo(String url) {
+		return videos.get(url);
 	}
 
 	public void addVideo(Video vid) {
-		videos.put(vid.getTitulo(), vid);
+		videos.put(vid.getUrl(), vid);
 	}
 
 	public void removeVideo(Video vid) {
-		videos.remove(vid.getTitulo());
+		videos.remove(vid.getUrl());
 	}
 
 	/* Recupera todos los Usuarios para trabajar con ellos en memoria */
 	private void cargarCatalogo() throws DAOException {
 		List<Video> UsuariosBD = adaptadorVideo.recuperarTodosVideos();
-		for (Video pro : UsuariosBD)
-			videos.put(pro.getTitulo(), pro);
+		for (Video vid : UsuariosBD)
+			videos.put(vid.getUrl(), vid);
 	}
 
 }

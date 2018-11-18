@@ -54,7 +54,7 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 		eListaVideos.setNombre("listavideos");
 		eListaVideos.setPropiedades(
 				new ArrayList<Propiedad>(Arrays.asList(new Propiedad("nombre lista", listaVideos.getNombreLista()),
-						new Propiedad("videos", obtenerCodigosVentas(listaVideos.getVideos())))));
+						new Propiedad("videos", obtenerCodigosVideos(listaVideos.getVideos())))));
 
 		// registrar entidad lista de videos
 		eListaVideos = servPersistencia.registrarEntidad(eListaVideos);
@@ -80,7 +80,7 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 				listaVideos.getNombreLista());
 		servPersistencia.eliminarPropiedadEntidad(eListaVideos, "videos");
 		servPersistencia.anadirPropiedadEntidad(eListaVideos, "videos",
-				obtenerCodigosVentas(listaVideos.getVideos()));
+				obtenerCodigosVideos(listaVideos.getVideos()));
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 
 		eListaVideos = servPersistencia.recuperarEntidad(codigo);
 		nombreLista = servPersistencia.recuperarPropiedadEntidad(eListaVideos, "nombre lista");
-		videos = obtenerVentasDesdeCodigos(servPersistencia.recuperarPropiedadEntidad(eListaVideos, "videos"));
+		videos = obtenerVideosDesdeCodigos(servPersistencia.recuperarPropiedadEntidad(eListaVideos, "videos"));
 
 		ListaVideos listaVideos = new ListaVideos(nombreLista);
 		for (Video video : videos) {
@@ -101,7 +101,7 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 	}
 
 	// -------------------Funciones auxiliares-----------------------------
-	private String obtenerCodigosVentas(List<Video> listaVideos) {
+	private String obtenerCodigosVideos(List<Video> listaVideos) {
 		String aux = "";
 		for (Video v : listaVideos) {
 			aux += v.getCodigo() + " ";
@@ -109,7 +109,7 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 		return aux.trim();
 	}
 
-	private List<Video> obtenerVentasDesdeCodigos(String videos) {
+	private List<Video> obtenerVideosDesdeCodigos(String videos) {
 
 		List<Video> listaVideos = new LinkedList<Video>();
 		StringTokenizer strTok = new StringTokenizer(videos, " ");
