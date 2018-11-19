@@ -63,7 +63,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         	@Override
         	public void mouseReleased(MouseEvent arg0) {
         		if (checkRegisterFields()) {
-        			
+        			/*
         			boolean registrado = false;
         			//Date fechaNac = new Date();
         			System.out.println("Entro");
@@ -74,15 +74,15 @@ public class LaunchFrame extends javax.swing.JFrame {
         			} else {
         				JOptionPane.showMessageDialog(ventana, "No se ha podido registrar el usuario. \n", "Registro", JOptionPane.ERROR_MESSAGE);
         			}
+        			*/
         			
-        			/*
         			if(!ControladorMyVideoApp.getUnicaInstancia().existUsername(usernameField.getText())) {
         				ControladorMyVideoApp.getUnicaInstancia().registrarUsuario(usernameField.getText(), new String(passwordField.getPassword()), nameField.getText(), surnameField.getText(), emailField.getText());
         				JOptionPane.showMessageDialog(ventana, "Usuario registrado con �xito.", "Registro", JOptionPane.INFORMATION_MESSAGE);
         			} else {
         				JOptionPane.showMessageDialog(ventana, "No se ha podido registrar el usuario. \n", "Registro", JOptionPane.ERROR_MESSAGE);
         			}
-        			*/
+        			
         		}
         	}
         });

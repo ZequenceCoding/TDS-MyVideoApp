@@ -16,7 +16,7 @@ import umu.tds.myvideoapp.dao.IAdaptadorVideoDAO;
  */
 public class CatalogoVideos {
 	private Map<String, Video> videos;
-	private static CatalogoVideos unicaInstancia = new CatalogoVideos();
+	private static CatalogoVideos unicaInstancia;
 
 	private FactoriaDAO dao;
 	private IAdaptadorVideoDAO adaptadorVideo;
@@ -33,6 +33,8 @@ public class CatalogoVideos {
 	}
 
 	public static CatalogoVideos getUnicaInstancia() {
+		if (unicaInstancia == null)
+			unicaInstancia = new CatalogoVideos();
 		return unicaInstancia;
 	}
 

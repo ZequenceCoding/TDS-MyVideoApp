@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.StringTokenizer;
 
+import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
 import umu.tds.myvideoapp.dominio.Usuario;
+import umu.tds.myvideoapp.dominio.ListaVideos;
 import beans.Entidad;
 import beans.Propiedad;
 
 public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 
-	private ServicioPersistencia servPersistencia;
+	private static ServicioPersistencia servPersistencia;
 	private static AdaptadorUsuarioTDS unicaInstancia = null;
 
 	
@@ -23,86 +26,137 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 			return unicaInstancia;
 	}	
 	
-	private Usuario entidadToUsuario(Entidad eUsuario) {
-		
-		String username = servPersistencia.recuperarPropiedadEntidad(eUsuario, "username");
-		String password = servPersistencia.recuperarPropiedadEntidad(eUsuario, "password");
-		
-		String nombre = servPersistencia.recuperarPropiedadEntidad(eUsuario, "nombre");
-		String apellidos = servPersistencia.recuperarPropiedadEntidad(eUsuario, "apellidos");
+	public AdaptadorUsuarioTDS() {
+		servPersistencia = FactoriaServicioPersistencia.getInstance().getServicioPersistencia(); 
+	}
 
-		//String fechaNac = servPersistencia.recuperarPropiedadEntidad(eUsuario, "fechaNac");
-		String email = servPersistencia.recuperarPropiedadEntidad(eUsuario, "email");
-		
-		
-	   /* Date date = null;
-		try {
-			date = new SimpleDateFormat("yyyy/mm/dd").parse(fechaNac);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}*/  
-		
-		Usuario Usuario = new Usuario(username, password, nombre, apellidos, /*date,*/ email);
-		Usuario.setId(eUsuario.getId());
-		return Usuario;
-	}
-	
-	private Entidad UsuarioToEntidad(Usuario Usuario) {
-		Entidad  eUsuario = new Entidad();
-		eUsuario.setNombre("usuario"); 
-	
-		eUsuario.setPropiedades(
-				new ArrayList<Propiedad>(Arrays.asList(
-						new Propiedad("username", Usuario.getUsername()),
-						new Propiedad("password", Usuario.getPassword()),
-						
-						new Propiedad("nombre", Usuario.getNombre()), 
-						new Propiedad("apellidos", Usuario.getApellidos()),
-
-						new Propiedad("email", Usuario.getEmail())
-						//new Propiedad("fechaNac", Usuario.getFechaNac().toString())						
-						))
-				);
-		return eUsuario;
-	}
-	
-	public void registrarUsuario(Usuario Usuario) {
-		Entidad  eUsuario = this.UsuarioToEntidad(Usuario);
-		eUsuario = servPersistencia.registrarEntidad(eUsuario);
-		Usuario.setId(eUsuario.getId());
-	}
-	
-	public boolean borrarUsuario(Usuario Usuario) {
+	public void registrarUsuario(Usuario usuario) {
 		Entidad eUsuario;
-		eUsuario = servPersistencia.recuperarEntidad(Usuario.getId());
-		return servPersistencia.borrarEntidad(eUsuario);
+		boolean existe = true;
+
+		// Si la entidad est� registrada no la registra de nuevo
+		try {
+			eUsuario = servPersistencia.recuperarEntidad(usuario.getCodigo());
+		} catch (NullPointerException e) {
+			existe = false;
+		}
+		if (existe)
+			return;
+
+		// crear entidad Usuario
+		eUsuario = new Entidad();
+		eUsuario.setNombre("usuario");
+		eUsuario.setPropiedades(new ArrayList<Propiedad>(
+				Arrays.asList(new Propiedad("premium", String.valueOf(usuario.isPremium())),
+						new Propiedad("username", usuario.getUsername()),
+						new Propiedad("password", usuario.getPassword()),
+						new Propiedad("nombre", usuario.getPassword()),
+						new Propiedad("apellidos", usuario.getApellidos()),
+						//new Propiedad("fechaNac", usuario.getFechaNac()),
+						new Propiedad("email", usuario.getEmail()),
+						new Propiedad("listasVideos", obtenerCodigosListaVideos(usuario.getListasVideos()))
+						)));
+
+		// registrar entidad cliente
+		eUsuario = servPersistencia.registrarEntidad(eUsuario);
+		// asignar identificador unico
+		// Se aprovecha el que genera el servicio de persistencia
+		usuario.setCodigo(eUsuario.getId());
 	}
 	
-	/**
-	 * Permite que un Usuario modifique su perfil: email y password
-	 */
-	public void modificarUsuario(Usuario Usuario ) {
-		Entidad eUsuario = servPersistencia.recuperarEntidad(Usuario.getId());
+	public void borrarUsuario(Usuario usuario) {
+		Entidad eUsuario= servPersistencia.recuperarEntidad(usuario.getCodigo());
+		servPersistencia.borrarEntidad(eUsuario);
+	}
+	
+	
+	public void modificarUsuario(Usuario usuario ) {
+		Entidad eUsuario = servPersistencia.recuperarEntidad(usuario.getCodigo());
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "premium");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "premium", String.valueOf(usuario.isPremium()));
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "username");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "username", usuario.getUsername());
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, "password");
-		servPersistencia.anadirPropiedadEntidad(eUsuario, "password",Usuario.getPassword());
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "password",usuario.getPassword());
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "nombre");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "nombre", usuario.getNombre());
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "apellidos");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "apellidos", usuario.getApellidos());
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, "email");
-		servPersistencia.anadirPropiedadEntidad(eUsuario, "email",Usuario.getEmail());
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "email",usuario.getEmail());
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "listasVideos");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "listasVideos", obtenerCodigosListaVideos(usuario.getListasVideos()));
 	}
 	
-	public Usuario recuperarUsuario(int id) {
-		Entidad eUsuario = servPersistencia.recuperarEntidad(id);
-		return entidadToUsuario(eUsuario);
+	public Usuario recuperarUsuario(int codigo) {
+		// Si la entidad est� en el pool la devuelve directamente
+				if (PoolDAO.getUnicaInstancia().contiene(codigo))
+					return (Usuario) PoolDAO.getUnicaInstancia().getObjeto(codigo);
+
+				// si no, la recupera de la base de datos
+				Entidad eUsuario;
+				Boolean premium;
+				String username;
+				String password;
+				String nombre;
+				String apellidos;
+				String email;
+				List<ListaVideos> listasVideos;
+
+				// recuperar entidad
+				eUsuario = servPersistencia.recuperarEntidad(codigo);
+
+				// recuperar propiedades que no son objetos
+				premium = Boolean.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "premium"));
+				username = servPersistencia.recuperarPropiedadEntidad(eUsuario, "username");
+				password = servPersistencia.recuperarPropiedadEntidad(eUsuario, "password");
+				nombre = servPersistencia.recuperarPropiedadEntidad(eUsuario, "nombre");
+				apellidos = servPersistencia.recuperarPropiedadEntidad(eUsuario, "apellidos");
+				email = servPersistencia.recuperarPropiedadEntidad(eUsuario, "email");
+				listasVideos = obtenerListaVideosDesdeCodigos(servPersistencia.recuperarPropiedadEntidad(eUsuario, "listasVideos"));
+
+				Usuario usuario = new Usuario(premium, username, password, nombre, apellidos, email, listasVideos);
+				usuario.setCodigo(codigo);
+
+				// IMPORTANTE:a�adir el cliente al pool antes de llamar a otros
+				// adaptadores
+				PoolDAO.getUnicaInstancia().addObjeto(codigo, usuario);
+
+				return usuario;
 	}
 	
 	public List<Usuario> recuperarTodosUsuarios() {
 		List<Entidad> entidades = servPersistencia.recuperarEntidades("usuario");
 		
-		List<Usuario> Usuarios  = new LinkedList<Usuario>();
+		List<Usuario> usuarios  = new LinkedList<Usuario>();
 		
 		for (Entidad eUsuario : entidades) {
-			Usuarios.add(recuperarUsuario(eUsuario.getId()));
+			usuarios.add(recuperarUsuario(eUsuario.getId()));
 		}
 		
-		return Usuarios;
+		return usuarios;
+	}
+	
+	/* Funciones auxiliares*/
+	
+	private String obtenerCodigosListaVideos(List<ListaVideos> listaListaVideoss) {
+		String aux = "";
+		for (ListaVideos v : listaListaVideoss) {
+			aux += v.getCodigo() + " ";
+		}
+		return aux.trim();
+	}
+	
+	private List<ListaVideos> obtenerListaVideosDesdeCodigos(String listasVideos) {
+
+		List<ListaVideos> listaListaVideos = new LinkedList<ListaVideos>();
+		if(listasVideos == null)
+			return listaListaVideos;
+		StringTokenizer strTok = new StringTokenizer(listasVideos, " ");
+		AdaptadorListaVideosTDS adaptadorV = AdaptadorListaVideosTDS.getUnicaInstancia();
+		while (strTok.hasMoreTokens()) {
+			listaListaVideos.add(adaptadorV.recuperarListaVideos(Integer.valueOf((String) strTok.nextElement())));
+		}
+		return listaListaVideos;
 	}
 }

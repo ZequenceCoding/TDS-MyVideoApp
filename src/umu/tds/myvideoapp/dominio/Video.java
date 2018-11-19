@@ -15,6 +15,11 @@ public class Video {
 		this.numReproducciones = 0;
 	}
 	
+	public Video(String url, String titulo, int numReproducciones) {
+		this(url, titulo);
+		this.numReproducciones = numReproducciones;
+	}
+	
 	// Metodo para cuando se reproduce un video
 	public int reproduce() {
 		this.numReproducciones++;

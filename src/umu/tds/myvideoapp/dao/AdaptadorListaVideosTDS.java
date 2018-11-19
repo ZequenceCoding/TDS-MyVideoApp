@@ -36,7 +36,7 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 		// Si la entidad est� registrada no la registra de nuevo
 		boolean existe = true;
 		try {
-			eListaVideos = servPersistencia.recuperarEntidad(listaVideos.getId());
+			eListaVideos = servPersistencia.recuperarEntidad(listaVideos.getCodigo());
 		} catch (NullPointerException e) {
 			existe = false;
 		}
@@ -60,12 +60,12 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 		eListaVideos = servPersistencia.registrarEntidad(eListaVideos);
 		// asignar identificador unico.
 		// Se aprovecha el que genera el servicio de persistencia
-		listaVideos.setId(eListaVideos.getId());
+		listaVideos.setCodigo(eListaVideos.getId());
 	}
 
 	@Override
 	public void borrarListaVideos(ListaVideos listaVideos) {
-		Entidad eListaVideos = servPersistencia.recuperarEntidad(listaVideos.getId());
+		Entidad eListaVideos = servPersistencia.recuperarEntidad(listaVideos.getCodigo());
 		servPersistencia.borrarEntidad(eListaVideos);
 	}
 
@@ -73,7 +73,7 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 	public void modificarListaVideos(ListaVideos listaVideos) {
 		Entidad eListaVideos;
 
-		eListaVideos = servPersistencia.recuperarEntidad(listaVideos.getId());
+		eListaVideos = servPersistencia.recuperarEntidad(listaVideos.getCodigo());
 
 		servPersistencia.eliminarPropiedadEntidad(eListaVideos, "nombre lista");
 		servPersistencia.anadirPropiedadEntidad(eListaVideos, "nombre lista",
