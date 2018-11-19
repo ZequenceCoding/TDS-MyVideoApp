@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import umu.tds.myvideoapp.appframe.AppFrame;
+import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
 import umu.tds.myvideoapp.controlador.ControladorUsuarios;
 
 import javax.swing.GroupLayout;
@@ -33,6 +34,9 @@ import java.awt.Insets;
 public class LaunchFrame extends javax.swing.JFrame {
 
 	JFrame ventana;
+	
+	
+	
     /**
      * Creates new form LaunchFrame
      */
@@ -59,16 +63,26 @@ public class LaunchFrame extends javax.swing.JFrame {
         	@Override
         	public void mouseReleased(MouseEvent arg0) {
         		if (checkRegisterFields()) {
+        			
         			boolean registrado = false;
         			//Date fechaNac = new Date();
         			System.out.println("Entro");
         			registrado = ControladorUsuarios.getUnicaInstancia().registrarUsuario(usernameField.getText(), new String(passwordField.getPassword()), nameField.getText(), surnameField.getText(), emailField.getText());
         			System.out.println("Salgo: " + registrado); 
         			if (registrado) {
-        				JOptionPane.showMessageDialog(ventana, "Usuario registrado con éxito.", "Registro", JOptionPane.INFORMATION_MESSAGE);
+        				JOptionPane.showMessageDialog(ventana, "Usuario registrado con ï¿½xito.", "Registro", JOptionPane.INFORMATION_MESSAGE);
         			} else {
         				JOptionPane.showMessageDialog(ventana, "No se ha podido registrar el usuario. \n", "Registro", JOptionPane.ERROR_MESSAGE);
-        			}	
+        			}
+        			
+        			/*
+        			if(!ControladorMyVideoApp.getUnicaInstancia().existUsername(usernameField.getText())) {
+        				ControladorMyVideoApp.getUnicaInstancia().registrarUsuario(usernameField.getText(), new String(passwordField.getPassword()), nameField.getText(), surnameField.getText(), emailField.getText());
+        				JOptionPane.showMessageDialog(ventana, "Usuario registrado con ï¿½xito.", "Registro", JOptionPane.INFORMATION_MESSAGE);
+        			} else {
+        				JOptionPane.showMessageDialog(ventana, "No se ha podido registrar el usuario. \n", "Registro", JOptionPane.ERROR_MESSAGE);
+        			}
+        			*/
         		}
         	}
         });
@@ -131,7 +145,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(882, 580));
         setMinimumSize(new java.awt.Dimension(882, 580));
         setName("launchFrame"); // NOI18N
-        setUndecorated(true);
+        setUndecorated(false);
         setPreferredSize(new java.awt.Dimension(882, 580));
         setResizable(false);
 

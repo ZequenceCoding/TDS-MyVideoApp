@@ -26,7 +26,7 @@ public class ControladorMyVideoApp {
 		inicializarCatalogos();
 	}
 
-	public ControladorMyVideoApp getUnicaInstancia() {
+	public static ControladorMyVideoApp getUnicaInstancia() {
 		if (unicaInstancia == null)
 			unicaInstancia = new ControladorMyVideoApp();
 		return unicaInstancia;
