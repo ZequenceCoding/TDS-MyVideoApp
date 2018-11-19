@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package umu.tds.myvideoapp.launchframe;
+package umu.tds.myvideoapp.vista;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import umu.tds.myvideoapp.appframe.AppFrame;
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
 import umu.tds.myvideoapp.controlador.ControladorUsuarios;
 
@@ -78,7 +77,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         			
         			if(!ControladorMyVideoApp.getUnicaInstancia().existUsername(usernameField.getText())) {
         				ControladorMyVideoApp.getUnicaInstancia().registrarUsuario(usernameField.getText(), new String(passwordField.getPassword()), nameField.getText(), surnameField.getText(), emailField.getText());
-        				JOptionPane.showMessageDialog(ventana, "Usuario registrado con �xito.", "Registro", JOptionPane.INFORMATION_MESSAGE);
+        				JOptionPane.showMessageDialog(ventana, "Usuario registrado con exito.", "Registro", JOptionPane.INFORMATION_MESSAGE);
         			} else {
         				JOptionPane.showMessageDialog(ventana, "No se ha podido registrar el usuario. \n", "Registro", JOptionPane.ERROR_MESSAGE);
         			}
@@ -123,7 +122,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         	@Override
         	public void mouseReleased(MouseEvent arg0) {
         		boolean login;
-        		login = ControladorUsuarios.getUnicaInstancia().loginUsuario(
+        		login = ControladorMyVideoApp.getUnicaInstancia().loginUsuario(
         				userTextField.getText(), new String(passwordLoginField.getPassword()));
         			
         		if (login) {
