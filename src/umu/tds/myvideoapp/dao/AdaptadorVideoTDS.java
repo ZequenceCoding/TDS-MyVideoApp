@@ -2,7 +2,6 @@ package umu.tds.myvideoapp.dao;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -90,7 +89,7 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 		String url;
 		String titulo;
 		int numReproducciones;
-		HashSet<Etiqueta> etiquetas = new HashSet<Etiqueta>();
+		LinkedList<Etiqueta> etiquetas = new LinkedList<Etiqueta>();
 
 		// recuperar entidad
 		eVideo = servPersistencia.recuperarEntidad(codigo);
