@@ -66,6 +66,10 @@ public class CatalogoVideos {
 		videos.remove(vid.getUrl());
 	}
 
+	public void verVideo(String url) {
+		videos.get(url).verVideo();
+	}
+	
 	/* Recupera todos los Usuarios para trabajar con ellos en memoria */
 	private void cargarCatalogo() throws DAOException {
 		List<Video> UsuariosBD = adaptadorVideo.recuperarTodosVideos();

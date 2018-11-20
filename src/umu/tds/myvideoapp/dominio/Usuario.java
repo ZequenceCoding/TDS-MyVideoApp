@@ -45,6 +45,10 @@ public class Usuario {
 		}
 		return null;
 	}
+	
+	public void anadirVideoALista(Video video, String nombreLista) {
+		getListaVideos(nombreLista).addVideo(video);
+	}
 	// Gets and Sets
 	public int getCodigo() {
 		return codigo;

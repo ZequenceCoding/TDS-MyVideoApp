@@ -2,11 +2,13 @@ package umu.tds.myvideoapp.dao;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
 import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
+import umu.tds.myvideoapp.dominio.Etiqueta;
 import umu.tds.myvideoapp.dominio.Video;
 import beans.Entidad;
 import beans.Propiedad;
@@ -88,6 +90,7 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 		String url;
 		String titulo;
 		int numReproducciones;
+		HashSet<Etiqueta> etiquetas = new HashSet<Etiqueta>();
 
 		// recuperar entidad
 		eVideo = servPersistencia.recuperarEntidad(codigo);
@@ -97,7 +100,7 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 		titulo = servPersistencia.recuperarPropiedadEntidad(eVideo, "titulo");
 		numReproducciones = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eVideo, "numReproducciones"));
 
-		Video video = new Video(url, titulo, numReproducciones);
+		Video video = new Video(url, titulo, numReproducciones, etiquetas);
 		video.setCodigo(codigo);
 
 		// IMPORTANTE:a�adir el cliente al pool antes de llamar a otros

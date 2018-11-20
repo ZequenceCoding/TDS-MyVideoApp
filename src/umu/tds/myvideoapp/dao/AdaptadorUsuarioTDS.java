@@ -42,6 +42,11 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		}
 		if (existe)
 			return;
+		// registrar primero los atributos que son objetos
+		AdaptadorListaVideosTDS adaptadorListaVideos = AdaptadorListaVideosTDS.getUnicaInstancia();
+		for (ListaVideos lv : usuario.getListasVideos()) {
+			adaptadorListaVideos.registrarListaVideos(lv);
+		}
 
 		// crear entidad Usuario
 		eUsuario = new Entidad();
