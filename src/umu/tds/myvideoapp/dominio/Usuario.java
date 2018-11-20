@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Usuario {
 	
-	private int id;
+	private int codigo;
 	private boolean premium;
 	private String username;
 	private String password;
@@ -16,7 +16,7 @@ public class Usuario {
 	private List<ListaVideos> listasVideos;
 	
 	public Usuario(String username, String password, String nombre, String apellidos, String email) {
-		this.id = 0;
+		this.codigo = 0;
 		this.premium = false;
 		this.username = username;
 		this.password = password;
@@ -27,6 +27,13 @@ public class Usuario {
 		this.listasVideos = new LinkedList<ListaVideos>();
 	}
 	
+	public Usuario(Boolean premium, String username, String password, String nombre, String apellidos, String email,
+			List<ListaVideos> listasVideos) {
+		this(username, password, nombre, apellidos, email);
+		this.premium = premium;
+		this.listasVideos = listasVideos;
+	}
+
 	public void addListaVideos(ListaVideos listaVideos) {
 		listasVideos.add(listaVideos);
 	}
@@ -38,9 +45,13 @@ public class Usuario {
 		}
 		return null;
 	}
+	
+	public void anadirVideoALista(Video video, String nombreLista) {
+		getListaVideos(nombreLista).addVideo(video);
+	}
 	// Gets and Sets
-	public int getId() {
-		return id;
+	public int getCodigo() {
+		return codigo;
 	}
 	public boolean isPremium() {
 		return premium;
@@ -67,8 +78,11 @@ public class Usuario {
 		return email;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public List<ListaVideos> getListasVideos() {
+		return new LinkedList<ListaVideos>(this.listasVideos);
+	}
+	public void setCodigo(int id) {
+		this.codigo = id;
 	}
 	
 }

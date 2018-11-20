@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package umu.tds.myvideoapp.appframe;
+package umu.tds.myvideoapp.vista;
 
 import javax.swing.UIManager;
 
@@ -77,9 +77,9 @@ public class AppFrame extends javax.swing.JFrame {
         topPanel.setMinimumSize(new java.awt.Dimension(512, 120));
         topPanel.setPreferredSize(new java.awt.Dimension(900, 120));
 
-        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AppFrame/logo64.png"))); // NOI18N
+        //logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo64.png"))); // NOI18N
 
-        userIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AppFrame/userIcon64.png"))); // NOI18N
+        //userIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userIcon64.png"))); // NOI18N
 
         usernameLabel.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         usernameLabel.setForeground(new java.awt.Color(0, 153, 204));

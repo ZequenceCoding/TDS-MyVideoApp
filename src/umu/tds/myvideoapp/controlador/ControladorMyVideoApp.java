@@ -66,11 +66,16 @@ public class ControladorMyVideoApp {
 	}
 	
 	public void anadirVideoALista(String url, String nombreLista) {
-		ListaVideos listaVideos = usuarioActual.getListaVideos(nombreLista);
-		listaVideos.addVideo(catalogoVideos.getVideo(url));
-		adaptadorListaVideos.modificarListaVideos(listaVideos);
+		usuarioActual.anadirVideoALista(catalogoVideos.getVideo(url), nombreLista);
+		adaptadorListaVideos.modificarListaVideos(usuarioActual.getListaVideos(nombreLista));
 	}
 	
+	public void verVideo(String url) {
+		catalogoVideos.verVideo(url);
+		adaptadorVideo.modificarVideo(catalogoVideos.getVideo(url));
+	}
+	
+	/* Funciones auxiliares */
 	private void inicializarAdaptadores() {
 		FactoriaDAO factoria = null;
 		try {

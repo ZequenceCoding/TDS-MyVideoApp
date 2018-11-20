@@ -16,7 +16,7 @@ import umu.tds.myvideoapp.dao.IAdaptadorUsuarioDAO;
  */
 public class CatalogoUsuarios {
 	private Map<String, Usuario> usuarios;
-	private static CatalogoUsuarios unicaInstancia = new CatalogoUsuarios();
+	private static CatalogoUsuarios unicaInstancia;
 
 	private FactoriaDAO dao;
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
@@ -33,6 +33,8 @@ public class CatalogoUsuarios {
 	}
 
 	public static CatalogoUsuarios getUnicaInstancia() {
+		if (unicaInstancia == null)
+			unicaInstancia = new CatalogoUsuarios();
 		return unicaInstancia;
 	}
 
@@ -46,14 +48,14 @@ public class CatalogoUsuarios {
 
 	public Usuario getUsuario(int codigo) {
 		for (Usuario u : usuarios.values()) {
-			if (u.getId() == codigo)
+			if (u.getCodigo() == codigo)
 				return u;
 		}
 		return null;
 	}
 
 	public Usuario getUsuario(String username) {
-		return usuarios.get(username);
+		return usuarios.get(username);	// Devuelve null si no esta el username
 	}
 
 	public void addUsuario(Usuario usu) {

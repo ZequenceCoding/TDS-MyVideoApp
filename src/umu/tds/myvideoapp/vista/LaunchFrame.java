@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package umu.tds.myvideoapp.launchframe;
+package umu.tds.myvideoapp.vista;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import umu.tds.myvideoapp.appframe.AppFrame;
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
-import umu.tds.myvideoapp.controlador.ControladorUsuarios;
 
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
@@ -25,6 +23,8 @@ import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -64,25 +64,13 @@ public class LaunchFrame extends javax.swing.JFrame {
         	public void mouseReleased(MouseEvent arg0) {
         		if (checkRegisterFields()) {
         			
-        			boolean registrado = false;
-        			//Date fechaNac = new Date();
-        			System.out.println("Entro");
-        			registrado = ControladorUsuarios.getUnicaInstancia().registrarUsuario(usernameField.getText(), new String(passwordField.getPassword()), nameField.getText(), surnameField.getText(), emailField.getText());
-        			System.out.println("Salgo: " + registrado); 
-        			if (registrado) {
-        				JOptionPane.showMessageDialog(ventana, "Usuario registrado con �xito.", "Registro", JOptionPane.INFORMATION_MESSAGE);
+        			if(!ControladorMyVideoApp.getUnicaInstancia().existUsername(usernameField.getText())) {
+        				ControladorMyVideoApp.getUnicaInstancia().registrarUsuario(usernameField.getText(), new String(passwordField.getPassword()), nameField.getText(), surnameField.getText(), emailField.getText());
+        				JOptionPane.showMessageDialog(ventana, "Usuario registrado con exito.", "Registro", JOptionPane.INFORMATION_MESSAGE);
         			} else {
         				JOptionPane.showMessageDialog(ventana, "No se ha podido registrar el usuario. \n", "Registro", JOptionPane.ERROR_MESSAGE);
         			}
         			
-        			/*
-        			if(!ControladorMyVideoApp.getUnicaInstancia().existUsername(usernameField.getText())) {
-        				ControladorMyVideoApp.getUnicaInstancia().registrarUsuario(usernameField.getText(), new String(passwordField.getPassword()), nameField.getText(), surnameField.getText(), emailField.getText());
-        				JOptionPane.showMessageDialog(ventana, "Usuario registrado con �xito.", "Registro", JOptionPane.INFORMATION_MESSAGE);
-        			} else {
-        				JOptionPane.showMessageDialog(ventana, "No se ha podido registrar el usuario. \n", "Registro", JOptionPane.ERROR_MESSAGE);
-        			}
-        			*/
         		}
         	}
         });
@@ -112,6 +100,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         termsAndCondsLabel = new javax.swing.JLabel();
         loginPanel = new javax.swing.JPanel();
         logoLabel = new javax.swing.JLabel();
+        logoLabel.setIcon(new ImageIcon("/Users/eduardo/git/TDS-MyVideoApp/src/sources/logo64.png"));
         usernameLabel = new javax.swing.JLabel();
         passwordLabel = new javax.swing.JLabel();
         userTextField = new javax.swing.JTextField();
@@ -123,7 +112,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         	@Override
         	public void mouseReleased(MouseEvent arg0) {
         		boolean login;
-        		login = ControladorUsuarios.getUnicaInstancia().loginUsuario(
+        		login = ControladorMyVideoApp.getUnicaInstancia().loginUsuario(
         				userTextField.getText(), new String(passwordLoginField.getPassword()));
         			
         		if (login) {
@@ -271,6 +260,8 @@ public class LaunchFrame extends javax.swing.JFrame {
 
         termsAndCondsLabel.setForeground(new java.awt.Color(0, 153, 204));
         termsAndCondsLabel.setText("<HTML><U>Terms and conditions</HTML></U>");
+        
+        JButton btnNewButton = new JButton("");
 
         javax.swing.GroupLayout registerPanelLayout = new javax.swing.GroupLayout(registerPanel);
         registerPanelLayout.setHorizontalGroup(
@@ -280,7 +271,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         				.addGroup(registerPanelLayout.createSequentialGroup()
         					.addGap(42)
         					.addComponent(titleLabel)
-        					.addPreferredGap(ComponentPlacement.RELATED, 317, Short.MAX_VALUE))
+        					.addPreferredGap(ComponentPlacement.RELATED, 335, Short.MAX_VALUE))
         				.addGroup(registerPanelLayout.createSequentialGroup()
         					.addGroup(registerPanelLayout.createParallelGroup(Alignment.TRAILING)
         						.addGroup(registerPanelLayout.createSequentialGroup()
@@ -288,10 +279,10 @@ public class LaunchFrame extends javax.swing.JFrame {
         							.addGroup(registerPanelLayout.createParallelGroup(Alignment.LEADING)
         								.addComponent(infoLabel)
         								.addGroup(registerPanelLayout.createSequentialGroup()
-        									.addGap(0, 248, Short.MAX_VALUE)
+        									.addGap(0, 251, Short.MAX_VALUE)
         									.addComponent(registerButton))))
         						.addGroup(registerPanelLayout.createSequentialGroup()
-        							.addContainerGap(64, Short.MAX_VALUE)
+        							.addContainerGap(75, Short.MAX_VALUE)
         							.addGroup(registerPanelLayout.createParallelGroup(Alignment.LEADING)
         								.addGroup(registerPanelLayout.createSequentialGroup()
         									.addGroup(registerPanelLayout.createParallelGroup(Alignment.TRAILING)
@@ -322,31 +313,36 @@ public class LaunchFrame extends javax.swing.JFrame {
         									.addComponent(termsAndCondsCheckBox)
         									.addPreferredGap(ComponentPlacement.UNRELATED)
         									.addComponent(termsAndCondsLabel, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)))))
-        					.addPreferredGap(ComponentPlacement.RELATED, 120, Short.MAX_VALUE)))
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+        					.addGap(102)))
         			.addComponent(separatorPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
         registerPanelLayout.setVerticalGroup(
         	registerPanelLayout.createParallelGroup(Alignment.TRAILING)
         		.addComponent(separatorPanel, GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
-        		.addGroup(registerPanelLayout.createSequentialGroup()
+        		.addGroup(Alignment.LEADING, registerPanelLayout.createSequentialGroup()
         			.addGap(64)
-        			.addComponent(titleLabel)
-        			.addGap(18)
-        			.addGroup(registerPanelLayout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(nameLabel)
-        				.addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addGap(5)
-        			.addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-        			.addGap(14)
-        			.addGroup(registerPanelLayout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(surnameLabel)
-        				.addComponent(surnameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addGap(5)
-        			.addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-        			.addGap(8)
-        			.addComponent(birthdayLabel)
-        			.addGap(5)
-        			.addComponent(jSeparator5, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+        			.addGroup(registerPanelLayout.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(btnNewButton)
+        				.addGroup(registerPanelLayout.createSequentialGroup()
+        					.addComponent(titleLabel)
+        					.addGap(18)
+        					.addGroup(registerPanelLayout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(nameLabel)
+        						.addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        					.addGap(5)
+        					.addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+        					.addGap(14)
+        					.addGroup(registerPanelLayout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(surnameLabel)
+        						.addComponent(surnameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        					.addGap(5)
+        					.addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+        					.addGap(8)
+        					.addComponent(birthdayLabel)
+        					.addGap(5)
+        					.addComponent(jSeparator5, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)))
         			.addGap(8)
         			.addGroup(registerPanelLayout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(emailLabel)
@@ -379,7 +375,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         					.addComponent(registerButton)
         					.addComponent(termsAndCondsLabel))
         				.addComponent(termsAndCondsCheckBox))
-        			.addContainerGap(101, Short.MAX_VALUE))
+        			.addContainerGap(102, Short.MAX_VALUE))
         );
         registerPanel.setLayout(registerPanelLayout);
 
@@ -432,9 +428,6 @@ public class LaunchFrame extends javax.swing.JFrame {
         		.addGroup(loginPanelLayout.createSequentialGroup()
         			.addGroup(loginPanelLayout.createParallelGroup(Alignment.LEADING)
         				.addGroup(loginPanelLayout.createSequentialGroup()
-        					.addGap(128)
-        					.addComponent(logoLabel))
-        				.addGroup(loginPanelLayout.createSequentialGroup()
         					.addGap(48)
         					.addComponent(forgotLabel)
         					.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
@@ -451,20 +444,24 @@ public class LaunchFrame extends javax.swing.JFrame {
         						.addComponent(passwordLoginField, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
         						.addComponent(userTextField, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
         						.addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE))))
-        			.addContainerGap(67, Short.MAX_VALUE))
+        			.addContainerGap(36, Short.MAX_VALUE))
         		.addGroup(loginPanelLayout.createSequentialGroup()
         			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         			.addComponent(buttonPanel, GroupLayout.PREFERRED_SIZE, 324, GroupLayout.PREFERRED_SIZE)
         			.addGap(31))
+        		.addGroup(Alignment.LEADING, loginPanelLayout.createSequentialGroup()
+        			.addGap(122)
+        			.addComponent(logoLabel)
+        			.addContainerGap(144, Short.MAX_VALUE))
         );
         loginPanelLayout.setVerticalGroup(
         	loginPanelLayout.createParallelGroup(Alignment.LEADING)
         		.addGroup(loginPanelLayout.createSequentialGroup()
         			.addContainerGap()
         			.addComponent(buttonPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        			.addGap(59)
+        			.addGap(56)
         			.addComponent(logoLabel, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-        			.addGap(75)
+        			.addGap(78)
         			.addComponent(usernameLabel)
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(userTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -480,7 +477,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         			.addGroup(loginPanelLayout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(loginButton)
         				.addComponent(forgotLabel))
-        			.addContainerGap(166, Short.MAX_VALUE))
+        			.addContainerGap(162, Short.MAX_VALUE))
         );
         GridBagLayout gbl_buttonPanel = new GridBagLayout();
         gbl_buttonPanel.columnWidths = new int[]{150, 8, 0};
@@ -637,8 +634,8 @@ public class LaunchFrame extends javax.swing.JFrame {
 			ok=false;
 		}
 		
-		if (ControladorUsuarios.getUnicaInstancia().esUsuarioRegistrado(usernameField.getText())) {
-			usernameLabel.setForeground(new java.awt.Color(190, 0, 0));
+		if (ControladorMyVideoApp.getUnicaInstancia().existUsername((usernameField.getText()))) {
+			userLabel.setForeground(new java.awt.Color(190, 0, 0));
 			ok=false;		
 		}
 		

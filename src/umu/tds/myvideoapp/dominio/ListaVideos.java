@@ -6,7 +6,7 @@ public class ListaVideos {
 
 	private String nombreLista;
 	private List<Video> videos;
-	private int id;
+	private int codigo;
 	
 	public ListaVideos(String nombreLista) {
 		this.nombreLista = nombreLista;
@@ -41,11 +41,11 @@ public class ListaVideos {
 	
 	
 	/* getters and setters */
-	public int getId() {
-		return id;
+	public int getCodigo() {
+		return codigo;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 	public String getNombreLista() {
 		return nombreLista;

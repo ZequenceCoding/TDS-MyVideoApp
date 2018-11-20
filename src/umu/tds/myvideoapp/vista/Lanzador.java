@@ -1,8 +1,6 @@
-package umu.tds.myvideoapp.launcher;
+package umu.tds.myvideoapp.vista;
 
 import java.awt.EventQueue;
-
-import umu.tds.myvideoapp.launchframe.LaunchFrame;
 
 public class Lanzador {
 	public static void main(final String[] args){
