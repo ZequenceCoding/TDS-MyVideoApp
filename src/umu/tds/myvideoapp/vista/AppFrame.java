@@ -7,6 +7,8 @@ package umu.tds.myvideoapp.vista;
 
 import javax.swing.UIManager;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 
 /**
@@ -62,7 +64,8 @@ public class AppFrame extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JSeparator();
         searchButton = new javax.swing.JButton();
         tagComboBox = new javax.swing.JComboBox<>();
-        contentPanel = new javax.swing.JPanel();
+        contentPanel = new JScrollPane();
+        contentPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MyVideoApp");
@@ -429,7 +432,7 @@ public class AppFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSplitPane buttonsSplitPanel;
-    private javax.swing.JPanel contentPanel;
+    private JScrollPane contentPanel;
     private javax.swing.JPanel deleteButtonPanel;
     private javax.swing.JButton deployableUserPanel;
     private javax.swing.JPanel framePanel;
