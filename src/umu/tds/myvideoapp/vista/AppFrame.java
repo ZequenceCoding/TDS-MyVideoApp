@@ -4,6 +4,18 @@
  * and open the template in the editor.
  */
 package umu.tds.myvideoapp.vista;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import pulsador.Luz;
+import umu.tds.componente.BuscadorVideos;
+import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
+
+import java.awt.Color;
+import pulsador.IEncendidoListener;
+import java.util.EventObject;
+
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -60,10 +72,6 @@ public class AppFrame extends javax.swing.JFrame {
         contentScrollPanel = new javax.swing.JScrollPane();
         contentPanel = new javax.swing.JPanel();
         searchPanel = new javax.swing.JPanel();
-        searchTextField = new javax.swing.JTextField();
-        jSeparator5 = new javax.swing.JSeparator();
-        searchButton = new javax.swing.JButton();
-        tagComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MyVideoApp");
@@ -79,9 +87,9 @@ public class AppFrame extends javax.swing.JFrame {
         topPanel.setMinimumSize(new java.awt.Dimension(512, 120));
         topPanel.setPreferredSize(new java.awt.Dimension(900, 120));
 
-        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AppFrame/logo64.png"))); // NOI18N
+        //logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AppFrame/logo64.png"))); // NOI18N
 
-        userIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AppFrame/userIcon64.png"))); // NOI18N
+        //userIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AppFrame/userIcon64.png"))); // NOI18N
 
         usernameLabel.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         usernameLabel.setForeground(new java.awt.Color(0, 153, 204));
@@ -270,60 +278,6 @@ public class AppFrame extends javax.swing.JFrame {
 
         searchPanel.setBackground(new java.awt.Color(50, 50, 50));
 
-        searchTextField.setBackground(new java.awt.Color(50, 50, 50));
-        searchTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        searchTextField.setForeground(new java.awt.Color(0, 153, 204));
-        searchTextField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        searchTextField.setText("Search...");
-        searchTextField.setBorder(null);
-        searchTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchTextFieldActionPerformed(evt);
-            }
-        });
-
-        searchButton.setBackground(new java.awt.Color(50, 50, 50));
-        searchButton.setForeground(new java.awt.Color(0, 153, 204));
-        searchButton.setBorder(null);
-        searchButton.setBorderPainted(false);
-        searchButton.setContentAreaFilled(false);
-
-        tagComboBox.setBackground(new java.awt.Color(50, 50, 50));
-        tagComboBox.setForeground(new java.awt.Color(0, 153, 204));
-        tagComboBox.setMaximumRowCount(64);
-        tagComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        tagComboBox.setBorder(null);
-
-        javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
-        searchPanel.setLayout(searchPanelLayout);
-        searchPanelLayout.setHorizontalGroup(
-            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(searchPanelLayout.createSequentialGroup()
-                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator5)
-                            .addComponent(searchTextField))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(tagComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(64, 64, 64))
-        );
-        searchPanelLayout.setVerticalGroup(
-            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchPanelLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(searchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(8, 8, 8)
-                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tagComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
-        );
-
         javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
         rightPanel.setLayout(rightPanelLayout);
         rightPanelLayout.setHorizontalGroup(
@@ -347,6 +301,64 @@ public class AppFrame extends javax.swing.JFrame {
                 .addComponent(contentScrollPanel)
                 .addGap(12, 12, 12))
         );
+        GridBagLayout gbl_searchPanel = new GridBagLayout();
+        gbl_searchPanel.columnWidths = new int[]{464, 0, 0};
+        gbl_searchPanel.rowHeights = new int[]{24, 10, 27, 0};
+        gbl_searchPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+        gbl_searchPanel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+        searchPanel.setLayout(gbl_searchPanel);
+        searchTextField = new javax.swing.JTextField();
+        
+                searchTextField.setBackground(new java.awt.Color(50, 50, 50));
+                searchTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                searchTextField.setForeground(new java.awt.Color(0, 153, 204));
+                searchTextField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+                searchTextField.setText("Search...");
+                searchTextField.setBorder(null);
+                searchTextField.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        searchTextFieldActionPerformed(evt);
+                    }
+                });
+                GridBagConstraints gbc_searchTextField = new GridBagConstraints();
+                gbc_searchTextField.fill = GridBagConstraints.BOTH;
+                gbc_searchTextField.insets = new Insets(0, 0, 5, 5);
+                gbc_searchTextField.gridx = 0;
+                gbc_searchTextField.gridy = 0;
+                searchPanel.add(searchTextField, gbc_searchTextField);
+        
+        luz = new Luz();
+        bv = new BuscadorVideos();
+        bv.addVideosListener(ControladorMyVideoApp.getUnicaInstancia());
+        luz.addEncendidoListener(bv);
+        
+        bv = new BuscadorVideos();
+        GridBagConstraints gbc_luz = new GridBagConstraints();
+        gbc_luz.gridheight = 3;
+        gbc_luz.insets = new Insets(0, 0, 5, 0);
+        gbc_luz.gridx = 1;
+        gbc_luz.gridy = 0;
+        searchPanel.add(luz, gbc_luz);
+        jSeparator5 = new javax.swing.JSeparator();
+        GridBagConstraints gbc_jSeparator5 = new GridBagConstraints();
+        gbc_jSeparator5.fill = GridBagConstraints.BOTH;
+        gbc_jSeparator5.insets = new Insets(0, 0, 5, 5);
+        gbc_jSeparator5.gridx = 0;
+        gbc_jSeparator5.gridy = 1;
+        searchPanel.add(jSeparator5, gbc_jSeparator5);
+        tagComboBox = new javax.swing.JComboBox<>();
+        
+                tagComboBox.setBackground(new java.awt.Color(50, 50, 50));
+                tagComboBox.setForeground(new java.awt.Color(0, 153, 204));
+                tagComboBox.setMaximumRowCount(64);
+                tagComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+                tagComboBox.setBorder(null);
+                GridBagConstraints gbc_tagComboBox = new GridBagConstraints();
+                gbc_tagComboBox.anchor = GridBagConstraints.NORTHWEST;
+                gbc_tagComboBox.insets = new Insets(0, 0, 0, 5);
+                gbc_tagComboBox.gridx = 0;
+                gbc_tagComboBox.gridy = 2;
+                searchPanel.add(tagComboBox, gbc_tagComboBox);
 
         javax.swing.GroupLayout framePanelLayout = new javax.swing.GroupLayout(framePanel);
         framePanel.setLayout(framePanelLayout);
@@ -447,7 +459,6 @@ public class AppFrame extends javax.swing.JFrame {
     private javax.swing.JPanel playButtonPanel;
     private javax.swing.JLabel recentLabel;
     private javax.swing.JPanel rightPanel;
-    private javax.swing.JButton searchButton;
     private javax.swing.JPanel searchPanel;
     private javax.swing.JTextField searchTextField;
     private javax.swing.JComboBox<String> tagComboBox;
@@ -455,5 +466,7 @@ public class AppFrame extends javax.swing.JFrame {
     private javax.swing.JPanel topPanel;
     private javax.swing.JLabel userIconLabel;
     private javax.swing.JLabel usernameLabel;
+    private Luz luz;
+    private BuscadorVideos bv;
     // End of variables declaration//GEN-END:variables
 }

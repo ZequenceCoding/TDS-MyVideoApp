@@ -15,7 +15,7 @@ public class CargadorVideos {
 		JAXBContext jc;
 		Videos asistencias = null;
 		try {
-			jc = JAXBContext.newInstance("umu.tds.videos");
+			jc = JAXBContext.newInstance("umu.tds.componente");
 			Unmarshaller u = jc.createUnmarshaller();
 			File file = new File(datos);
 			asistencias = (Videos) u.unmarshal(file);

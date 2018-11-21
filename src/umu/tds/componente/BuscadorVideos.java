@@ -5,6 +5,8 @@ import java.util.EventObject;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JFileChooser;
+
 import pulsador.IEncendidoListener;
 
 
@@ -17,7 +19,10 @@ public class BuscadorVideos implements Serializable, IEncendidoListener{
 	List<VideosListener> oyentesVideos;
 	
 	
-	
+	public BuscadorVideos() {
+		archivoVideos = new Videos();
+		oyentesVideos = new LinkedList<VideosListener>();
+	}
 	public void setArchivoVideos(Videos archivoVideos) {
 		if (archivoVideos != this.archivoVideos) {
 			VideosEvent evento = new VideosEvent(this, this.archivoVideos, archivoVideos);
@@ -45,6 +50,9 @@ public class BuscadorVideos implements Serializable, IEncendidoListener{
 
 	@Override
 	public void enteradoCambioEncendido(EventObject arg0) {
-		CargadorVideos.cargarVideos((String) arg0.getSource());
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.showOpenDialog(null);
+		System.out.println(fileChooser.getSelectedFile().getName());
+		setArchivoVideos(CargadorVideos.cargarVideos(fileChooser.getSelectedFile().getAbsolutePath()));
 	}
 }

@@ -101,6 +101,7 @@ public class ControladorMyVideoApp implements VideosListener{
 
 	@Override
 	public void enteradoCambioVideos(VideosEvent evento) {
+		System.out.println("Luz pulsado");
 		for (umu.tds.componente.Video video : evento.getNewVideo().getVideo()) {
 			LinkedList<Etiqueta> etiquetas = new LinkedList<Etiqueta>();
 			for (umu.tds.componente.Etiqueta etiqueta : video.getEtiqueta()) {
@@ -108,5 +109,6 @@ public class ControladorMyVideoApp implements VideosListener{
 			}
 			registrarVideo(video.getUrl(), video.getTitulo(), etiquetas);
 		}
+		System.out.println("Videos Registrados");
 	}
 }
