@@ -13,7 +13,7 @@ import umu.tds.myvideoapp.dominio.ListaVideos;
 import umu.tds.myvideoapp.dominio.Usuario;
 import umu.tds.myvideoapp.dominio.Video;
 
-public class ControladorMyVideoApp implements VideosListener{
+public class ControladorMyVideoApp implements VideosListener {
 
 	private static ControladorMyVideoApp unicaInstancia;
 
@@ -60,6 +60,10 @@ public class ControladorMyVideoApp implements VideosListener{
 		return catalogoUsuarios.getUsuario(username) != null;
 	}
 
+	public boolean existVideo(String url) {
+		return catalogoVideos.getVideo(url) != null;
+	}
+
 	public boolean loginUsuario(String username, String password) {
 		Usuario usuario = catalogoUsuarios.getUsuario(username);
 		if (usuario == null)
@@ -70,17 +74,17 @@ public class ControladorMyVideoApp implements VideosListener{
 		}
 		return false;
 	}
-	
+
 	public void anadirVideoALista(String url, String nombreLista) {
 		usuarioActual.anadirVideoALista(catalogoVideos.getVideo(url), nombreLista);
 		adaptadorListaVideos.modificarListaVideos(usuarioActual.getListaVideos(nombreLista));
 	}
-	
+
 	public void verVideo(String url) {
 		catalogoVideos.verVideo(url);
 		adaptadorVideo.modificarVideo(catalogoVideos.getVideo(url));
 	}
-	
+
 	/* Funciones auxiliares */
 	private void inicializarAdaptadores() {
 		FactoriaDAO factoria = null;
@@ -103,11 +107,13 @@ public class ControladorMyVideoApp implements VideosListener{
 	public void enteradoCambioVideos(VideosEvent evento) {
 		System.out.println("Luz pulsado");
 		for (umu.tds.componente.Video video : evento.getNewVideo().getVideo()) {
-			LinkedList<Etiqueta> etiquetas = new LinkedList<Etiqueta>();
-			for (umu.tds.componente.Etiqueta etiqueta : video.getEtiqueta()) {
-				etiquetas.add(new Etiqueta(etiqueta.getNombre()));
+			if (!existVideo(video.getUrl())) {
+				LinkedList<Etiqueta> etiquetas = new LinkedList<Etiqueta>();
+				for (umu.tds.componente.Etiqueta etiqueta : video.getEtiqueta()) {
+					etiquetas.add(new Etiqueta(etiqueta.getNombre()));
+				}
+				registrarVideo(video.getUrl(), video.getTitulo(), etiquetas);
 			}
-			registrarVideo(video.getUrl(), video.getTitulo(), etiquetas);
 		}
 		System.out.println("Videos Registrados");
 	}

@@ -11,11 +11,6 @@ import pulsador.Luz;
 import umu.tds.componente.BuscadorVideos;
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
 
-import java.awt.Color;
-import pulsador.IEncendidoListener;
-import java.util.EventObject;
-
-import javax.swing.JFileChooser;
 
 /**
  *
