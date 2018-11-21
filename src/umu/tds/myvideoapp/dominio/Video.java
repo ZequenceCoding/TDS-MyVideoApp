@@ -1,7 +1,6 @@
 package umu.tds.myvideoapp.dominio;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class Video {
 
@@ -9,21 +8,20 @@ public class Video {
 	private String url;
 	private String titulo;
 	private int numReproducciones;
-	private Set<Etiqueta> etiquetas;
+	private List<Etiqueta> etiquetas;
 	
 	// Constructor
-	public Video(String url, String titulo) {
+	public Video(String url, String titulo, List<Etiqueta> etiquetas) {
 		this.codigo = 0;
 		this.url = url;
 		this.titulo = titulo;
 		this.numReproducciones = 0;
-		this.etiquetas = new HashSet<Etiqueta>();
+		this.etiquetas = etiquetas;
 	}
 	
-	public Video(String url, String titulo, int numReproducciones, Set<Etiqueta> etiquetas) {
-		this(url, titulo);
+	public Video(String url, String titulo, int numReproducciones, List<Etiqueta> etiquetas) {
+		this(url, titulo, etiquetas);
 		this.numReproducciones = numReproducciones;
-		this.etiquetas = etiquetas;
 	}
 	
 	// Metodo para cuando se reproduce un video
@@ -50,7 +48,7 @@ public class Video {
 		this.codigo = codigo;
 	}
 	
-	public Set<Etiqueta> getEtiquetas() {
+	public List<Etiqueta> getEtiquetas() {
 		return etiquetas;
 	}
 	

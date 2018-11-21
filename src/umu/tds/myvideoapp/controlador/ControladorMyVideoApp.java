@@ -1,13 +1,19 @@
 package umu.tds.myvideoapp.controlador;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import umu.tds.componente.VideosEvent;
+import umu.tds.componente.VideosListener;
 import umu.tds.myvideoapp.dao.*;
 import umu.tds.myvideoapp.dominio.CatalogoUsuarios;
 import umu.tds.myvideoapp.dominio.CatalogoVideos;
+import umu.tds.myvideoapp.dominio.Etiqueta;
 import umu.tds.myvideoapp.dominio.ListaVideos;
 import umu.tds.myvideoapp.dominio.Usuario;
 import umu.tds.myvideoapp.dominio.Video;
 
-public class ControladorMyVideoApp {
+public class ControladorMyVideoApp implements VideosListener{
 
 	private static ControladorMyVideoApp unicaInstancia;
 
@@ -38,8 +44,8 @@ public class ControladorMyVideoApp {
 		catalogoUsuarios.addUsuario(usuario);
 	}
 
-	public void registrarVideo(String url, String titulo) {
-		Video video = new Video(url, titulo);
+	public void registrarVideo(String url, String titulo, List<Etiqueta> etiquetas) {
+		Video video = new Video(url, titulo, etiquetas);
 		adaptadorVideo.registrarVideo(video);
 		catalogoVideos.addVideo(video);
 	}
@@ -91,5 +97,16 @@ public class ControladorMyVideoApp {
 	private void inicializarCatalogos() {
 		catalogoUsuarios = CatalogoUsuarios.getUnicaInstancia();
 		catalogoVideos = CatalogoVideos.getUnicaInstancia();
+	}
+
+	@Override
+	public void enteradoCambioVideos(VideosEvent evento) {
+		for (umu.tds.componente.Video video : evento.getNewVideo().getVideo()) {
+			LinkedList<Etiqueta> etiquetas = new LinkedList<Etiqueta>();
+			for (umu.tds.componente.Etiqueta etiqueta : video.getEtiqueta()) {
+				etiquetas.add(new Etiqueta(etiqueta.getNombre()));
+			}
+			registrarVideo(video.getUrl(), video.getTitulo(), etiquetas);
+		}
 	}
 }
