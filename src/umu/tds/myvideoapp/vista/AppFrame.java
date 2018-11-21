@@ -6,6 +6,8 @@
 package umu.tds.myvideoapp.vista;
 
 import javax.swing.UIManager;
+import javax.swing.GroupLayout.Alignment;
+
 
 /**
  *
@@ -61,7 +63,6 @@ public class AppFrame extends javax.swing.JFrame {
         searchButton = new javax.swing.JButton();
         tagComboBox = new javax.swing.JComboBox<>();
         contentPanel = new javax.swing.JPanel();
-        layeredPanel = new javax.swing.JLayeredPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MyVideoApp");
@@ -124,7 +125,7 @@ public class AppFrame extends javax.swing.JFrame {
 
         mostSeenLabel.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         mostSeenLabel.setForeground(new java.awt.Color(0, 153, 204));
-        mostSeenLabel.setText("Más vistos");
+        mostSeenLabel.setText("Mas vistos");
 
         recentLabel.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         recentLabel.setForeground(new java.awt.Color(0, 153, 204));
@@ -316,27 +317,16 @@ public class AppFrame extends javax.swing.JFrame {
         contentPanel.setBackground(new java.awt.Color(50, 50, 50));
         contentPanel.setForeground(new java.awt.Color(0, 153, 204));
 
-        javax.swing.GroupLayout layeredPanelLayout = new javax.swing.GroupLayout(layeredPanel);
-        layeredPanel.setLayout(layeredPanelLayout);
-        layeredPanelLayout.setHorizontalGroup(
-            layeredPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        layeredPanelLayout.setVerticalGroup(
-            layeredPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
-        contentPanel.setLayout(contentPanelLayout);
         contentPanelLayout.setHorizontalGroup(
-            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(layeredPanel, javax.swing.GroupLayout.Alignment.TRAILING)
+        	contentPanelLayout.createParallelGroup(Alignment.LEADING)
+        		.addGap(0, 566, Short.MAX_VALUE)
         );
         contentPanelLayout.setVerticalGroup(
-            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(layeredPanel)
+        	contentPanelLayout.createParallelGroup(Alignment.LEADING)
+        		.addGap(0, 369, Short.MAX_VALUE)
         );
+        contentPanel.setLayout(contentPanelLayout);
 
         javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
         rightPanel.setLayout(rightPanelLayout);
@@ -450,7 +440,6 @@ public class AppFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JLayeredPane layeredPanel;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JSplitPane listButtonSplit;
     private javax.swing.JPanel listNamePanel;
@@ -471,5 +460,4 @@ public class AppFrame extends javax.swing.JFrame {
     private javax.swing.JPanel topPanel;
     private javax.swing.JLabel userIconLabel;
     private javax.swing.JLabel usernameLabel;
-    // End of variables declaration//GEN-END:variables
 }
