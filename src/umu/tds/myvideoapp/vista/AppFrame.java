@@ -8,8 +8,13 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import pulsador.Luz;
+import tds.video.VideoWeb;
 import umu.tds.componente.BuscadorVideos;
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
+import javax.swing.JTable;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.BorderLayout;
 
 
 /**
@@ -270,7 +275,13 @@ public class AppFrame extends javax.swing.JFrame {
         contentPanel.setBackground(new java.awt.Color(50, 50, 50));
         contentPanel.setForeground(new java.awt.Color(0, 153, 204));
         contentScrollPanel.setViewportView(contentPanel);
-
+        
+        table = new JTable(3,3);
+        table.setBackground(null);
+        contentPanel.setLayout(new BorderLayout(0, 0));
+        contentPanel.add(table, BorderLayout.CENTER);
+        
+       
         searchPanel.setBackground(new java.awt.Color(50, 50, 50));
 
         javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
@@ -463,5 +474,8 @@ public class AppFrame extends javax.swing.JFrame {
     private javax.swing.JLabel usernameLabel;
     private Luz luz;
     private BuscadorVideos bv;
-    // End of variables declaration//GEN-END:variables
+    private JTable table;
+    private VideoWeb videoWeb;
+    private JTable table_1;
+    private JTable table_2;
 }
