@@ -7,21 +7,38 @@ package umu.tds.myvideoapp.vista;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.EventObject;
+
+import pulsador.IEncendidoListener;
 import pulsador.Luz;
 import tds.video.VideoWeb;
 import umu.tds.componente.BuscadorVideos;
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
+import umu.tds.myvideoapp.dominio.CatalogoVideos;
+
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+
+import com.sun.javafx.scene.paint.GradientUtils.Point;
+
+import javax.persistence.Table;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 /**
  *
  * @author Agustin
  */
-public class AppFrame extends javax.swing.JFrame {
+public class AppFrame extends javax.swing.JFrame{
 
     /**
 	 * 
@@ -276,9 +293,39 @@ public class AppFrame extends javax.swing.JFrame {
         contentPanel.setForeground(new java.awt.Color(0, 153, 204));
         contentScrollPanel.setViewportView(contentPanel);
         
-        table = new JTable(3,3);
+        
+        table = new JTable();
+        table.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		int column = table.getColumnModel().getColumnIndexAtX(e.getX());
+        		int row = e.getY()/table.getRowHeight();
+        		
+        		if(row < table.getRowCount() && row >= 0 && column < table.getColumnCount() && column >= 0) {
+        			Object value = table.getValueAt(row, column);
+        			if(value instanceof JLabel) {
+        				JLabel label = (JLabel) value;
+        				System.out.println("Click");
+        				ControladorMyVideoApp.getUnicaInstancia().verVideo(label.getName());
+;        			}
+        		}
+        	}
+        });
+        table.setShowGrid(false);
+        table.setDefaultRenderer(Object.class, new VideoTabla());
+        Object tab[][] = ControladorMyVideoApp.getUnicaInstancia().videosToArray();
+        DefaultTableModel model = new DefaultTableModel(tab, new Object[] {"","",""}) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+        		return false;
+        	}
+        };
         table.setBackground(null);
+        table.setModel(model);
         contentPanel.setLayout(new BorderLayout(0, 0));
+        table.setRowHeight(120);
+        table.setRowMargin(5);
         contentPanel.add(table, BorderLayout.CENTER);
         
        
@@ -438,6 +485,7 @@ public class AppFrame extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSplitPane buttonsSplitPanel;
@@ -475,7 +523,6 @@ public class AppFrame extends javax.swing.JFrame {
     private Luz luz;
     private BuscadorVideos bv;
     private JTable table;
-    private VideoWeb videoWeb;
-    private JTable table_1;
-    private JTable table_2;
+    private VideoWeb vW;
+
 }

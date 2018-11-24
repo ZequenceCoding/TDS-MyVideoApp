@@ -1,7 +1,7 @@
 package umu.tds.myvideoapp.dominio;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +40,7 @@ public class CatalogoVideos {
 
 	/* devuelve todos los Usuarios */
 	public List<Video> getVideos() {
-		ArrayList<Video> lista = new ArrayList<Video>();
+		LinkedList<Video> lista = new LinkedList<Video>();
 		for (Video c : videos.values())
 			lista.add(c);
 		return lista;
