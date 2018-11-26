@@ -1,5 +1,6 @@
 package umu.tds.myvideoapp.dominio;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Video {
@@ -49,7 +50,7 @@ public class Video {
 	}
 	
 	public List<Etiqueta> getEtiquetas() {
-		return etiquetas;
+		return new LinkedList<>(etiquetas);
 	}
 	
 	

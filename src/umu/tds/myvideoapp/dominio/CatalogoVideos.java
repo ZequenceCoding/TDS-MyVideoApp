@@ -1,9 +1,11 @@
 package umu.tds.myvideoapp.dominio;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import umu.tds.myvideoapp.dao.DAOException;
 import umu.tds.myvideoapp.dao.FactoriaDAO;
@@ -70,11 +72,30 @@ public class CatalogoVideos {
 		videos.get(url).verVideo();
 	}
 	
+	public int getNumReproducciones(String url) {
+		return videos.get(url).getNumReproducciones();
+	}
+	
+	public List<Etiqueta> getEtiquetasVideo(String url) {
+		return videos.get(url).getEtiquetas();
+	}
+	
+	public Set<Etiqueta> getEtiquetas() {
+		Set<Etiqueta> etiquetas = new HashSet<Etiqueta>();
+		for (Video video : videos.values()) {
+			etiquetas.addAll(video.getEtiquetas());
+		}
+		return etiquetas;
+	}
 	/* Recupera todos los Usuarios para trabajar con ellos en memoria */
 	private void cargarCatalogo() throws DAOException {
 		List<Video> UsuariosBD = adaptadorVideo.recuperarTodosVideos();
 		for (Video vid : UsuariosBD)
 			videos.put(vid.getUrl(), vid);
 	}
+
+
+
+
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
@@ -42,19 +43,22 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 		if (existe)
 			return;
 
-		// crear entidad Video
+		// crear entidad
 		eVideo = new Entidad();
 		eVideo.setNombre("video");
 		eVideo.setPropiedades(new ArrayList<Propiedad>(
 				Arrays.asList(new Propiedad("url", video.getUrl()), new Propiedad("titulo", video.getTitulo()),
-						new Propiedad("numReproducciones", String.valueOf(video.getNumReproducciones())))));
+						new Propiedad("numReproducciones", String.valueOf(video.getNumReproducciones())),
+						new Propiedad("etiquetas", obtenerNombresEtiquetas(video.getEtiquetas())))));
 
-		// registrar entidad cliente
+		// registrar entidad 
 		eVideo = servPersistencia.registrarEntidad(eVideo);
 		// asignar identificador unico
 		// Se aprovecha el que genera el servicio de persistencia
 		video.setCodigo(eVideo.getId());
 	}
+
+
 
 	@Override
 	public void borrarVideo(Video video) {
@@ -70,12 +74,17 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 
 		servPersistencia.eliminarPropiedadEntidad(eVideo, "url");
 		servPersistencia.anadirPropiedadEntidad(eVideo, "url", video.getUrl());
+		
 		servPersistencia.eliminarPropiedadEntidad(eVideo, "titulo");
 		servPersistencia.anadirPropiedadEntidad(eVideo, "titulo", video.getTitulo());
 
 		servPersistencia.eliminarPropiedadEntidad(eVideo, "numReproducciones");
 		servPersistencia.anadirPropiedadEntidad(eVideo, "numReproducciones",
 				String.valueOf(video.getNumReproducciones()));
+		
+		servPersistencia.eliminarPropiedadEntidad(eVideo, "etiquetas");
+		servPersistencia.anadirPropiedadEntidad(eVideo, "etiquetas", 
+				obtenerNombresEtiquetas(video.getEtiquetas()));
 	}
 
 	@Override
@@ -89,7 +98,7 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 		String url;
 		String titulo;
 		int numReproducciones;
-		LinkedList<Etiqueta> etiquetas = new LinkedList<Etiqueta>();
+		List<Etiqueta> etiquetas;
 
 		// recuperar entidad
 		eVideo = servPersistencia.recuperarEntidad(codigo);
@@ -98,7 +107,8 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 		url = servPersistencia.recuperarPropiedadEntidad(eVideo, "url");
 		titulo = servPersistencia.recuperarPropiedadEntidad(eVideo, "titulo");
 		numReproducciones = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eVideo, "numReproducciones"));
-
+		etiquetas = obtenerEtiquetasDesdeNombres(servPersistencia.recuperarPropiedadEntidad(eVideo, "etiquetas"));
+		
 		Video video = new Video(url, titulo, numReproducciones, etiquetas);
 		video.setCodigo(codigo);
 
@@ -122,4 +132,24 @@ public class AdaptadorVideoTDS implements IAdaptadorVideoDAO {
 		return videos;
 	}
 
+	/* Metodos auxiliares*/
+	private String obtenerNombresEtiquetas(List<Etiqueta> listaEtiquetas) {
+		String aux = "";
+		for (Etiqueta e : listaEtiquetas) {
+			aux += e.getNombre() + " ";
+		}
+		return aux.trim();
+	}
+	
+	private List<Etiqueta> obtenerEtiquetasDesdeNombres(String etiquetas) {
+
+		List<Etiqueta> listaEtiquetas = new LinkedList<Etiqueta>();
+		if(etiquetas == null)
+			return listaEtiquetas;
+		StringTokenizer strTok = new StringTokenizer(etiquetas, " ");
+		while (strTok.hasMoreTokens()) {
+			listaEtiquetas.add(new Etiqueta((String) strTok.nextElement()));
+		}
+		return listaEtiquetas;
+	}
 }

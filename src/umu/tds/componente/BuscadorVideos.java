@@ -52,6 +52,8 @@ public class BuscadorVideos implements Serializable, IEncendidoListener{
 	public void enteradoCambioEncendido(EventObject arg0) {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.showOpenDialog(null);
+		if(fileChooser.getSelectedFile() == null)
+			return;
 		System.out.println(fileChooser.getSelectedFile().getName());
 		setArchivoVideos(CargadorVideos.cargarVideos(fileChooser.getSelectedFile().getAbsolutePath()));
 	}

@@ -1,15 +1,12 @@
 package umu.tds.myvideoapp.controlador;
 
 import java.awt.Color;
-import java.awt.Label;
-import java.awt.LayoutManager;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTable;
 
 import tds.video.VideoWeb;
 import umu.tds.componente.VideosEvent;
@@ -35,12 +32,14 @@ public class ControladorMyVideoApp implements VideosListener {
 
 	private Usuario usuarioActual;
 	private static VideoWeb videoWeb = new VideoWeb();
+	private Set<Etiqueta> etiquetas;
 
 
 	public ControladorMyVideoApp() {
+		System.out.println("Crea el controlador");
 		inicializarAdaptadores();
-
 		inicializarCatalogos();
+		etiquetas = catalogoVideos.getEtiquetas();
 	}
 
 	public static ControladorMyVideoApp getUnicaInstancia() {
@@ -97,28 +96,37 @@ public class ControladorMyVideoApp implements VideosListener {
 		videoWeb.playVideo(url);
 	}
 
+	public void stopVideo() {
+		videoWeb.cancel();
+	}
+	
 	/* Funciones auxiliares */
 	private void inicializarAdaptadores() {
+		System.out.println("Inicializa los adaptadores");
 		FactoriaDAO factoria = null;
 		try {
 			factoria = FactoriaDAO.getInstancia(FactoriaDAO.DAO_TDS);
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("Adaptador Lista Videos");
 		adaptadorListaVideos = factoria.getListaVideosDAO();
+		System.out.println("Adaptador Usuario");
 		adaptadorUsuario = factoria.getUsuarioDAO();
+		System.out.println("Adaptador Video");
 		adaptadorVideo = factoria.getVideoDAO();
 	}
 
 	private void inicializarCatalogos() {
+		System.out.println("Inicializa los catalogos");
+		System.out.println("Catalogo Usuario");
 		catalogoUsuarios = CatalogoUsuarios.getUnicaInstancia();
+		System.out.println("Catalogo videos");
 		catalogoVideos = CatalogoVideos.getUnicaInstancia();
 	}
 
 	public JLabel[][] videosToArray() {
 		int nFilas = (int) (Math.ceil(catalogoVideos.getVideos().size()/3.0));
-		System.out.println(catalogoVideos.getVideos().size() + " >> "+ Math.ceil(catalogoVideos.getVideos().size()));
-		System.out.println(nFilas);
 		JLabel tab[][] = new JLabel[nFilas][3];
 		LinkedList<Video> videos = (LinkedList<Video>) catalogoVideos.getVideos();
 		int k = 0;
@@ -140,23 +148,12 @@ public class ControladorMyVideoApp implements VideosListener {
 		return tab;
 	}
 	
-	public JTable videosToTable() {
-		int nFilas = (int) Math.ceil(catalogoVideos.getVideos().size());
-		LinkedList<Video> videos = (LinkedList<Video>) catalogoVideos.getVideos();
-		ImageIcon icon[][] = new ImageIcon[][] {{videoWeb.getThumb(videos.get(0).getUrl())}};
-		/*
-		int k = 0;
-		for (int i = 0; i < nFilas; i++) {
-			for (int j = 0; j < 3; j++) {
-				if(k >= videos.size())
-					break;
-				tabla.set(videoWeb.getThumb(videos.get(k).getUrl()), k);
-				k++;
-			}
-		}
-		*/
-		JTable tabla = new JTable(icon, new String[]{""}) ;
-		return tabla;
+	public int getNumReproducciones(String url) {
+		return catalogoVideos.getNumReproducciones(url);
+	}
+	
+	public VideoWeb getVideoWeb() {
+		return videoWeb;
 	}
 	
 	@Override
@@ -172,5 +169,13 @@ public class ControladorMyVideoApp implements VideosListener {
 			}
 		}
 		System.out.println("Videos Registrados");
+	}
+
+	public List<Etiqueta> getEtiquetasVideo(String url) {
+		return catalogoVideos.getEtiquetasVideo(url);
+	}
+	
+	public Set<Etiqueta> getEtiquetas() {
+		return new HashSet<Etiqueta>(etiquetas);
 	}
 }
