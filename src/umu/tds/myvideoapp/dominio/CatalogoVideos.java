@@ -94,6 +94,18 @@ public class CatalogoVideos {
 			videos.put(vid.getUrl(), vid);
 	}
 
+	public List<Video> getVideosConEtiquetas(Set<Etiqueta> etiquetasSeleccionadas) {
+		if(etiquetasSeleccionadas.isEmpty())
+			return getVideos();
+		List<Video> videosConEtiquetas = new LinkedList<Video>();
+		for (Video video : videos.values()) {
+			if (video.contieneEtiqueta(etiquetasSeleccionadas)) {
+				videosConEtiquetas.add(video);
+			}
+		}
+		return videosConEtiquetas;
+	}
+
 
 
 

@@ -18,19 +18,29 @@ import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
 import umu.tds.myvideoapp.dominio.Etiqueta;
 
 import javax.swing.JTable;
+import javax.swing.ListCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
  import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JComboBox;
+import javax.swing.JScrollPane;
 
 
 /**
@@ -412,9 +422,9 @@ public class AppFrame extends javax.swing.JFrame{
        
         searchPanel.setBackground(new java.awt.Color(50, 50, 50));
         GridBagLayout gbl_searchPanel = new GridBagLayout();
-        gbl_searchPanel.columnWidths = new int[]{30, 464, 0, 0};
+        gbl_searchPanel.columnWidths = new int[]{30, 232, 232, 0, 0};
         gbl_searchPanel.rowHeights = new int[]{30, 24, 10, 27, 0};
-        gbl_searchPanel.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+        gbl_searchPanel.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
         gbl_searchPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         searchPanel.setLayout(gbl_searchPanel);
         searchTextField = new javax.swing.JTextField();
@@ -431,6 +441,7 @@ public class AppFrame extends javax.swing.JFrame{
                     }
                 });
                 GridBagConstraints gbc_searchTextField = new GridBagConstraints();
+                gbc_searchTextField.gridwidth = 2;
                 gbc_searchTextField.fill = GridBagConstraints.BOTH;
                 gbc_searchTextField.insets = new Insets(0, 0, 5, 5);
                 gbc_searchTextField.gridx = 1;
@@ -456,11 +467,12 @@ public class AppFrame extends javax.swing.JFrame{
         bv = new BuscadorVideos();
         GridBagConstraints gbc_luz = new GridBagConstraints();
         gbc_luz.gridheight = 3;
-        gbc_luz.gridx = 2;
+        gbc_luz.gridx = 3;
         gbc_luz.gridy = 1;
         searchPanel.add(luz, gbc_luz);
         jSeparator5 = new javax.swing.JSeparator();
         GridBagConstraints gbc_jSeparator5 = new GridBagConstraints();
+        gbc_jSeparator5.gridwidth = 2;
         gbc_jSeparator5.fill = GridBagConstraints.BOTH;
         gbc_jSeparator5.insets = new Insets(0, 0, 5, 5);
         gbc_jSeparator5.gridx = 1;
@@ -471,11 +483,7 @@ public class AppFrame extends javax.swing.JFrame{
                 tagComboBox.setBackground(new java.awt.Color(50, 50, 50));
                 tagComboBox.setForeground(new java.awt.Color(0, 153, 204));
                 tagComboBox.setMaximumRowCount(64);
-                tagComboBox.addItem("Sel. Etiq.");
-                for (Etiqueta etiqueta : ControladorMyVideoApp.getUnicaInstancia().getEtiquetas()) {
-					tagComboBox.addItem(etiqueta.getNombre());
-				}
-                //tagComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ninguna", "Item 2", "Item 3", "Item 4" }));
+                tagComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin filtro", "Item 2", "Item 3", "Item 4" }));
                 tagComboBox.setBorder(null);
                 GridBagConstraints gbc_tagComboBox = new GridBagConstraints();
                 gbc_tagComboBox.anchor = GridBagConstraints.NORTHWEST;
@@ -506,6 +514,39 @@ public class AppFrame extends javax.swing.JFrame{
         rightPanel.setLayout(new BorderLayout(0, 0));
         rightPanel.add(contentScrollPanel, BorderLayout.CENTER);
         rightPanel.add(searchPanel, BorderLayout.NORTH);
+        
+        btnEtiquetas = new JButton("Etiquetas");
+        btnEtiquetas.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseReleased(MouseEvent e) {
+        		VentanaEtiquetas ventanaEtiquetas = new VentanaEtiquetas();
+        	}
+        });
+        btnEtiquetas.setForeground(new Color(0, 0, 0));
+        JPanel panelBtn = new JPanel(new FlowLayout());
+        panelBtn.setBackground(new Color(51, 51, 51));
+        panelBtn.add(btnEtiquetas);
+        GridBagConstraints gbc_panelBtn = new GridBagConstraints();
+        gbc_panelBtn.insets = new Insets(0, 0, 0, 5);
+        gbc_panelBtn.gridx = 2;
+        gbc_panelBtn.gridy = 3;
+        searchPanel.add(panelBtn, gbc_panelBtn);
+        
+        btnRefrescar = new JButton("Refrescar");
+        btnRefrescar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				contentPanel.remove(table);
+				generateTableVideos();
+				contentPanel.add(table, BorderLayout.CENTER);
+		        rightPanel.revalidate();
+		        rightPanel.repaint();
+			}
+		});
+        panelBtn.add(btnRefrescar);
+       
+       
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -548,7 +589,24 @@ public class AppFrame extends javax.swing.JFrame{
         	}
         });
         table.setShowGrid(false);
-        table.setDefaultRenderer(Object.class, new VideoTabla());
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        	/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+        	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+        			int row, int column) {
+        		
+        		if(value instanceof JLabel) {
+        			JLabel label = (JLabel) value;
+        			return label;
+        		}
+        		
+        		return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        	}
+        });
         Object tab[][] = ControladorMyVideoApp.getUnicaInstancia().videosToArray();
         DefaultTableModel model = new DefaultTableModel(tab, new Object[] {"","",""}) {
 			private static final long serialVersionUID = 1L;
@@ -641,5 +699,7 @@ public class AppFrame extends javax.swing.JFrame{
     private Luz luz;
     private BuscadorVideos bv;
     private JTable table;
-
+    private JList<JCheckBox> list;
+    private JButton btnEtiquetas;
+    private JButton btnRefrescar;
 }

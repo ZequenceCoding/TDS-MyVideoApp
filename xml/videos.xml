@@ -10,5 +10,10 @@
 		<etiqueta nombre="blogotheque"/>
 		<etiqueta nombre="solo"/>
 	</video>
-	
+	<video titulo="LOCOPLAYA - LA VUELTA AL COLE (Vidéo)" url="https://www.youtube.com/watch?v=Dy8g0pV_3jY" >
+		<etiqueta nombre="music"/>
+		<etiqueta nombre="rap"/>
+		<etiqueta nombre="spanish"/>
+	</video>
+
 </videos>

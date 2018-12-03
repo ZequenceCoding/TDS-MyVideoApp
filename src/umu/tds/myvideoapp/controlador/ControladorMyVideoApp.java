@@ -33,6 +33,7 @@ public class ControladorMyVideoApp implements VideosListener {
 	private Usuario usuarioActual;
 	private static VideoWeb videoWeb = new VideoWeb();
 	private Set<Etiqueta> etiquetas;
+	private Set<Etiqueta> etiquetasSeleccionadas;
 
 
 	public ControladorMyVideoApp() {
@@ -40,6 +41,7 @@ public class ControladorMyVideoApp implements VideosListener {
 		inicializarAdaptadores();
 		inicializarCatalogos();
 		etiquetas = catalogoVideos.getEtiquetas();
+		etiquetasSeleccionadas = new HashSet<Etiqueta>();
 	}
 
 	public static ControladorMyVideoApp getUnicaInstancia() {
@@ -125,10 +127,15 @@ public class ControladorMyVideoApp implements VideosListener {
 		catalogoVideos = CatalogoVideos.getUnicaInstancia();
 	}
 
+	
+	private List<Video> videosConEtiquetas(){
+		return catalogoVideos.getVideosConEtiquetas(etiquetasSeleccionadas);
+	}
+	
 	public JLabel[][] videosToArray() {
 		int nFilas = (int) (Math.ceil(catalogoVideos.getVideos().size()/3.0));
 		JLabel tab[][] = new JLabel[nFilas][3];
-		LinkedList<Video> videos = (LinkedList<Video>) catalogoVideos.getVideos();
+		LinkedList<Video> videos = (LinkedList<Video>) videosConEtiquetas();
 		int k = 0;
 		for (int i = 0; i < nFilas; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -148,6 +155,24 @@ public class ControladorMyVideoApp implements VideosListener {
 		return tab;
 	}
 	
+	public boolean isEtiquetasSeleccionada(String nombreEtiqueta) {
+		for (Etiqueta etiqueta : etiquetasSeleccionadas) {
+			if(etiqueta.getNombre().equals(nombreEtiqueta))
+				return true;
+		}
+		return false;
+	}
+	
+	public void etiquetaSeleccionada(Etiqueta etiqueta) {
+		for (Etiqueta etiquetaSeleccionada : etiquetasSeleccionadas) {
+			if(etiquetaSeleccionada.getNombre().equals(etiqueta.getNombre())) {
+				etiquetasSeleccionadas.remove(etiquetaSeleccionada);
+				return;
+			}	
+		}
+		etiquetasSeleccionadas.add(etiqueta);
+		
+	}
 	public int getNumReproducciones(String url) {
 		return catalogoVideos.getNumReproducciones(url);
 	}

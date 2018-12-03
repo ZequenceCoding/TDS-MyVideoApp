@@ -2,6 +2,7 @@ package umu.tds.myvideoapp.dominio;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class Video {
 
@@ -51,6 +52,15 @@ public class Video {
 	
 	public List<Etiqueta> getEtiquetas() {
 		return new LinkedList<>(etiquetas);
+	}
+
+	public boolean contieneEtiqueta(Set<Etiqueta> etiquetasSeleccionadas) {
+		for (Etiqueta etiqueta : etiquetasSeleccionadas) {
+			if (etiquetas.contains(etiqueta)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	
