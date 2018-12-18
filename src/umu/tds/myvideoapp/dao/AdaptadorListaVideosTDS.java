@@ -97,6 +97,7 @@ public class AdaptadorListaVideosTDS implements IAdaptadorListaVideosDAO {
 		for (Video video : videos) {
 			listaVideos.addVideo(video);
 		}
+		listaVideos.setCodigo(eListaVideos.getId());
 		return listaVideos;
 	}
 

@@ -1,6 +1,6 @@
 package umu.tds.myvideoapp.dominio;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 public class ListaVideos {
 
@@ -10,13 +10,13 @@ public class ListaVideos {
 	
 	public ListaVideos(String nombreLista) {
 		this.nombreLista = nombreLista;
-		videos = new ArrayList<Video>();
+		videos = new LinkedList<Video>();
 	}
 
 	
 	/* devuelve todos los Videos de la lista */
 	public List<Video> getVideos() {
-		return new ArrayList<Video>(videos);
+		return new LinkedList<Video>(videos);
 	}
 
 	public Video getVideo(int codigo) {
@@ -27,9 +27,9 @@ public class ListaVideos {
 		return null;
 	}
 
-	public Video getVideo(String titulo) {
+	public Video getVideo(String url) {
 		for (Video v : videos) {
-			if (v.getTitulo() == titulo)
+			if (v.getUrl() == url)
 				return v;
 		}
 		return null;
@@ -39,6 +39,9 @@ public class ListaVideos {
 		videos.add(vid);
 	}
 	
+	public void removeVideo(String url) {
+		videos.remove(getVideo(url));
+	}
 	
 	/* getters and setters */
 	public int getCodigo() {

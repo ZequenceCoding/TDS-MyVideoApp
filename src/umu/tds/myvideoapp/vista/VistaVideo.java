@@ -11,10 +11,14 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JButton;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
+import javax.swing.plaf.OptionPaneUI;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class VistaVideo {
 
@@ -75,6 +79,13 @@ public class VistaVideo {
 		frame.getContentPane().add(panel, gbc_panel);
 		
 		JButton btnReproducir = new JButton("Reproducir");
+		btnReproducir.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		panel.add(btnReproducir);
 		
 		JButton btnParar = new JButton("Parar");

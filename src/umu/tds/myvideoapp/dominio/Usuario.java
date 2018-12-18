@@ -3,6 +3,8 @@ package umu.tds.myvideoapp.dominio;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JCheckBox;
+
 public class Usuario {
 	
 	private int codigo;
@@ -34,8 +36,8 @@ public class Usuario {
 		this.listasVideos = listasVideos;
 	}
 
-	public void addListaVideos(ListaVideos listaVideos) {
-		listasVideos.add(listaVideos);
+	public void addListaVideos(String nombreLista) {
+		listasVideos.add(new ListaVideos(nombreLista));
 	}
 	
 	public ListaVideos getListaVideos(String nombreLista) {
@@ -47,7 +49,12 @@ public class Usuario {
 	}
 	
 	public void anadirVideoALista(Video video, String nombreLista) {
+		if(getListaVideos(nombreLista).getVideo(video.getUrl()) != null) {
+			getListaVideos(nombreLista).removeVideo(video.getUrl());
+			return;
+		}
 		getListaVideos(nombreLista).addVideo(video);
+
 	}
 	// Gets and Sets
 	public int getCodigo() {
@@ -83,6 +90,23 @@ public class Usuario {
 	}
 	public void setCodigo(int id) {
 		this.codigo = id;
+	}
+
+	public List<Video> getVideosListaVideos(String nombreLista) {
+		return getListaVideos(nombreLista).getVideos();
+	}
+
+	public LinkedList<JCheckBox> getAnadirA(String url) {
+		LinkedList<JCheckBox> lista = new LinkedList<JCheckBox>();
+		for (ListaVideos listaVideos : listasVideos) {
+			JCheckBox checkBox = new JCheckBox();
+			checkBox.setText(listaVideos.getNombreLista());
+			checkBox.setName(listaVideos.getNombreLista());
+			checkBox.setSelected(listaVideos.getVideo(url) != null);
+			lista.add(checkBox);
+			
+		}
+		return lista;
 	}
 	
 }

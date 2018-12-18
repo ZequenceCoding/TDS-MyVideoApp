@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 
 import tds.video.VideoWeb;
@@ -63,9 +64,9 @@ public class ControladorMyVideoApp implements VideosListener {
 	}
 
 	public void registrarListaVideos(String nombreLista) {
-		ListaVideos listaVideos = new ListaVideos(nombreLista);
-		adaptadorListaVideos.registrarListaVideos(listaVideos);
-		usuarioActual.addListaVideos(listaVideos);
+		usuarioActual.addListaVideos(nombreLista);
+		adaptadorListaVideos.registrarListaVideos(usuarioActual.getListaVideos(nombreLista));
+		adaptadorUsuario.modificarUsuario(usuarioActual);
 	}
 
 	public boolean existUsername(String username) {
@@ -82,6 +83,7 @@ public class ControladorMyVideoApp implements VideosListener {
 			return false;
 		if (usuario.getPassword().equals(password)) {
 			usuarioActual = usuario;
+			System.out.println(usuario.getListasVideos());
 			return true;
 		}
 		return false;
@@ -90,6 +92,7 @@ public class ControladorMyVideoApp implements VideosListener {
 	public void anadirVideoALista(String url, String nombreLista) {
 		usuarioActual.anadirVideoALista(catalogoVideos.getVideo(url), nombreLista);
 		adaptadorListaVideos.modificarListaVideos(usuarioActual.getListaVideos(nombreLista));
+		adaptadorUsuario.modificarUsuario(usuarioActual);
 	}
 
 	public void verVideo(String url) {
@@ -111,20 +114,22 @@ public class ControladorMyVideoApp implements VideosListener {
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("Adaptador Video");
+		adaptadorVideo = factoria.getVideoDAO();
 		System.out.println("Adaptador Lista Videos");
 		adaptadorListaVideos = factoria.getListaVideosDAO();
 		System.out.println("Adaptador Usuario");
 		adaptadorUsuario = factoria.getUsuarioDAO();
-		System.out.println("Adaptador Video");
-		adaptadorVideo = factoria.getVideoDAO();
+
 	}
 
 	private void inicializarCatalogos() {
 		System.out.println("Inicializa los catalogos");
-		System.out.println("Catalogo Usuario");
-		catalogoUsuarios = CatalogoUsuarios.getUnicaInstancia();
 		System.out.println("Catalogo videos");
 		catalogoVideos = CatalogoVideos.getUnicaInstancia();
+		System.out.println("Catalogo Usuario");
+		catalogoUsuarios = CatalogoUsuarios.getUnicaInstancia();
+
 	}
 
 	
@@ -133,9 +138,9 @@ public class ControladorMyVideoApp implements VideosListener {
 	}
 	
 	public JLabel[][] videosToArray() {
-		int nFilas = (int) (Math.ceil(catalogoVideos.getVideos().size()/3.0));
-		JLabel tab[][] = new JLabel[nFilas][3];
 		LinkedList<Video> videos = (LinkedList<Video>) videosConEtiquetas();
+		int nFilas = (int) (Math.ceil(videos.size()/3.0));
+		JLabel tab[][] = new JLabel[nFilas][3];
 		int k = 0;
 		for (int i = 0; i < nFilas; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -154,6 +159,30 @@ public class ControladorMyVideoApp implements VideosListener {
 
 		return tab;
 	}
+	
+	public JLabel[][] videosToArray(String nombreLista) {
+		LinkedList<Video> videos = (LinkedList<Video>) usuarioActual.getVideosListaVideos(nombreLista);
+		int nFilas = (int) (Math.ceil(videos.size()/3.0));
+		JLabel tab[][] = new JLabel[nFilas][3];
+		int k = 0;
+		for (int i = 0; i < nFilas; i++) {
+			for (int j = 0; j < 3; j++) {
+				if(k >= videos.size())
+					break;
+				tab[i][j] = new JLabel();
+				tab[i][j].setIcon(videoWeb.getThumb(videos.get(k).getUrl()));
+				tab[i][j].setText(videos.get(k).getTitulo());
+				tab[i][j].setHorizontalTextPosition(JLabel.CENTER);
+				tab[i][j].setVerticalTextPosition(JLabel.BOTTOM);
+				tab[i][j].setForeground(Color.WHITE);
+				tab[i][j].setName(videos.get(k).getUrl());
+				k++;
+			}
+		}
+
+		return tab;
+	}
+
 	
 	public boolean isEtiquetasSeleccionada(String nombreEtiqueta) {
 		for (Etiqueta etiqueta : etiquetasSeleccionadas) {
@@ -203,4 +232,18 @@ public class ControladorMyVideoApp implements VideosListener {
 	public Set<Etiqueta> getEtiquetas() {
 		return new HashSet<Etiqueta>(etiquetas);
 	}
+
+	public String getUsuarioActualName() {
+		return usuarioActual.getNombre();
+	}
+
+	public Object[] getListasUsuario() {
+		return usuarioActual.getListasVideos().toArray();
+	}
+
+	public LinkedList<JCheckBox> getAnadirA(String url) {
+		return usuarioActual.getAnadirA(url);
+	}
+
+
 }
