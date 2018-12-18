@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.plaf.OptionPaneUI;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
 
 public class VistaVideo {
 
@@ -79,6 +80,7 @@ public class VistaVideo {
 		frame.getContentPane().add(panel, gbc_panel);
 		
 		JButton btnReproducir = new JButton("Reproducir");
+		btnReproducir.setIcon(new ImageIcon(VistaVideo.class.getResource("/sources/addEtiq.png")));
 		btnReproducir.addActionListener(new ActionListener() {
 			
 			@Override

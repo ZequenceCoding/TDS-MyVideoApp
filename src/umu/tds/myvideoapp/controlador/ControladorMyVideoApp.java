@@ -63,12 +63,20 @@ public class ControladorMyVideoApp implements VideosListener {
 		catalogoVideos.addVideo(video);
 	}
 
-	public void registrarListaVideos(String nombreLista) {
+	public boolean registrarListaVideos(String nombreLista) {
+		if(usuarioActual.getListaVideos(nombreLista) != null)
+			return false;
 		usuarioActual.addListaVideos(nombreLista);
 		adaptadorListaVideos.registrarListaVideos(usuarioActual.getListaVideos(nombreLista));
 		adaptadorUsuario.modificarUsuario(usuarioActual);
+		return true;
 	}
 
+	public void borrarListaVideos(String nombreLista) {
+		adaptadorListaVideos.borrarListaVideos(usuarioActual.getListaVideos(nombreLista));
+		usuarioActual.eliminarListaVideos(nombreLista);
+		adaptadorUsuario.modificarUsuario(usuarioActual);
+	}
 	public boolean existUsername(String username) {
 		return catalogoUsuarios.getUsuario(username) != null;
 	}
@@ -243,6 +251,14 @@ public class ControladorMyVideoApp implements VideosListener {
 
 	public LinkedList<JCheckBox> getAnadirA(String url) {
 		return usuarioActual.getAnadirA(url);
+	}
+
+	public boolean registrarEtiq(String url, String etiq) {
+		if(catalogoVideos.contieneEtiq(url, etiq))
+			return false;
+		catalogoVideos.anadirEtiq(url, etiq);
+		etiquetas.add(new Etiqueta(etiq));
+		return true;
 	}
 
 

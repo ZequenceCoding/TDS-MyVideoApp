@@ -108,5 +108,9 @@ public class Usuario {
 		}
 		return lista;
 	}
+
+	public void eliminarListaVideos(String nombreLista) {
+		listasVideos.remove(getListaVideos(nombreLista));
+	}
 	
 }

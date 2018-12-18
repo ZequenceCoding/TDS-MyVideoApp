@@ -62,6 +62,18 @@ public class Video {
 		}
 		return false;
 	}
-	
+
+	public boolean contieneEtiqueta(String etiq) {
+		for (Etiqueta etiqueta : etiquetas) {
+			if (etiqueta.getNombre().equals(etiq)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void addEtiqueta(String etiq) {
+		etiquetas.add(new Etiqueta(etiq));
+	}
 	
 }

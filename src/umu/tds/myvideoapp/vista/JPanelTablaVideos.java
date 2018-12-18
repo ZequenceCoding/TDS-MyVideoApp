@@ -1,5 +1,6 @@
 package umu.tds.myvideoapp.vista;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -36,28 +37,28 @@ import java.awt.event.MouseEvent;
 import java.util.EventObject;
 import java.util.List;
 
-
-
 public class JPanelTablaVideos extends JPanel {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	private JScrollPane scrollPanel;
 	private JPanel searchPanel;
 	private JPanel contentPanel;
 
-	
-	public JPanelTablaVideos() {
-		
+	private AppFrame padre;
+
+	public JPanelTablaVideos(AppFrame padre) {
+
+		this.padre = padre;
+
 		setBackground(new Color(50, 50, 50));
 		setLayout(new BorderLayout(0, 0));
-		
+
 		/*************************
-		 *  Panel de busqueda
+		 * Panel de busqueda
 		 ************************/
 		searchPanel = new JPanel();
 		searchPanel.setBackground(new Color(50, 50, 50));
@@ -68,8 +69,8 @@ public class JPanelTablaVideos extends JPanel {
 		gbl_searchPanel.columnWeights = new double[] { 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE };
 		gbl_searchPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		searchPanel.setLayout(gbl_searchPanel);
-		
-		JTextField searchTextField = new JTextField();	// Campo de texto para buscar
+
+		JTextField searchTextField = new JTextField(); // Campo de texto para buscar
 		searchTextField.setBackground(new java.awt.Color(50, 50, 50));
 		searchTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		searchTextField.setForeground(new java.awt.Color(0, 153, 204));
@@ -78,7 +79,7 @@ public class JPanelTablaVideos extends JPanel {
 		searchTextField.setBorder(null);
 		searchTextField.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//searchTextFieldActionPerformed(evt);
+				// searchTextFieldActionPerformed(evt);
 			}
 		});
 		GridBagConstraints gbc_searchTextField = new GridBagConstraints();
@@ -88,19 +89,18 @@ public class JPanelTablaVideos extends JPanel {
 		gbc_searchTextField.gridx = 1;
 		gbc_searchTextField.gridy = 1;
 		searchPanel.add(searchTextField, gbc_searchTextField);
-		
-		
+
 		// Creas el buscador de videos y el boton luz para cargar los videos
 		BuscadorVideos bv = new BuscadorVideos();
 		Luz luz = new Luz();
-		
+
 		GridBagConstraints gbc_luz = new GridBagConstraints();
 		gbc_luz.gridheight = 3;
 		gbc_luz.gridx = 3;
 		gbc_luz.gridy = 1;
-		
+
 		bv.addVideosListener(ControladorMyVideoApp.getUnicaInstancia());
-		
+
 		luz.addEncendidoListener(bv);
 		luz.addEncendidoListener(new IEncendidoListener() {
 
@@ -115,100 +115,97 @@ public class JPanelTablaVideos extends JPanel {
 			}
 		});
 		searchPanel.add(luz, gbc_luz);
-		
+
 		// Creas un separador para el campo de busqueda
 		JSeparator jSeparator5 = new JSeparator();
-		
+
 		GridBagConstraints gbc_jSeparator5 = new GridBagConstraints();
 		gbc_jSeparator5.gridwidth = 2;
 		gbc_jSeparator5.fill = GridBagConstraints.BOTH;
 		gbc_jSeparator5.insets = new Insets(0, 0, 5, 5);
 		gbc_jSeparator5.gridx = 1;
 		gbc_jSeparator5.gridy = 2;
-		
+
 		searchPanel.add(jSeparator5, gbc_jSeparator5);
-		
+
 		// Creas un ComboBox para seleccionar el filtro
 		JComboBox<String> tagComboBox = new JComboBox<String>();
-		
+
 		tagComboBox.setBackground(new java.awt.Color(50, 50, 50));
 		tagComboBox.setForeground(new java.awt.Color(0, 153, 204));
 		tagComboBox.setMaximumRowCount(64);
 		tagComboBox.setModel(
 				new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin filtro", "Item 2", "Item 3", "Item 4" }));
 		tagComboBox.setBorder(null);
-		
+
 		GridBagConstraints gbc_tagComboBox = new GridBagConstraints();
 		gbc_tagComboBox.anchor = GridBagConstraints.NORTHWEST;
 		gbc_tagComboBox.insets = new Insets(0, 0, 0, 5);
 		gbc_tagComboBox.gridx = 1;
 		gbc_tagComboBox.gridy = 3;
-		
+
 		searchPanel.add(tagComboBox, gbc_tagComboBox);
-		
-		
+
 		// Panel de botones, dentro del panel de busqueda
-		JPanel panelBtn = new JPanel(new FlowLayout()); 
+		JPanel panelBtn = new JPanel(new FlowLayout());
 		panelBtn.setBackground(new Color(50, 50, 50));
 
 		JButton btnEtiquetas = new JButton("Etiquetas"); // Boton de las etiquetas
 		btnEtiquetas.setForeground(new Color(0, 0, 0));
 		btnEtiquetas.addMouseListener(new MouseAdapter() {
-			
+
 			@Override
-			public void mouseReleased(MouseEvent e) {	// Abre la pestaña para seleccionar etiquetas
-				VentanaEtiquetas ventanaEtiquetas = new VentanaEtiquetas();	
+			public void mouseReleased(MouseEvent e) { // Abre la pestaña para seleccionar etiquetas
+				VentanaEtiquetas ventanaEtiquetas = new VentanaEtiquetas();
 			}
 		});
 		panelBtn.add(btnEtiquetas);
-		
+
 		JButton btnRefrescar = new JButton("Refrescar"); // Boton para refrescar la pantalla
 		btnRefrescar.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {	// Refresca la pantalla
+			public void actionPerformed(ActionEvent e) { // Refresca la pantalla
 				System.out.println(getClass());
 				removeAll();
 				generateTableVideos();
 				add(searchPanel, BorderLayout.NORTH);
 				add(scrollPanel, BorderLayout.CENTER);
-				
+
 				revalidate();
 				repaint();
 
 			}
 		});
 		panelBtn.add(btnRefrescar);
-		
+
 		GridBagConstraints gbc_panelBtn = new GridBagConstraints();
 		gbc_panelBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_panelBtn.gridx = 2;
 		gbc_panelBtn.gridy = 3;
 		searchPanel.add(panelBtn, gbc_panelBtn);
-		
+
 		add(searchPanel, BorderLayout.NORTH);
 
 		/****************************
-		 *  Panel de videos
+		 * Panel de videos
 		 ****************************/
 		scrollPanel = new JScrollPane();
 		scrollPanel.setBackground(new java.awt.Color(50, 50, 50));
 		scrollPanel.setBorder(null);
 		scrollPanel.setForeground(new java.awt.Color(0, 153, 204));
 		scrollPanel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		
+
 		contentPanel = new JPanel(new BorderLayout());
 		contentPanel.setBackground(new java.awt.Color(50, 50, 50));
 		contentPanel.setForeground(new java.awt.Color(0, 153, 204));
 		scrollPanel.setViewportView(contentPanel);
-		
+
 		generateTableVideos();
-		
+
 		add(scrollPanel, BorderLayout.CENTER);
 	}
-	
-	
-	
+
 	private void generateTableVideos() {
 		JTable table = new JTable();
 		table.setRowSelectionAllowed(false);
@@ -265,10 +262,10 @@ public class JPanelTablaVideos extends JPanel {
 		table.setModel(model);
 		table.setRowHeight(120);
 		table.setRowMargin(5);
-		
+
 		contentPanel.removeAll();
 		contentPanel.add(table, BorderLayout.CENTER);
-		
+
 	}
 
 	private JPanel createVistaVideo(JLabel label) {
@@ -304,7 +301,7 @@ public class JPanelTablaVideos extends JPanel {
 
 		JButton btnParar = new JButton("Añadir a");
 		btnParar.addMouseListener(new MouseAdapter() {
-			
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				VentanaListas vl = new VentanaListas(label.getName());
@@ -390,7 +387,30 @@ public class JPanelTablaVideos extends JPanel {
 			panel_3.add(lbl);
 		}
 
+		JButton btnAnadirEtiq = new JButton("");
+		btnAnadirEtiq.setBorderPainted(false);
+		btnAnadirEtiq.setBackground(null);
+		btnAnadirEtiq.setBorderPainted(false);
+		btnAnadirEtiq.setIcon(new ImageIcon(AppFrame.class.getResource("/sources/addEtiq.png")));
+		btnAnadirEtiq.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				padre.addEtiq(label.getName());
+				
+				removeAll();
+				createVistaVideo(label);
+
+				add(searchPanel, BorderLayout.NORTH);
+				add(createVistaVideo(label), BorderLayout.CENTER);
+
+				revalidate();
+				repaint();
+			}
+		});
+		panel_3.add(btnAnadirEtiq);
+
 		return vistaVideo;
 	}
-	
+
 }

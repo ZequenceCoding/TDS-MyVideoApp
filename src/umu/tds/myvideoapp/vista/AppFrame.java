@@ -226,8 +226,10 @@ public class AppFrame extends javax.swing.JFrame {
 				String nombreLista = JOptionPane.showInputDialog(framePanel, "¿Como quieres llamar a la nueva lista?",
 						"Nueva Lista", JOptionPane.QUESTION_MESSAGE);
 				if (nombreLista != null) {
-					ControladorMyVideoApp.getUnicaInstancia().registrarListaVideos(nombreLista);
-					createTableListas();
+					if(ControladorMyVideoApp.getUnicaInstancia().registrarListaVideos(nombreLista))
+						createTableListas();
+					else
+						JOptionPane.showMessageDialog(thisFrame, "Ya existe una lista con este nombre", "Error", JOptionPane.ERROR_MESSAGE);
 
 				}
 			}
@@ -301,7 +303,7 @@ public class AppFrame extends javax.swing.JFrame {
 		
 		rightPanel.setBackground(new java.awt.Color(50, 50, 50));
 		rightPanel.setLayout(new BorderLayout(0, 0));
-		rightPanel.add(new JPanelTablaVideos());
+		rightPanel.add(new JPanelTablaVideos(thisFrame));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
@@ -365,9 +367,30 @@ public class AppFrame extends javax.swing.JFrame {
 
 	public void volverAExplorar() {
 		rightPanel.removeAll();
-		rightPanel.add(new JPanelTablaVideos());
+		rightPanel.add(new JPanelTablaVideos(thisFrame));
 		revalidate();
 		repaint();
+	}
+	
+	public void borrarLista(String tituloLista) {
+		ControladorMyVideoApp.getUnicaInstancia().borrarListaVideos(tituloLista);
+		rightPanel.removeAll();
+		rightPanel.add(new JPanelTablaVideos(thisFrame), BorderLayout.CENTER);
+		
+		createTableListas();
+		
+		revalidate();
+		repaint();
+	}
+	
+	public void addEtiq(String url) {
+		String etiq = JOptionPane.showInputDialog(thisFrame, "Ponga un nuevo nombre de etiqueta");
+		if(etiq != null && etiq != "") {
+			if(!ControladorMyVideoApp.getUnicaInstancia().registrarEtiq(url, etiq))
+				JOptionPane.showMessageDialog(thisFrame, "Este video ya tiene esa etiqueta", "Error", JOptionPane.ERROR_MESSAGE);
+
+		}
+		
 	}
 	
 	private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_searchTextFieldActionPerformed
@@ -436,4 +459,8 @@ public class AppFrame extends javax.swing.JFrame {
 	private javax.swing.JLabel usernameLabel;
 	private JButton addButton;
 	private JTable table_1;
+
+
+
+
 }

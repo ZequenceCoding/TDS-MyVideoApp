@@ -3,6 +3,7 @@ package umu.tds.myvideoapp.vista;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -98,6 +99,18 @@ public class JPanelTablaVideosLista extends JPanel {
 			}
 		});
 		panelBotones.add(btnVolver);
+		
+		JButton btnBorrar = new JButton("Borrar lista");
+		btnBorrar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(JOptionPane.showConfirmDialog(padre, "¿Seguro que quiere borrar esta lista?") == 0) {
+					padre.borrarLista(tituloLista);
+				}
+			}
+		});
+		panelBotones.add(btnBorrar);
 		
 		add(panelBotones, BorderLayout.SOUTH);
 		
@@ -213,6 +226,7 @@ public class JPanelTablaVideosLista extends JPanel {
 			public void mouseReleased(MouseEvent e) {
 				removeAll();
 				ControladorMyVideoApp.getUnicaInstancia().stopVideo();
+				generateTableVideos();
 				add(panelTituloLista, BorderLayout.NORTH);
 				add(scrollPanel, BorderLayout.CENTER);
 				add(panelBotones, BorderLayout.SOUTH);

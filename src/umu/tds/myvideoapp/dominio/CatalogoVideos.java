@@ -106,8 +106,12 @@ public class CatalogoVideos {
 		return videosConEtiquetas;
 	}
 
+	public boolean contieneEtiq(String url, String etiq) {
+		return videos.get(url).contieneEtiqueta(etiq);
+	}
 
-
-
+	public void anadirEtiq(String url, String etiq) {
+		videos.get(url).addEtiqueta(etiq);
+	}
 
 }
