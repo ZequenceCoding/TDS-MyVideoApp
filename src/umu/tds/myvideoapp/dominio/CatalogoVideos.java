@@ -1,5 +1,8 @@
 package umu.tds.myvideoapp.dominio;
 
+import java.awt.Color;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -7,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.JLabel;
+
+import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
 import umu.tds.myvideoapp.dao.DAOException;
 import umu.tds.myvideoapp.dao.FactoriaDAO;
 import umu.tds.myvideoapp.dao.IAdaptadorVideoDAO;
@@ -114,4 +120,38 @@ public class CatalogoVideos {
 		videos.get(url).addEtiqueta(etiq);
 	}
 
+	public JLabel[][] topToArray() {
+		LinkedList<Video> videosOrdenados = new LinkedList<Video>(videos.values());
+		Collections.sort(videosOrdenados, new Comparator<Video>() {
+
+			@Override
+			public int compare(Video o1, Video o2) {
+				return Integer.valueOf(o2.getNumReproducciones()).compareTo(o1.getNumReproducciones());
+			}
+		});
+		
+		while(videosOrdenados.size() > 10)
+			videosOrdenados.removeLast();
+		
+		int nFilas = (int) (Math.ceil(videosOrdenados.size()/3.0));
+		JLabel tab[][] = new JLabel[nFilas][3];
+		int k = 0;
+		for (int i = 0; i < nFilas; i++) {
+			for (int j = 0; j < 3; j++) {
+				if(k >= videos.size())
+					break;
+				tab[i][j] = new JLabel();
+				tab[i][j].setIcon(ControladorMyVideoApp.getUnicaInstancia().getVideoWeb().getThumb(videosOrdenados.get(k).getUrl()));
+				tab[i][j].setText(videosOrdenados.get(k).getTitulo());
+				tab[i][j].setHorizontalTextPosition(JLabel.CENTER);
+				tab[i][j].setVerticalTextPosition(JLabel.BOTTOM);
+				tab[i][j].setForeground(Color.WHITE);
+				tab[i][j].setName(videosOrdenados.get(k).getUrl());
+				k++;
+			}
+		}
+
+		return tab;
+	}
+	
 }

@@ -261,7 +261,11 @@ public class AppFrame extends javax.swing.JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				rightPanel.removeAll();
+				rightPanel.add(new JPanelMasVistos("Más Vistos", thisFrame), BorderLayout.CENTER);
 				
+				revalidate();
+				repaint();
 			}
 		});
 		topButton.setBorderPainted(false);

@@ -269,5 +269,9 @@ public class ControladorMyVideoApp implements VideosListener {
 		return usuarioActual.recientesToArray();
 	}
 
+	public JLabel[][] topToArray() {
+		return catalogoVideos.topToArray();
+	}
+
 
 }
