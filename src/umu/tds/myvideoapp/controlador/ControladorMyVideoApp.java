@@ -105,6 +105,9 @@ public class ControladorMyVideoApp implements VideosListener {
 
 	public void verVideo(String url) {
 		catalogoVideos.verVideo(url);
+		usuarioActual.verVideo(catalogoVideos.getVideo(url));
+		adaptadorUsuario.modificarUsuario(usuarioActual);
+		adaptadorListaVideos.modificarListaVideos(usuarioActual.getRecientes());
 		adaptadorVideo.modificarVideo(catalogoVideos.getVideo(url));
 		videoWeb.playVideo(url);
 	}
@@ -230,6 +233,7 @@ public class ControladorMyVideoApp implements VideosListener {
 				registrarVideo(video.getUrl(), video.getTitulo(), etiquetas);
 			}
 		}
+		etiquetas = catalogoVideos.getEtiquetas();
 		System.out.println("Videos Registrados");
 	}
 
@@ -259,6 +263,10 @@ public class ControladorMyVideoApp implements VideosListener {
 		catalogoVideos.anadirEtiq(url, etiq);
 		etiquetas.add(new Etiqueta(etiq));
 		return true;
+	}
+
+	public JLabel[][] recientesToArray() {
+		return usuarioActual.recientesToArray();
 	}
 
 

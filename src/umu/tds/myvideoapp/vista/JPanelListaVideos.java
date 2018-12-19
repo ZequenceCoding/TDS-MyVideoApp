@@ -1,21 +1,5 @@
 package umu.tds.myvideoapp.vista;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-
-import javafx.scene.control.Cell;
-import javafx.scene.layout.Border;
-import tds.video.VideoWeb;
-import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
-import umu.tds.myvideoapp.dominio.Etiqueta;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -31,10 +15,22 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-public class JPanelTablaVideosLista extends JPanel {
-	/**
-	 * 
-	 */
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
+import tds.video.VideoWeb;
+import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
+import umu.tds.myvideoapp.dominio.Etiqueta;
+
+public abstract class JPanelListaVideos extends JPanel {
+	
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel panelTituloLista;
@@ -45,8 +41,8 @@ public class JPanelTablaVideosLista extends JPanel {
 	private String tituloLista;
 	private AppFrame padre;
 	
-	public JPanelTablaVideosLista(String tituloLista, AppFrame padre) {
-		this.tituloLista = tituloLista;
+	public JPanelListaVideos(String tituloLista, AppFrame padre) {
+		this.setTituloLista(tituloLista);
 		this.padre = padre;
 		
 		setBackground(new Color(50, 50, 50));
@@ -87,6 +83,12 @@ public class JPanelTablaVideosLista extends JPanel {
 		/****************************
 		 *  Panel de los botones
 		 ****************************/
+		createButtonPanel(tituloLista, padre);
+		
+	}
+
+	protected abstract void createButtonPanel(String tituloLista, AppFrame padre); 
+	/*{
 		panelBotones = new JPanel();
 		panelBotones.setBackground(new Color(51, 51, 51));
 		
@@ -113,8 +115,8 @@ public class JPanelTablaVideosLista extends JPanel {
 		panelBotones.add(btnBorrar);
 		
 		add(panelBotones, BorderLayout.SOUTH);
-		
 	}
+	*/
 
 	private void generateTableVideos() {
 		JTable table = new JTable();
@@ -134,9 +136,9 @@ public class JPanelTablaVideosLista extends JPanel {
 						removeAll();
 						add(panelTituloLista, BorderLayout.NORTH);
 						add(vistaVideo, BorderLayout.CENTER);
+						ControladorMyVideoApp.getUnicaInstancia().verVideo(label.getName());
 						revalidate();
 						repaint();
-						ControladorMyVideoApp.getUnicaInstancia().verVideo(label.getName());
 					}
 				}
 			}
@@ -160,7 +162,7 @@ public class JPanelTablaVideosLista extends JPanel {
 				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			}
 		});
-		Object tab[][] = ControladorMyVideoApp.getUnicaInstancia().videosToArray(tituloLista);
+		Object tab[][] = getVideosData();
 		DefaultTableModel model = new DefaultTableModel(tab, new Object[] { "", "", "" }) {
 			private static final long serialVersionUID = 1L;
 
@@ -177,6 +179,8 @@ public class JPanelTablaVideosLista extends JPanel {
 		contentPanel.add(table, BorderLayout.CENTER);
 		
 	}
+
+	protected abstract JLabel[][] getVideosData();
 	
 	
 	private JPanel createVistaVideo(JLabel label) {
@@ -210,15 +214,15 @@ public class JPanelTablaVideosLista extends JPanel {
 		JButton btnReproducir = new JButton("Reproducir");
 		panel.add(btnReproducir);
 
-		JButton btnParar = new JButton("Añadir a");
-		btnParar.addMouseListener(new MouseAdapter() {
+		JButton btnAnadirA = new JButton("Añadir a");
+		btnAnadirA.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				VentanaListas vl = new VentanaListas(label.getName());
 			}
 		});
-		panel.add(btnParar);
+		panel.add(btnAnadirA);
 
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addMouseListener(new MouseAdapter() {
@@ -229,7 +233,7 @@ public class JPanelTablaVideosLista extends JPanel {
 				generateTableVideos();
 				add(panelTituloLista, BorderLayout.NORTH);
 				add(scrollPanel, BorderLayout.CENTER);
-				add(panelBotones, BorderLayout.SOUTH);
+				add(getPanelBotones(), BorderLayout.SOUTH);
 				revalidate();
 				repaint();
 			}
@@ -300,6 +304,46 @@ public class JPanelTablaVideosLista extends JPanel {
 			panel_3.add(lbl);
 		}
 
+		JButton btnAnadirEtiq = new JButton("");
+		btnAnadirEtiq.setBorderPainted(false);
+		btnAnadirEtiq.setBackground(null);
+		btnAnadirEtiq.setBorderPainted(false);
+		btnAnadirEtiq.setIcon(new ImageIcon(AppFrame.class.getResource("/sources/addEtiq.png")));
+		btnAnadirEtiq.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				padre.addEtiq(label.getName());
+				
+				removeAll();
+				createVistaVideo(label);
+
+				add(panelTituloLista, BorderLayout.NORTH);
+				add(createVistaVideo(label), BorderLayout.CENTER);
+
+				revalidate();
+				repaint();
+			}
+		});
+		panel_3.add(btnAnadirEtiq);
+		
 		return vistaVideo;
 	}
+
+	public JPanel getPanelBotones() {
+		return panelBotones;
+	}
+
+	public void setPanelBotones(JPanel panelBotones) {
+		this.panelBotones = panelBotones;
+	}
+
+	public String getTituloLista() {
+		return tituloLista;
+	}
+
+	public void setTituloLista(String tituloLista) {
+		this.tituloLista = tituloLista;
+	}
+
 }

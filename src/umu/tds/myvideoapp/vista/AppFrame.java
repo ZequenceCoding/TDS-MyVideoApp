@@ -238,42 +238,100 @@ public class AppFrame extends javax.swing.JFrame {
 		addButton.setBackground(null);
 		addButton.setBorderPainted(false);
 		addButton.setIcon(new ImageIcon(AppFrame.class.getResource("/sources/add.png")));
+		
+		historyButton = new JButton("");
+		historyButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				rightPanel.removeAll();
+				rightPanel.add(new JPanelRecientes("Recientes", thisFrame), BorderLayout.CENTER);
+				
+				revalidate();
+				repaint();
+			}
+		});
+		historyButton.setBorderPainted(false);
+		historyButton.setBackground(null);
+		historyButton.setBorderPainted(false);
+		historyButton.setIcon(new ImageIcon(AppFrame.class.getResource("/sources/clock.png")));
+		
+		topButton = new JButton("");
+		topButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		topButton.setBorderPainted(false);
+		topButton.setBackground(null);
+		topButton.setBorderPainted(false);
+		topButton.setIcon(new ImageIcon(AppFrame.class.getResource("/sources/top.png")));
 
 		javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
-		leftPanelLayout.setHorizontalGroup(leftPanelLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(leftPanelLayout.createSequentialGroup().addGroup(leftPanelLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(leftPanelLayout.createSequentialGroup().addGap(32).addGroup(leftPanelLayout
-								.createParallelGroup(Alignment.LEADING).addComponent(recentLabel)
-								.addComponent(mostSeenLabel)
-								.addComponent(jSeparator1, GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+		leftPanelLayout.setHorizontalGroup(
+			leftPanelLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(leftPanelLayout.createSequentialGroup()
+					.addGroup(leftPanelLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(leftPanelLayout.createSequentialGroup()
+							.addGap(32)
+							.addGroup(leftPanelLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(leftPanelLayout.createSequentialGroup()
+									.addComponent(mostSeenLabel)
+									.addPreferredGap(ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+									.addComponent(topButton)
+									.addGap(35))
+								.addComponent(jSeparator1, GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
 								.addComponent(myListsLabel)
-								.addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addGroup(leftPanelLayout.createSequentialGroup().addComponent(newListLabel).addGap(14)
-										.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 28,
-												GroupLayout.PREFERRED_SIZE))
-								.addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)
-								.addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE))
-								.addGap(17))
-						.addGroup(leftPanelLayout.createSequentialGroup().addGap(64).addComponent(myListsPanel,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.addGap(32)));
-		leftPanelLayout.setVerticalGroup(leftPanelLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(leftPanelLayout.createSequentialGroup().addGap(32).addComponent(mostSeenLabel).addGap(4)
-						.addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-						.addGap(12).addComponent(recentLabel).addGap(4)
-						.addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(leftPanelLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(leftPanelLayout.createSequentialGroup().addGap(12).addComponent(newListLabel))
-								.addGroup(leftPanelLayout.createSequentialGroup().addGap(7).addComponent(addButton,
-										GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)))
-						.addGap(4).addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-						.addGap(12).addComponent(myListsLabel).addGap(4)
-						.addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(myListsPanel, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE).addGap(32)));
+								.addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
+								.addGroup(leftPanelLayout.createSequentialGroup()
+									.addComponent(newListLabel)
+									.addPreferredGap(ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+									.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+									.addGap(39))
+								.addGroup(leftPanelLayout.createSequentialGroup()
+									.addComponent(recentLabel)
+									.addPreferredGap(ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+									.addComponent(historyButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+									.addGap(37))
+								.addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE))
+							.addGap(16))
+						.addGroup(leftPanelLayout.createSequentialGroup()
+							.addGap(64)
+							.addComponent(myListsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(32))
+		);
+		leftPanelLayout.setVerticalGroup(
+			leftPanelLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(leftPanelLayout.createSequentialGroup()
+					.addGap(25)
+					.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(mostSeenLabel)
+						.addComponent(topButton))
+					.addGap(4)
+					.addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(recentLabel)
+						.addComponent(historyButton))
+					.addGap(4)
+					.addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+					.addGap(7)
+					.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(newListLabel)
+						.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+					.addGap(4)
+					.addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+					.addGap(12)
+					.addComponent(myListsLabel)
+					.addGap(4)
+					.addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(myListsPanel, GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+					.addGap(32))
+		);
 		leftPanel.setLayout(leftPanelLayout);
 
 
@@ -332,7 +390,7 @@ public class AppFrame extends javax.swing.JFrame {
 						JButton button = (JButton) value;
 						rightPanel.removeAll();
 
-						rightPanel.add(new JPanelTablaVideosLista(button.getName(), thisFrame));
+						rightPanel.add(new JPanelMiListaVideos(button.getName(), thisFrame));
 						
 						rightPanel.revalidate();
 						rightPanel.repaint();
@@ -388,7 +446,6 @@ public class AppFrame extends javax.swing.JFrame {
 		if(etiq != null && etiq != "") {
 			if(!ControladorMyVideoApp.getUnicaInstancia().registrarEtiq(url, etiq))
 				JOptionPane.showMessageDialog(thisFrame, "Este video ya tiene esa etiqueta", "Error", JOptionPane.ERROR_MESSAGE);
-
 		}
 		
 	}
@@ -459,8 +516,6 @@ public class AppFrame extends javax.swing.JFrame {
 	private javax.swing.JLabel usernameLabel;
 	private JButton addButton;
 	private JTable table_1;
-
-
-
-
+	private JButton historyButton;
+	private JButton topButton;
 }

@@ -47,6 +47,8 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		for (ListaVideos lv : usuario.getListasVideos()) {
 			adaptadorListaVideos.registrarListaVideos(lv);
 		}
+		
+		adaptadorListaVideos.registrarListaVideos(usuario.getRecientes());
 
 		// crear entidad Usuario
 		eUsuario = new Entidad();
@@ -59,7 +61,8 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 						new Propiedad("apellidos", usuario.getApellidos()),
 						//new Propiedad("fechaNac", usuario.getFechaNac()),
 						new Propiedad("email", usuario.getEmail()),
-						new Propiedad("listasVideos", obtenerCodigosListaVideos(usuario.getListasVideos()))
+						new Propiedad("listasVideos", obtenerCodigosListaVideos(usuario.getListasVideos())),
+						new Propiedad("recientes", String.valueOf(usuario.getRecientes().getCodigo()))
 						)));
 
 		// registrar entidad cliente
@@ -69,6 +72,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		usuario.setCodigo(eUsuario.getId());
 	}
 	
+
 	public void borrarUsuario(Usuario usuario) {
 		Entidad eUsuario= servPersistencia.recuperarEntidad(usuario.getCodigo());
 		servPersistencia.borrarEntidad(eUsuario);
@@ -91,6 +95,8 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		servPersistencia.anadirPropiedadEntidad(eUsuario, "email",usuario.getEmail());
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, "listasVideos");
 		servPersistencia.anadirPropiedadEntidad(eUsuario, "listasVideos", obtenerCodigosListaVideos(usuario.getListasVideos()));
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "recientes");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "recientes", String.valueOf(usuario.getRecientes().getCodigo()));
 	}
 	
 	public Usuario recuperarUsuario(int codigo) {
@@ -107,6 +113,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 				String apellidos;
 				String email;
 				List<ListaVideos> listasVideos;
+				ListaVideos recientes;
 
 				// recuperar entidad
 				eUsuario = servPersistencia.recuperarEntidad(codigo);
@@ -119,8 +126,10 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 				apellidos = servPersistencia.recuperarPropiedadEntidad(eUsuario, "apellidos");
 				email = servPersistencia.recuperarPropiedadEntidad(eUsuario, "email");
 				listasVideos = obtenerListaVideosDesdeCodigos(servPersistencia.recuperarPropiedadEntidad(eUsuario, "listasVideos"));
-
-				Usuario usuario = new Usuario(premium, username, password, nombre, apellidos, email, listasVideos);
+				recientes = AdaptadorListaVideosTDS.getUnicaInstancia().recuperarListaVideos(
+						Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eUsuario, "recientes")));
+				
+				Usuario usuario = new Usuario(premium, username, password, nombre, apellidos, email, listasVideos, recientes);
 				usuario.setCodigo(codigo);
 
 				// IMPORTANTE:a�adir el cliente al pool antes de llamar a otros
@@ -164,4 +173,5 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		}
 		return listaListaVideos;
 	}
+
 }

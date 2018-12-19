@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 
 public class Usuario {
 	
@@ -16,6 +17,8 @@ public class Usuario {
 	//private Date fechaNac;
 	private String email;
 	private List<ListaVideos> listasVideos;
+	private ListaVideos recientes;
+
 	
 	public Usuario(String username, String password, String nombre, String apellidos, String email) {
 		this.codigo = 0;
@@ -27,13 +30,15 @@ public class Usuario {
 		//this.fechaNac = fechaNac;
 		this.email = email;
 		this.listasVideos = new LinkedList<ListaVideos>();
+		this.recientes = new ListaVideos("Recientes");
 	}
 	
 	public Usuario(Boolean premium, String username, String password, String nombre, String apellidos, String email,
-			List<ListaVideos> listasVideos) {
+			List<ListaVideos> listasVideos, ListaVideos recientes) {
 		this(username, password, nombre, apellidos, email);
 		this.premium = premium;
 		this.listasVideos = listasVideos;
+		this.recientes = recientes;
 	}
 
 	public void addListaVideos(String nombreLista) {
@@ -111,6 +116,21 @@ public class Usuario {
 
 	public void eliminarListaVideos(String nombreLista) {
 		listasVideos.remove(getListaVideos(nombreLista));
+	}
+	
+	public void verVideo(Video video) {
+		recientes.removeVideo(video.getUrl());
+		recientes.addVideoPrincipio(video);
+		if(recientes.getNumVideos() > 5)
+			recientes.removeUltimoVideo();
+	}
+
+	public JLabel[][] recientesToArray() {
+		return recientes.toArray();
+	}
+
+	public ListaVideos getRecientes() {
+		return recientes;
 	}
 	
 }
