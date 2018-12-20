@@ -422,19 +422,16 @@ public class LaunchFrame extends javax.swing.JFrame {
         
         forgotLabel = new JLabel("<HTML><U>Forgot your password? </U></HTML>");
         forgotLabel.setForeground(new java.awt.Color(0, 153, 204));
-        
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(new java.awt.Color(50, 50, 50));
 
         javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
         loginPanelLayout.setHorizontalGroup(
-        	loginPanelLayout.createParallelGroup(Alignment.TRAILING)
+        	loginPanelLayout.createParallelGroup(Alignment.LEADING)
         		.addGroup(loginPanelLayout.createSequentialGroup()
         			.addGroup(loginPanelLayout.createParallelGroup(Alignment.LEADING)
         				.addGroup(loginPanelLayout.createSequentialGroup()
         					.addGap(48)
         					.addComponent(forgotLabel)
-        					.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+        					.addPreferredGap(ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
         					.addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
         				.addGroup(loginPanelLayout.createSequentialGroup()
         					.addGap(27)
@@ -448,22 +445,16 @@ public class LaunchFrame extends javax.swing.JFrame {
         						.addComponent(passwordLoginField, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
         						.addComponent(userTextField, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
         						.addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE))))
-        			.addContainerGap(36, Short.MAX_VALUE))
+        			.addContainerGap(21, Short.MAX_VALUE))
         		.addGroup(loginPanelLayout.createSequentialGroup()
-        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        			.addComponent(buttonPanel, GroupLayout.PREFERRED_SIZE, 324, GroupLayout.PREFERRED_SIZE)
-        			.addGap(31))
-        		.addGroup(Alignment.LEADING, loginPanelLayout.createSequentialGroup()
         			.addGap(122)
         			.addComponent(logoLabel)
-        			.addContainerGap(144, Short.MAX_VALUE))
+        			.addContainerGap(175, Short.MAX_VALUE))
         );
         loginPanelLayout.setVerticalGroup(
         	loginPanelLayout.createParallelGroup(Alignment.LEADING)
         		.addGroup(loginPanelLayout.createSequentialGroup()
-        			.addContainerGap()
-        			.addComponent(buttonPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        			.addGap(56)
+        			.addGap(82)
         			.addComponent(logoLabel, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
         			.addGap(78)
         			.addComponent(usernameLabel)
@@ -481,48 +472,29 @@ public class LaunchFrame extends javax.swing.JFrame {
         			.addGroup(loginPanelLayout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(loginButton)
         				.addComponent(forgotLabel))
-        			.addContainerGap(162, Short.MAX_VALUE))
+        			.addContainerGap(172, Short.MAX_VALUE))
         );
-        GridBagLayout gbl_buttonPanel = new GridBagLayout();
-        gbl_buttonPanel.columnWidths = new int[]{150, 8, 0};
-        gbl_buttonPanel.rowHeights = new int[]{20, 0};
-        gbl_buttonPanel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-        gbl_buttonPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-        buttonPanel.setLayout(gbl_buttonPanel);
-        
-        closeLabel = new JLabel("X");
-        GridBagConstraints gbc_closeLabel = new GridBagConstraints();
-        gbc_closeLabel.insets = new Insets(0, 0, 0, 5);
-        gbc_closeLabel.anchor = GridBagConstraints.NORTHEAST;
-        gbc_closeLabel.gridx = 0;
-        gbc_closeLabel.gridy = 0;
-        buttonPanel.add(closeLabel, gbc_closeLabel);
-        closeLabel.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseReleased(MouseEvent arg0) {
-        		System.exit(0);
-        	}
-        });
-        closeLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-        closeLabel.setForeground(new java.awt.Color(0, 153, 204));
         loginPanel.setLayout(loginPanelLayout);
 
         logoLabel.getAccessibleContext().setAccessibleName("logoIcon");
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addComponent(registerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        	mainPanelLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(mainPanelLayout.createSequentialGroup()
+        			.addComponent(registerPanel, GroupLayout.PREFERRED_SIZE, 542, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(loginPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addGap(64))
         );
         mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(registerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(loginPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
+        	mainPanelLayout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(registerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        		.addGroup(mainPanelLayout.createSequentialGroup()
+        			.addComponent(loginPanel, GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+        			.addContainerGap())
         );
+        mainPanel.setLayout(mainPanelLayout);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -611,7 +583,6 @@ public class LaunchFrame extends javax.swing.JFrame {
     private javax.swing.JTextField usernameField;
     private javax.swing.JLabel usernameLabel;
     private JLabel forgotLabel;
-    private JLabel closeLabel;
     JDateChooser dateChooser;
     
     
