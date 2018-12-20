@@ -18,7 +18,10 @@ import tds.video.VideoWeb;
 import umu.tds.componente.BuscadorVideos;
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
 import umu.tds.myvideoapp.dominio.Etiqueta;
+import umu.tds.myvideoapp.dominio.ITest;
 import umu.tds.myvideoapp.dominio.ListaVideos;
+import umu.tds.myvideoapp.dominio.NoFiltro;
+import umu.tds.myvideoapp.dominio.Video;
 
 import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
@@ -26,6 +29,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import javafx.scene.Cursor;
 import jdk.nashorn.internal.scripts.JO;
 
 import javax.swing.JButton;
@@ -39,6 +48,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -52,6 +63,9 @@ import javax.swing.Icon;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ImageIcon;
+import javax.swing.border.MatteBorder;
+import javax.swing.plaf.OptionPaneUI;
+import javax.swing.border.EtchedBorder;
 
 /**
  *
@@ -82,10 +96,6 @@ public class AppFrame extends javax.swing.JFrame {
 
 		framePanel = new javax.swing.JPanel();
 		topPanel = new javax.swing.JPanel();
-		logoLabel = new javax.swing.JLabel();
-		userIconLabel = new javax.swing.JLabel();
-		usernameLabel = new javax.swing.JLabel();
-		deployableUserPanel = new javax.swing.JButton();
 		leftPanel = new javax.swing.JPanel();
 		mostSeenLabel = new javax.swing.JLabel();
 		recentLabel = new javax.swing.JLabel();
@@ -112,50 +122,6 @@ public class AppFrame extends javax.swing.JFrame {
 		topPanel.setBackground(new java.awt.Color(42, 42, 42));
 		topPanel.setMinimumSize(new java.awt.Dimension(512, 120));
 		topPanel.setPreferredSize(new java.awt.Dimension(900, 120));
-
-		// logoLabel.setIcon(new
-		// javax.swing.ImageIcon(getClass().getResource("/AppFrame/logo64.png"))); //
-		// NOI18N
-
-		// userIconLabel.setIcon(new
-		// javax.swing.ImageIcon(getClass().getResource("/AppFrame/userIcon64.png")));
-		// // NOI18N
-
-		usernameLabel.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
-		usernameLabel.setForeground(new java.awt.Color(0, 153, 204));
-		usernameLabel.setText("Hola " + ControladorMyVideoApp.getUnicaInstancia().getUsuarioActualName());
-
-		deployableUserPanel.setBorder(null);
-		deployableUserPanel.setMaximumSize(new java.awt.Dimension(16, 16));
-		deployableUserPanel.setMinimumSize(new java.awt.Dimension(16, 16));
-		deployableUserPanel.setPreferredSize(new java.awt.Dimension(16, 16));
-
-		javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
-		topPanel.setLayout(topPanelLayout);
-		topPanelLayout.setHorizontalGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(topPanelLayout.createSequentialGroup().addGap(32, 32, 32)
-						.addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 64,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(userIconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 64,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addGap(18, 18, 18).addComponent(usernameLabel)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addComponent(deployableUserPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addGap(44, 44, 44)));
-		topPanelLayout.setVerticalGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(topPanelLayout.createSequentialGroup().addGap(16, 16, 16).addGroup(topPanelLayout
-						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(userIconLabel,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addComponent(logoLabel)
-						.addGroup(topPanelLayout.createSequentialGroup().addGap(20, 20, 20).addGroup(topPanelLayout
-								.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addComponent(deployableUserPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(usernameLabel))))
-						.addGap(16, 16, 16)));
 
 		leftPanel.setBackground(new java.awt.Color(45, 45, 45));
 
@@ -196,7 +162,7 @@ public class AppFrame extends javax.swing.JFrame {
 		table_1.setBackground(null);
 		table_1.setShowGrid(false);
 		table_1.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-		
+
 			/**
 			 * 
 			 */
@@ -207,29 +173,33 @@ public class AppFrame extends javax.swing.JFrame {
 					boolean hasFocus, int row, int column) {
 
 				if (value instanceof JButton) {
-					JButton label = (JButton) value;
+					JButton button = (JButton) value;
+					return button;
+				} else if (value instanceof JLabel) {
+					JLabel label = (JLabel) value;
 					return label;
 				}
 
 				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			}
 		});
-		
-		
+
 		// Crea la tabla de listas
 		createTableListas();
 
 		// Boton crear nueva lista
 		addButton = new JButton("");
+		addButton.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR));
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nombreLista = JOptionPane.showInputDialog(framePanel, "¿Como quieres llamar a la nueva lista?",
 						"Nueva Lista", JOptionPane.QUESTION_MESSAGE);
 				if (nombreLista != null) {
-					if(ControladorMyVideoApp.getUnicaInstancia().registrarListaVideos(nombreLista))
+					if (ControladorMyVideoApp.getUnicaInstancia().registrarListaVideos(nombreLista))
 						createTableListas();
 					else
-						JOptionPane.showMessageDialog(thisFrame, "Ya existe una lista con este nombre", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(thisFrame, "Ya existe una lista con este nombre", "Error",
+								JOptionPane.ERROR_MESSAGE);
 
 				}
 			}
@@ -238,15 +208,18 @@ public class AppFrame extends javax.swing.JFrame {
 		addButton.setBackground(null);
 		addButton.setBorderPainted(false);
 		addButton.setIcon(new ImageIcon(AppFrame.class.getResource("/sources/add.png")));
-		
+
 		historyButton = new JButton("");
+		historyButton.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR));
 		historyButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				rightPanel.removeAll();
+				ControladorMyVideoApp.getUnicaInstancia().stopVideo();
+
 				rightPanel.add(new JPanelRecientes("Recientes", thisFrame), BorderLayout.CENTER);
-				
+
 				revalidate();
 				repaint();
 			}
@@ -255,15 +228,26 @@ public class AppFrame extends javax.swing.JFrame {
 		historyButton.setBackground(null);
 		historyButton.setBorderPainted(false);
 		historyButton.setIcon(new ImageIcon(AppFrame.class.getResource("/sources/clock.png")));
-		
+
 		topButton = new JButton("");
+		topButton.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR));
 		topButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
+				if (!ControladorMyVideoApp.getUnicaInstancia().isPremium()) {
+
+					JOptionPane.showMessageDialog(thisFrame, "Necesitas ser premium para ver los más vistos",
+							"Más Vistos", JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+
 				rightPanel.removeAll();
+				ControladorMyVideoApp.getUnicaInstancia().stopVideo();
+
 				rightPanel.add(new JPanelMasVistos("Más Vistos", thisFrame), BorderLayout.CENTER);
-				
+
 				revalidate();
 				repaint();
 			}
@@ -273,73 +257,89 @@ public class AppFrame extends javax.swing.JFrame {
 		topButton.setBorderPainted(false);
 		topButton.setIcon(new ImageIcon(AppFrame.class.getResource("/sources/top.png")));
 
+		button_1 = new JButton("");
+		button_1.setBorderPainted(false);
+		button_1.setContentAreaFilled(false);
+		button_1.setIcon(new ImageIcon(AppFrame.class.getResource("/sources/pdf.png")));
+		button_1.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR));
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				if (!ControladorMyVideoApp.getUnicaInstancia().isPremium()) {
+
+					JOptionPane.showMessageDialog(thisFrame, "Necesitas ser premium para hacer un pdf de tus listas",
+							"Mis listas", JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+
+				String nombre = JOptionPane.showInputDialog(thisFrame,
+						"¿Como quieres llamar al archivo pdf de tus videos?", "Mis Videos",
+						JOptionPane.QUESTION_MESSAGE);
+				if (nombre == null || String.valueOf(nombre).replaceAll("\\s+", "").equals(""))
+					return;
+				try {
+					ControladorMyVideoApp.getUnicaInstancia().listasToPDF(nombre);
+				} catch (FileNotFoundException | DocumentException e1) {
+					JOptionPane.showMessageDialog(thisFrame, "No se ha podido generar el archivo", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
+			}
+		});
+
 		javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
-		leftPanelLayout.setHorizontalGroup(
-			leftPanelLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(leftPanelLayout.createSequentialGroup()
-					.addGroup(leftPanelLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(leftPanelLayout.createSequentialGroup()
-							.addGap(32)
-							.addGroup(leftPanelLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(leftPanelLayout.createSequentialGroup()
-									.addComponent(mostSeenLabel)
-									.addPreferredGap(ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-									.addComponent(topButton)
-									.addGap(35))
+		leftPanelLayout.setHorizontalGroup(leftPanelLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(leftPanelLayout.createSequentialGroup().addGroup(leftPanelLayout
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(leftPanelLayout.createSequentialGroup().addGap(32).addGroup(leftPanelLayout
+								.createParallelGroup(Alignment.LEADING)
+								.addGroup(leftPanelLayout.createSequentialGroup().addComponent(mostSeenLabel)
+										.addPreferredGap(ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+										.addComponent(topButton).addGap(35))
 								.addComponent(jSeparator1, GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-								.addComponent(myListsLabel)
-								.addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addGroup(leftPanelLayout.createSequentialGroup().addComponent(myListsLabel)
+										.addPreferredGap(ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+										.addComponent(button_1).addGap(32))
+								.addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
 								.addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
-								.addGroup(leftPanelLayout.createSequentialGroup()
-									.addComponent(newListLabel)
-									.addPreferredGap(ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-									.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-									.addGap(39))
-								.addGroup(leftPanelLayout.createSequentialGroup()
-									.addComponent(recentLabel)
-									.addPreferredGap(ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-									.addComponent(historyButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-									.addGap(37))
+								.addGroup(leftPanelLayout.createSequentialGroup().addComponent(newListLabel)
+										.addPreferredGap(ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+										.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 28,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(39))
+								.addGroup(leftPanelLayout.createSequentialGroup().addComponent(recentLabel)
+										.addPreferredGap(ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+										.addComponent(historyButton, GroupLayout.PREFERRED_SIZE, 34,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(37))
 								.addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE))
-							.addGap(16))
-						.addGroup(leftPanelLayout.createSequentialGroup()
-							.addGap(64)
-							.addComponent(myListsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGap(32))
-		);
-		leftPanelLayout.setVerticalGroup(
-			leftPanelLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(leftPanelLayout.createSequentialGroup()
-					.addGap(25)
-					.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(mostSeenLabel)
-						.addComponent(topButton))
-					.addGap(4)
-					.addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(recentLabel)
-						.addComponent(historyButton))
-					.addGap(4)
-					.addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-					.addGap(7)
-					.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(newListLabel)
-						.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
-					.addGap(4)
-					.addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-					.addGap(12)
-					.addComponent(myListsLabel)
-					.addGap(4)
-					.addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(myListsPanel, GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-					.addGap(32))
-		);
+								.addGap(16))
+						.addGroup(leftPanelLayout.createSequentialGroup().addGap(64).addComponent(myListsPanel,
+								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGap(32)));
+		leftPanelLayout.setVerticalGroup(leftPanelLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(leftPanelLayout.createSequentialGroup().addGap(25)
+						.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING).addComponent(mostSeenLabel)
+								.addComponent(topButton))
+						.addGap(4).addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING).addComponent(recentLabel)
+								.addComponent(historyButton))
+						.addGap(4).addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+						.addGap(7)
+						.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING).addComponent(newListLabel)
+								.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+						.addGap(4).addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING).addComponent(myListsLabel)
+								.addComponent(button_1))
+						.addGap(4).addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(myListsPanel, GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE).addGap(32)));
 		leftPanel.setLayout(leftPanelLayout);
 
-
-		
 		javax.swing.GroupLayout framePanelLayout = new javax.swing.GroupLayout(framePanel);
 		framePanel.setLayout(framePanelLayout);
 		framePanelLayout
@@ -362,10 +362,109 @@ public class AppFrame extends javax.swing.JFrame {
 										javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(rightPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))));
+		GridBagLayout gbl_topPanel = new GridBagLayout();
+		gbl_topPanel.columnWidths = new int[] { 32, 64, 460, 64, 145, 16, 0, 0 };
+		gbl_topPanel.rowHeights = new int[] { 20, 20, 44, 0 };
+		gbl_topPanel.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_topPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		topPanel.setLayout(gbl_topPanel);
+
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(AppFrame.class.getResource("/sources/logo64.png")));
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.gridheight = 3;
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel.gridx = 1;
+		gbc_lblNewLabel.gridy = 0;
+		topPanel.add(lblNewLabel, gbc_lblNewLabel);
+		userIconLabel = new javax.swing.JLabel();
+		userIconLabel.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
+		userIconLabel
+				.setBorder(new EtchedBorder(EtchedBorder.RAISED, new Color(0, 153, 204), new Color(255, 255, 255)));
+		userIconLabel.setIcon(new ImageIcon(AppFrame.class.getResource("/sources/userIcon64.png")));
+		GridBagConstraints gbc_userIconLabel = new GridBagConstraints();
+		gbc_userIconLabel.insets = new Insets(0, 0, 0, 5);
+		gbc_userIconLabel.fill = GridBagConstraints.BOTH;
+		gbc_userIconLabel.gridheight = 4;
+		gbc_userIconLabel.gridx = 5;
+		gbc_userIconLabel.gridy = 0;
+		topPanel.add(userIconLabel, gbc_userIconLabel);
+
+		btnNewButton = new JButton("");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (ControladorMyVideoApp.getUnicaInstancia().isPremium()) {
+					JOptionPane.showMessageDialog(thisFrame, "Ya eres premium", "Usuario Premium",
+							JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					if (JOptionPane.showConfirmDialog(thisFrame, "¿Seguro que querieres hacerte premium?",
+							"Usuario Premium", JOptionPane.YES_NO_OPTION) == 0)
+						ControladorMyVideoApp.getUnicaInstancia().doPremium();
+					JOptionPane.showMessageDialog(thisFrame, "¡Enhorabuena, Ya eres premium!", "Usuario Premium",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
+		btnNewButton.setBorderPainted(false);
+		btnNewButton.setBorder(null);
+		btnNewButton.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR));
+		btnNewButton.setIcon(new ImageIcon(AppFrame.class.getResource("/sources/premium.png")));
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.gridheight = 4;
+		gbc_btnNewButton.anchor = GridBagConstraints.EAST;
+		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
+		gbc_btnNewButton.gridx = 3;
+		gbc_btnNewButton.gridy = 0;
+		topPanel.add(btnNewButton, gbc_btnNewButton);
+		usernameLabel = new javax.swing.JLabel();
+
+		usernameLabel.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+		usernameLabel.setForeground(new java.awt.Color(0, 153, 204));
+		usernameLabel.setText("Hola " + ControladorMyVideoApp.getUnicaInstancia().getUsuarioActualName());
+		GridBagConstraints gbc_usernameLabel = new GridBagConstraints();
+		gbc_usernameLabel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_usernameLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_usernameLabel.gridx = 4;
+		gbc_usernameLabel.gridy = 2;
+		topPanel.add(usernameLabel, gbc_usernameLabel);
+		deployableUserPanel = new javax.swing.JButton();
+
+		deployableUserPanel.setBorder(null);
+		deployableUserPanel.setMaximumSize(new java.awt.Dimension(16, 16));
+		deployableUserPanel.setMinimumSize(new java.awt.Dimension(16, 16));
+		deployableUserPanel.setPreferredSize(new java.awt.Dimension(16, 16));
+		GridBagConstraints gbc_deployableUserPanel = new GridBagConstraints();
+		gbc_deployableUserPanel.insets = new Insets(0, 0, 5, 5);
+		gbc_deployableUserPanel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_deployableUserPanel.gridx = 5;
+		gbc_deployableUserPanel.gridy = 2;
+		topPanel.add(deployableUserPanel, gbc_deployableUserPanel);
 		
+		outButton = new JButton("");
+		outButton.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR));
+		outButton.setBorderPainted(false);
+		outButton.setContentAreaFilled(false);
+		outButton.setIcon(new ImageIcon(AppFrame.class.getResource("/sources/out.png")));
+		outButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(JOptionPane.showConfirmDialog(thisFrame, "¿Seguro que quieres salir?", "Log out", JOptionPane.YES_NO_OPTION) == 0) {
+					LaunchFrame ventanaLogin = new LaunchFrame();
+        			ventanaLogin.setVisible(true);
+        			dispose();
+				}
+			}
+		});
+		GridBagConstraints gbc_outButton = new GridBagConstraints();
+		gbc_outButton.insets = new Insets(0, 0, 5, 0);
+		gbc_outButton.gridx = 6;
+		gbc_outButton.gridy = 2;
+		topPanel.add(outButton, gbc_outButton);
+
 		rightPanel.setBackground(new java.awt.Color(50, 50, 50));
 		rightPanel.setLayout(new BorderLayout(0, 0));
-		rightPanel.add(new JPanelTablaVideos(thisFrame));
+		rightPanel.add(new JPanelExplorar(thisFrame));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
@@ -389,13 +488,14 @@ public class AppFrame extends javax.swing.JFrame {
 
 				if (row < table_1.getRowCount() && row >= 0 && column < table_1.getColumnCount() && column >= 0) {
 					Object value = table_1.getValueAt(row, column);
-					if (value instanceof JButton) {
+					if (value instanceof JLabel) {
 						System.out.println("click lista");
-						JButton button = (JButton) value;
+						JLabel label = (JLabel) value;
 						rightPanel.removeAll();
+						ControladorMyVideoApp.getUnicaInstancia().stopVideo();
 
-						rightPanel.add(new JPanelMiListaVideos(button.getName(), thisFrame));
-						
+						rightPanel.add(new JPanelMiListaVideos(label.getText(), thisFrame));
+
 						rightPanel.revalidate();
 						rightPanel.repaint();
 					}
@@ -404,15 +504,17 @@ public class AppFrame extends javax.swing.JFrame {
 
 		});
 		Object[] data = ControladorMyVideoApp.getUnicaInstancia().getListasUsuario();
-		Object[][] model_data = new Object[data.length][2];
+		Object[][] model_data = new Object[data.length][1];
 		for (int i = 0; i < data.length; i++) {
 			ListaVideos lv = (ListaVideos) data[i];
-			model_data[i][0] = lv.getNombreLista();
-			JButton listButton = new JButton("Boton");
-			listButton.setName(lv.getNombreLista());
-			model_data[i][1] = listButton;
+			JLabel etiq = new JLabel(lv.getNombreLista());
+			etiq.setForeground(Color.WHITE);
+			etiq.setFont(new Font("Arial", Font.BOLD, 16));
+			etiq.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR));
+			model_data[i][0] = etiq;
 		}
-		DefaultTableModel model = new DefaultTableModel(model_data, new Object[] { "", "" }) {
+
+		DefaultTableModel model = new DefaultTableModel(model_data, new Object[] { null }) {
 			private static final long serialVersionUID = 1L;
 
 			public boolean isCellEditable(int row, int column) {
@@ -420,43 +522,56 @@ public class AppFrame extends javax.swing.JFrame {
 			}
 		};
 		table_1.setModel(model);
-		table_1.setSelectionForeground(null);
-		table_1.setSelectionBackground(null);
-		table_1.setCellSelectionEnabled(false);
+		table_1.setBackground(null);
+		table_1.setRowHeight(30);
+		table_1.setShowGrid(false);
+		table_1.setRowSelectionAllowed(false);
+		table_1.setTableHeader(null);
+
 		myListsScrollPanel.setViewportView(table_1);
 		myListsScrollPanel.getViewport().setBackground(null);
+
 	}
 
 	public void volverAExplorar() {
 		rightPanel.removeAll();
-		rightPanel.add(new JPanelTablaVideos(thisFrame));
+		rightPanel.add(new JPanelExplorar(thisFrame));
 		revalidate();
 		repaint();
 	}
-	
+
 	public void borrarLista(String tituloLista) {
 		ControladorMyVideoApp.getUnicaInstancia().borrarListaVideos(tituloLista);
 		rightPanel.removeAll();
-		rightPanel.add(new JPanelTablaVideos(thisFrame), BorderLayout.CENTER);
-		
+		rightPanel.add(new JPanelExplorar(thisFrame), BorderLayout.CENTER);
+
 		createTableListas();
-		
+
 		revalidate();
 		repaint();
 	}
-	
+
 	public void addEtiq(String url) {
 		String etiq = JOptionPane.showInputDialog(thisFrame, "Ponga un nuevo nombre de etiqueta");
-		if(etiq != null && etiq != "") {
-			if(!ControladorMyVideoApp.getUnicaInstancia().registrarEtiq(url, etiq))
-				JOptionPane.showMessageDialog(thisFrame, "Este video ya tiene esa etiqueta", "Error", JOptionPane.ERROR_MESSAGE);
+		if (etiq != null && etiq != "") {
+			if (!ControladorMyVideoApp.getUnicaInstancia().registrarEtiq(url, etiq))
+				JOptionPane.showMessageDialog(thisFrame, "Este video ya tiene esa etiqueta", "Error",
+						JOptionPane.ERROR_MESSAGE);
 		}
-		
+
 	}
-	
-	private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_searchTextFieldActionPerformed
-		// TODO add your handling code here:
-	}// GEN-LAST:event_searchTextFieldActionPerformed
+
+	public void buscaVideos(String text) {
+		ControladorMyVideoApp.getUnicaInstancia().buscaVideos(text);
+	}
+
+	public void cambiaFiltro(ITest<Video> filtro) {
+		ControladorMyVideoApp.getUnicaInstancia().cambiaFiltro(filtro);
+	}
+
+	public String getFiltroAcual() {
+		return ControladorMyVideoApp.getUnicaInstancia().getFiltroActual();
+	}
 
 	/**
 	 * @param args
@@ -499,7 +614,7 @@ public class AppFrame extends javax.swing.JFrame {
 	}
 
 	private AppFrame thisFrame = this;
-	
+
 	private javax.swing.JButton deployableUserPanel;
 	private javax.swing.JPanel framePanel;
 	private javax.swing.JSeparator jSeparator1;
@@ -507,7 +622,6 @@ public class AppFrame extends javax.swing.JFrame {
 	private javax.swing.JSeparator jSeparator3;
 	private javax.swing.JSeparator jSeparator4;
 	private javax.swing.JPanel leftPanel;
-	private javax.swing.JLabel logoLabel;
 	private javax.swing.JLabel mostSeenLabel;
 	private javax.swing.JLabel myListsLabel;
 	private javax.swing.JPanel myListsPanel;
@@ -522,4 +636,8 @@ public class AppFrame extends javax.swing.JFrame {
 	private JTable table_1;
 	private JButton historyButton;
 	private JButton topButton;
+	private JLabel lblNewLabel;
+	private JButton btnNewButton;
+	private JButton button_1;
+	private JButton outButton;
 }

@@ -1,6 +1,10 @@
 package umu.tds.myvideoapp.controlador;
 
 import java.awt.Color;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +13,11 @@ import java.util.Set;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import tds.video.VideoWeb;
 import umu.tds.componente.VideosEvent;
 import umu.tds.componente.VideosListener;
@@ -16,6 +25,7 @@ import umu.tds.myvideoapp.dao.*;
 import umu.tds.myvideoapp.dominio.CatalogoUsuarios;
 import umu.tds.myvideoapp.dominio.CatalogoVideos;
 import umu.tds.myvideoapp.dominio.Etiqueta;
+import umu.tds.myvideoapp.dominio.ITest;
 import umu.tds.myvideoapp.dominio.ListaVideos;
 import umu.tds.myvideoapp.dominio.Usuario;
 import umu.tds.myvideoapp.dominio.Video;
@@ -35,6 +45,8 @@ public class ControladorMyVideoApp implements VideosListener {
 	private static VideoWeb videoWeb = new VideoWeb();
 	private Set<Etiqueta> etiquetas;
 	private Set<Etiqueta> etiquetasSeleccionadas;
+	
+	private String textoBusqueda;
 
 
 	public ControladorMyVideoApp() {
@@ -43,6 +55,7 @@ public class ControladorMyVideoApp implements VideosListener {
 		inicializarCatalogos();
 		etiquetas = catalogoVideos.getEtiquetas();
 		etiquetasSeleccionadas = new HashSet<Etiqueta>();
+		textoBusqueda = "";
 	}
 
 	public static ControladorMyVideoApp getUnicaInstancia() {
@@ -51,8 +64,9 @@ public class ControladorMyVideoApp implements VideosListener {
 		return unicaInstancia;
 	}
 
-	public void registrarUsuario(String username, String password, String nombre, String apellidos, String email) {
-		Usuario usuario = new Usuario(username, password, nombre, apellidos, email);
+	public void registrarUsuario(String username, String password, String nombre, String apellidos, String email, Date date) {
+		System.out.println(DateFormat.getDateInstance().format(date));
+		Usuario usuario = new Usuario(username, password, nombre, apellidos, email, date);
 		adaptadorUsuario.registrarUsuario(usuario);
 		catalogoUsuarios.addUsuario(usuario);
 	}
@@ -144,12 +158,13 @@ public class ControladorMyVideoApp implements VideosListener {
 	}
 
 	
-	private List<Video> videosConEtiquetas(){
-		return catalogoVideos.getVideosConEtiquetas(etiquetasSeleccionadas);
+	private List<Video> videosConEtiquetasTextoYFiltro(){
+		return catalogoVideos.getVideosConEtiquetasTextoYFiltro(etiquetasSeleccionadas, textoBusqueda, usuarioActual.getFiltro());
 	}
 	
 	public JLabel[][] videosToArray() {
-		LinkedList<Video> videos = (LinkedList<Video>) videosConEtiquetas();
+		LinkedList<Video> videos = (LinkedList<Video>) videosConEtiquetasTextoYFiltro();
+		
 		int nFilas = (int) (Math.ceil(videos.size()/3.0));
 		JLabel tab[][] = new JLabel[nFilas][3];
 		int k = 0;
@@ -224,6 +239,8 @@ public class ControladorMyVideoApp implements VideosListener {
 	@Override
 	public void enteradoCambioVideos(VideosEvent evento) {
 		System.out.println("Luz pulsado");
+		if(evento == null)
+			return;
 		for (umu.tds.componente.Video video : evento.getNewVideo().getVideo()) {
 			if (!existVideo(video.getUrl())) {
 				LinkedList<Etiqueta> etiquetas = new LinkedList<Etiqueta>();
@@ -271,6 +288,48 @@ public class ControladorMyVideoApp implements VideosListener {
 
 	public JLabel[][] topToArray() {
 		return catalogoVideos.topToArray();
+	}
+
+	public void buscaVideos(String text) {
+		textoBusqueda = text;
+	}
+
+	public String getTextoBusqueda() {
+		return textoBusqueda;
+	}
+
+	public void reproducirTodos(String tituloLista, int tiempo) {
+		
+	}
+
+	public List<Video> getVideosLista(String tituloLista) {
+		return usuarioActual.getVideosListaVideos(tituloLista); 
+	}
+
+	public List<ListaVideos> getListasVideosUsuario() {
+		return usuarioActual.getListasVideos();
+	}
+
+	public void cambiaFiltro(ITest<Video> filtro) {
+		usuarioActual.setFiltro(filtro);
+		adaptadorUsuario.modificarUsuario(usuarioActual);
+	}
+
+	public String getFiltroActual() {
+		return usuarioActual.getFiltro().getNombre();
+	}
+
+	public boolean isPremium() {
+		return usuarioActual.isPremium();
+	}
+
+	public void doPremium() {
+		usuarioActual.setPremium();
+		adaptadorUsuario.modificarUsuario(usuarioActual);
+	}
+
+	public void listasToPDF(String nombre) throws FileNotFoundException, DocumentException {
+		usuarioActual.listasToPDF(nombre);
 	}
 
 

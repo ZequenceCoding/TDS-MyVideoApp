@@ -2,6 +2,7 @@ package umu.tds.componente;
 
 import java.io.File;
 
+import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -20,7 +21,8 @@ public class CargadorVideos {
 			File file = new File(datos);
 			asistencias = (Videos) u.unmarshal(file);
 		} catch (JAXBException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error al abrir el fichero, prueba con un fichero .xml",
+					"Error", JOptionPane.ERROR_MESSAGE);
 		}	
 		return asistencias;
 	}

@@ -15,7 +15,9 @@ import javafx.scene.control.Cell;
 import javafx.scene.layout.Border;
 import tds.video.VideoWeb;
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
+import umu.tds.myvideoapp.dominio.CatalogoVideos;
 import umu.tds.myvideoapp.dominio.Etiqueta;
+import umu.tds.myvideoapp.dominio.Video;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -31,6 +33,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class JPanelMiListaVideos extends JPanelListaVideos {
 
@@ -68,6 +75,41 @@ public class JPanelMiListaVideos extends JPanelListaVideos {
 		});
 		getPanelBotones().add(btnBorrar);
 		
+		JButton btnPlay = new JButton("Play");
+		btnPlay.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String tiempo = (JOptionPane.showInputDialog(padre,
+						"¿Cuantos sugundos por video?", "Play all", JOptionPane.QUESTION_MESSAGE));
+				if(tiempo != null && !tiempo.equals("")) {
+					int intTiempo = 0;
+					try {
+						intTiempo = Integer.parseInt(tiempo);
+					} catch (Exception e2) {
+						return;
+					}
+					for (Video video : ControladorMyVideoApp.getUnicaInstancia().getVideosLista(tituloLista)) {
+						
+						removeAll();
+
+						add(getPanelTituloLista(), BorderLayout.NORTH);
+						JLabel etiq = new JLabel(video.getTitulo());
+						etiq.setName(video.getUrl());
+						add(createVistaVideo(etiq), BorderLayout.CENTER);
+						
+						revalidate();
+						repaint();
+						
+						
+					}
+
+					
+				}
+			}
+		});
+		getPanelBotones().add(btnPlay);
+
 		add(getPanelBotones(), BorderLayout.SOUTH);
 	}
 

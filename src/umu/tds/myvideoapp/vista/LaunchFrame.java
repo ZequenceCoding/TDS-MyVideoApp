@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
 
 import javax.swing.JPanel;
 
@@ -25,6 +26,11 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import java.awt.Cursor;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
+import java.awt.Color;
 
 /**
  *
@@ -65,7 +71,8 @@ public class LaunchFrame extends javax.swing.JFrame {
         		if (checkRegisterFields()) {
         			
         			if(!ControladorMyVideoApp.getUnicaInstancia().existUsername(usernameField.getText())) {
-        				ControladorMyVideoApp.getUnicaInstancia().registrarUsuario(usernameField.getText(), new String(passwordField.getPassword()), nameField.getText(), surnameField.getText(), emailField.getText());
+        				ControladorMyVideoApp.getUnicaInstancia().registrarUsuario(usernameField.getText(), new String(passwordField.getPassword()),
+        						nameField.getText(), surnameField.getText(), emailField.getText(), dateChooser.getDate());
         				JOptionPane.showMessageDialog(ventana, "Usuario registrado con exito.", "Registro", JOptionPane.INFORMATION_MESSAGE);
         			} else {
         				JOptionPane.showMessageDialog(ventana, "No se ha podido registrar el usuario. \n", "Registro", JOptionPane.ERROR_MESSAGE);
@@ -86,7 +93,6 @@ public class LaunchFrame extends javax.swing.JFrame {
         surnameField = new javax.swing.JTextField();
         emailField = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
-        jSeparator5 = new javax.swing.JSeparator();
         jSeparator6 = new javax.swing.JSeparator();
         jSeparator7 = new javax.swing.JSeparator();
         jSeparator8 = new javax.swing.JSeparator();
@@ -100,7 +106,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         termsAndCondsLabel = new javax.swing.JLabel();
         loginPanel = new javax.swing.JPanel();
         logoLabel = new javax.swing.JLabel();
-        logoLabel.setIcon(new ImageIcon("/Users/eduardo/git/TDS-MyVideoApp/src/sources/logo64.png"));
+        logoLabel.setIcon(new ImageIcon(LaunchFrame.class.getResource("/sources/logo64.png")));
         usernameLabel = new javax.swing.JLabel();
         passwordLabel = new javax.swing.JLabel();
         userTextField = new javax.swing.JTextField();
@@ -218,8 +224,6 @@ public class LaunchFrame extends javax.swing.JFrame {
 
         jSeparator4.setForeground(new java.awt.Color(255, 255, 255));
 
-        jSeparator5.setForeground(new java.awt.Color(255, 255, 255));
-
         jSeparator6.setForeground(new java.awt.Color(255, 255, 255));
 
         jSeparator7.setForeground(new java.awt.Color(255, 255, 255));
@@ -261,7 +265,10 @@ public class LaunchFrame extends javax.swing.JFrame {
         termsAndCondsLabel.setForeground(new java.awt.Color(0, 153, 204));
         termsAndCondsLabel.setText("<HTML><U>Terms and conditions</HTML></U>");
         
-        JButton btnNewButton = new JButton("");
+        dateChooser = new JDateChooser();
+        dateChooser.getCalendarButton().setBorderPainted(false);
+        dateChooser.getCalendarButton().setIcon(new ImageIcon(LaunchFrame.class.getResource("/sources/calendar.png")));
+        dateChooser.setBackground(new Color(65, 65, 65));
 
         javax.swing.GroupLayout registerPanelLayout = new javax.swing.GroupLayout(registerPanel);
         registerPanelLayout.setHorizontalGroup(
@@ -286,22 +293,22 @@ public class LaunchFrame extends javax.swing.JFrame {
         							.addGroup(registerPanelLayout.createParallelGroup(Alignment.LEADING)
         								.addGroup(registerPanelLayout.createSequentialGroup()
         									.addGroup(registerPanelLayout.createParallelGroup(Alignment.TRAILING)
-        										.addComponent(birthdayLabel)
         										.addComponent(nameLabel)
         										.addComponent(surnameLabel)
         										.addComponent(emailLabel)
         										.addComponent(passLabel)
         										.addComponent(userLabel)
-        										.addComponent(repeatPassLabel))
+        										.addComponent(repeatPassLabel)
+        										.addComponent(birthdayLabel))
         									.addGap(18)
         									.addGroup(registerPanelLayout.createParallelGroup(Alignment.LEADING, false)
+        										.addComponent(dateChooser, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         										.addComponent(jSeparator9, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
         										.addComponent(jSeparator3, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
         										.addComponent(nameField, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
         										.addComponent(surnameField, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
         										.addComponent(emailField, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
         										.addComponent(jSeparator4, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
-        										.addComponent(jSeparator5, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
         										.addComponent(jSeparator6, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
         										.addComponent(jSeparator7, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
         										.addComponent(jSeparator8, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
@@ -313,37 +320,35 @@ public class LaunchFrame extends javax.swing.JFrame {
         									.addComponent(termsAndCondsCheckBox)
         									.addPreferredGap(ComponentPlacement.UNRELATED)
         									.addComponent(termsAndCondsLabel, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)))))
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-        					.addGap(102)))
+        					.addGap(141)))
         			.addComponent(separatorPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
         registerPanelLayout.setVerticalGroup(
-        	registerPanelLayout.createParallelGroup(Alignment.TRAILING)
+        	registerPanelLayout.createParallelGroup(Alignment.LEADING)
         		.addComponent(separatorPanel, GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
-        		.addGroup(Alignment.LEADING, registerPanelLayout.createSequentialGroup()
+        		.addGroup(registerPanelLayout.createSequentialGroup()
         			.addGap(64)
+        			.addComponent(titleLabel)
+        			.addGap(18)
+        			.addGroup(registerPanelLayout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(nameLabel)
+        				.addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addGap(5)
+        			.addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+        			.addGap(14)
+        			.addGroup(registerPanelLayout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(surnameLabel)
+        				.addComponent(surnameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addGap(5)
         			.addGroup(registerPanelLayout.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(btnNewButton)
         				.addGroup(registerPanelLayout.createSequentialGroup()
-        					.addComponent(titleLabel)
-        					.addGap(18)
-        					.addGroup(registerPanelLayout.createParallelGroup(Alignment.BASELINE)
-        						.addComponent(nameLabel)
-        						.addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        					.addGap(5)
-        					.addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-        					.addGap(14)
-        					.addGroup(registerPanelLayout.createParallelGroup(Alignment.BASELINE)
-        						.addComponent(surnameLabel)
-        						.addComponent(surnameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        					.addGap(5)
         					.addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
         					.addGap(8)
+        					.addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        					.addGap(14))
+        				.addGroup(registerPanelLayout.createSequentialGroup()
         					.addComponent(birthdayLabel)
-        					.addGap(5)
-        					.addComponent(jSeparator5, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)))
-        			.addGap(8)
+        					.addGap(18)))
         			.addGroup(registerPanelLayout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(emailLabel)
         				.addComponent(emailField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -384,7 +389,6 @@ public class LaunchFrame extends javax.swing.JFrame {
         loginPanel.setMaximumSize(new java.awt.Dimension(420, 2160));
         loginPanel.setPreferredSize(new java.awt.Dimension(330, 501));
 
-        //logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/LaunchFrame/logo64.png"))); // NOI18N
 
         usernameLabel.setFont(new java.awt.Font("Candara", 0, 14)); // NOI18N
         usernameLabel.setForeground(new java.awt.Color(0, 153, 204));
@@ -578,7 +582,6 @@ public class LaunchFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
@@ -609,6 +612,7 @@ public class LaunchFrame extends javax.swing.JFrame {
     private javax.swing.JLabel usernameLabel;
     private JLabel forgotLabel;
     private JLabel closeLabel;
+    JDateChooser dateChooser;
     
     
 	public void mostrarVentana() {

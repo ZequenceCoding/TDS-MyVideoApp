@@ -100,16 +100,15 @@ public class CatalogoVideos {
 			videos.put(vid.getUrl(), vid);
 	}
 
-	public List<Video> getVideosConEtiquetas(Set<Etiqueta> etiquetasSeleccionadas) {
-		if(etiquetasSeleccionadas.isEmpty())
-			return getVideos();
-		List<Video> videosConEtiquetas = new LinkedList<Video>();
+	public List<Video> getVideosConEtiquetasTextoYFiltro(Set<Etiqueta> etiquetasSeleccionadas, String text, ITest<Video> filtro) {
+		List<Video> videosConEtiquetasYTexto = new LinkedList<Video>();
+		System.out.println(filtro.getClass());
 		for (Video video : videos.values()) {
-			if (video.contieneEtiqueta(etiquetasSeleccionadas)) {
-				videosConEtiquetas.add(video);
+			if (video.contieneEtiqueta(etiquetasSeleccionadas) && video.getTitulo().contains(text) && filtro.test(video)) {
+					videosConEtiquetasYTexto.add(video);
 			}
 		}
-		return videosConEtiquetas;
+		return videosConEtiquetasYTexto;
 	}
 
 	public boolean contieneEtiq(String url, String etiq) {

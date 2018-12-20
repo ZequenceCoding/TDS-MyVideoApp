@@ -55,6 +55,8 @@ public class Video {
 	}
 
 	public boolean contieneEtiqueta(Set<Etiqueta> etiquetasSeleccionadas) {
+		if(etiquetasSeleccionadas.isEmpty())
+			return true;
 		for (Etiqueta etiqueta : etiquetasSeleccionadas) {
 			if (etiquetas.contains(etiqueta)) {
 				return true;

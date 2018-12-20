@@ -51,34 +51,34 @@ public abstract class JPanelListaVideos extends JPanel {
 		/****************************
 		 *  Panel del titulo de la lista
 		 ****************************/
-		panelTituloLista = new JPanel();
-		panelTituloLista.setBackground(new Color(50, 50, 50));
+		setPanelTituloLista(new JPanel());
+		getPanelTituloLista().setBackground(new Color(50, 50, 50));
 		
 		JLabel etiqTitulo = new JLabel(tituloLista);
 		etiqTitulo.setForeground(new Color(255, 255, 255));
 		etiqTitulo.setFont(new Font("Comic Sans MS", Font.BOLD, 25));
-		panelTituloLista.add(etiqTitulo, BorderLayout.CENTER);
+		getPanelTituloLista().add(etiqTitulo, BorderLayout.CENTER);
 		
-		add(panelTituloLista, BorderLayout.NORTH);
+		add(getPanelTituloLista(), BorderLayout.NORTH);
 		
 		/****************************
 		 *  Panel de los videos de la lista
 		 ****************************/
-		scrollPanel = new JScrollPane();
-		scrollPanel = new JScrollPane();
-		scrollPanel.setBackground(new java.awt.Color(50, 50, 50));
-		scrollPanel.setBorder(null);
-		scrollPanel.setForeground(new java.awt.Color(0, 153, 204));
-		scrollPanel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		setScrollPanel(new JScrollPane());
+		setScrollPanel(new JScrollPane());
+		getScrollPanel().setBackground(new java.awt.Color(50, 50, 50));
+		getScrollPanel().setBorder(null);
+		getScrollPanel().setForeground(new java.awt.Color(0, 153, 204));
+		getScrollPanel().setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		contentPanel = new JPanel(new BorderLayout());
 		contentPanel.setBackground(new java.awt.Color(50, 50, 50));
 		contentPanel.setForeground(new java.awt.Color(0, 153, 204));
-		scrollPanel.setViewportView(contentPanel);
+		getScrollPanel().setViewportView(contentPanel);
 		
 		generateTableVideos();
 		
-		add(scrollPanel, BorderLayout.CENTER);
+		add(getScrollPanel(), BorderLayout.CENTER);
 		
 		/****************************
 		 *  Panel de los botones
@@ -88,37 +88,8 @@ public abstract class JPanelListaVideos extends JPanel {
 	}
 
 	protected abstract void createButtonPanel(String tituloLista, AppFrame padre); 
-	/*{
-		panelBotones = new JPanel();
-		panelBotones.setBackground(new Color(51, 51, 51));
-		
-		JButton btnVolver = new JButton("Volver a explorar");
-		btnVolver.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				padre.volverAExplorar();
-			}
-		});
-		panelBotones.add(btnVolver);
-		
-		JButton btnBorrar = new JButton("Borrar lista");
-		btnBorrar.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(JOptionPane.showConfirmDialog(padre, "¿Seguro que quiere borrar esta lista?") == 0) {
-					padre.borrarLista(tituloLista);
-				}
-			}
-		});
-		panelBotones.add(btnBorrar);
-		
-		add(panelBotones, BorderLayout.SOUTH);
-	}
-	*/
 
-	private void generateTableVideos() {
+	protected void generateTableVideos() {
 		JTable table = new JTable();
 		table.setRowSelectionAllowed(false);
 		table.addMouseListener(new MouseAdapter() {
@@ -134,7 +105,7 @@ public abstract class JPanelListaVideos extends JPanel {
 						JLabel label = (JLabel) value;
 						JPanel vistaVideo = createVistaVideo(label);
 						removeAll();
-						add(panelTituloLista, BorderLayout.NORTH);
+						add(getPanelTituloLista(), BorderLayout.NORTH);
 						add(vistaVideo, BorderLayout.CENTER);
 						ControladorMyVideoApp.getUnicaInstancia().verVideo(label.getName());
 						revalidate();
@@ -183,7 +154,7 @@ public abstract class JPanelListaVideos extends JPanel {
 	protected abstract JLabel[][] getVideosData();
 	
 	
-	private JPanel createVistaVideo(JLabel label) {
+	protected JPanel createVistaVideo(JLabel label) {
 		JPanel vistaVideo = new JPanel();
 		vistaVideo.setMinimumSize(new Dimension(100, 0));
 		vistaVideo.setBackground(new Color(51, 51, 51));
@@ -231,8 +202,8 @@ public abstract class JPanelListaVideos extends JPanel {
 				removeAll();
 				ControladorMyVideoApp.getUnicaInstancia().stopVideo();
 				generateTableVideos();
-				add(panelTituloLista, BorderLayout.NORTH);
-				add(scrollPanel, BorderLayout.CENTER);
+				add(getPanelTituloLista(), BorderLayout.NORTH);
+				add(getScrollPanel(), BorderLayout.CENTER);
 				add(getPanelBotones(), BorderLayout.SOUTH);
 				revalidate();
 				repaint();
@@ -318,7 +289,7 @@ public abstract class JPanelListaVideos extends JPanel {
 				removeAll();
 				createVistaVideo(label);
 
-				add(panelTituloLista, BorderLayout.NORTH);
+				add(getPanelTituloLista(), BorderLayout.NORTH);
 				add(createVistaVideo(label), BorderLayout.CENTER);
 
 				revalidate();
@@ -344,6 +315,22 @@ public abstract class JPanelListaVideos extends JPanel {
 
 	public void setTituloLista(String tituloLista) {
 		this.tituloLista = tituloLista;
+	}
+
+	public JPanel getPanelTituloLista() {
+		return panelTituloLista;
+	}
+
+	public void setPanelTituloLista(JPanel panelTituloLista) {
+		this.panelTituloLista = panelTituloLista;
+	}
+
+	public JScrollPane getScrollPanel() {
+		return scrollPanel;
+	}
+
+	public void setScrollPanel(JScrollPane scrollPanel) {
+		this.scrollPanel = scrollPanel;
 	}
 
 }

@@ -20,6 +20,12 @@ import tds.video.VideoWeb;
 import umu.tds.componente.BuscadorVideos;
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
 import umu.tds.myvideoapp.dominio.Etiqueta;
+import umu.tds.myvideoapp.dominio.FiltroAdultos;
+import umu.tds.myvideoapp.dominio.FiltroImpopulares;
+import umu.tds.myvideoapp.dominio.FiltroMisListas;
+import umu.tds.myvideoapp.dominio.ITest;
+import umu.tds.myvideoapp.dominio.NoFiltro;
+import umu.tds.myvideoapp.dominio.Video;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -36,8 +42,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
 import java.util.List;
+import java.awt.Cursor;
 
-public class JPanelTablaVideos extends JPanel {
+public class JPanelExplorar extends JPanel {
 
 	/**
 	 * 
@@ -50,7 +57,7 @@ public class JPanelTablaVideos extends JPanel {
 
 	private AppFrame padre;
 
-	public JPanelTablaVideos(AppFrame padre) {
+	public JPanelExplorar(AppFrame padre) {
 
 		this.padre = padre;
 
@@ -64,9 +71,9 @@ public class JPanelTablaVideos extends JPanel {
 		searchPanel.setBackground(new Color(50, 50, 50));
 
 		GridBagLayout gbl_searchPanel = new GridBagLayout(); // Creas el GridBagLayout para el panel de busqueda
-		gbl_searchPanel.columnWidths = new int[] { 30, 232, 232, 0, 0 };
+		gbl_searchPanel.columnWidths = new int[] { 30, 232, 116, 116, 0, 0 };
 		gbl_searchPanel.rowHeights = new int[] { 30, 24, 10, 27, 0 };
-		gbl_searchPanel.columnWeights = new double[] { 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE };
+		gbl_searchPanel.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE };
 		gbl_searchPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		searchPanel.setLayout(gbl_searchPanel);
 
@@ -75,13 +82,11 @@ public class JPanelTablaVideos extends JPanel {
 		searchTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		searchTextField.setForeground(new java.awt.Color(0, 153, 204));
 		searchTextField.setHorizontalAlignment(JTextField.LEFT);
-		searchTextField.setText("Search...");
+		searchTextField.setText(ControladorMyVideoApp.getUnicaInstancia().getTextoBusqueda());
+		if (searchTextField.getText().compareTo("") == 0) {
+			searchTextField.setText("Search...");
+		}
 		searchTextField.setBorder(null);
-		searchTextField.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// searchTextFieldActionPerformed(evt);
-			}
-		});
 		GridBagConstraints gbc_searchTextField = new GridBagConstraints();
 		gbc_searchTextField.gridwidth = 2;
 		gbc_searchTextField.fill = GridBagConstraints.BOTH;
@@ -96,7 +101,7 @@ public class JPanelTablaVideos extends JPanel {
 
 		GridBagConstraints gbc_luz = new GridBagConstraints();
 		gbc_luz.gridheight = 3;
-		gbc_luz.gridx = 3;
+		gbc_luz.gridx = 4;
 		gbc_luz.gridy = 1;
 
 		bv.addVideosListener(ControladorMyVideoApp.getUnicaInstancia());
@@ -114,13 +119,45 @@ public class JPanelTablaVideos extends JPanel {
 				repaint();
 			}
 		});
+		
 		searchPanel.add(luz, gbc_luz);
+
+		
+		JButton searchButton = new JButton("");
+		searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		searchButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				removeAll();
+				ControladorMyVideoApp.getUnicaInstancia().stopVideo();
+				
+				padre.buscaVideos(searchTextField.getText());
+				generateTableVideos();
+				add(searchPanel, BorderLayout.NORTH);
+				add(scrollPanel, BorderLayout.CENTER);
+				
+				revalidate();
+				repaint();
+			}
+		});
+		searchButton.setBorderPainted(false);
+		searchButton.setBackground(null);
+		searchButton.setBorderPainted(false);
+		searchButton.setIcon(new ImageIcon(JPanelExplorar.class.getResource("/sources/search.png")));
+		GridBagConstraints gbc_searchButton = new GridBagConstraints();
+		gbc_searchButton.anchor = GridBagConstraints.EAST;
+		gbc_searchButton.insets = new Insets(0, 0, 5, 5);
+		gbc_searchButton.gridx = 3;
+		gbc_searchButton.gridy = 1;
+		searchPanel.add(searchButton, gbc_searchButton);
+		
 
 		// Creas un separador para el campo de busqueda
 		JSeparator jSeparator5 = new JSeparator();
 
 		GridBagConstraints gbc_jSeparator5 = new GridBagConstraints();
-		gbc_jSeparator5.gridwidth = 2;
+		gbc_jSeparator5.gridwidth = 3;
 		gbc_jSeparator5.fill = GridBagConstraints.BOTH;
 		gbc_jSeparator5.insets = new Insets(0, 0, 5, 5);
 		gbc_jSeparator5.gridx = 1;
@@ -135,8 +172,43 @@ public class JPanelTablaVideos extends JPanel {
 		tagComboBox.setForeground(new java.awt.Color(0, 153, 204));
 		tagComboBox.setMaximumRowCount(64);
 		tagComboBox.setModel(
-				new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin filtro", "Item 2", "Item 3", "Item 4" }));
+				new javax.swing.DefaultComboBoxModel<>(new String[] { "No filtro", "Mis listas", "Impopulares", "Adultos" }));
 		tagComboBox.setBorder(null);
+		tagComboBox.setSelectedItem(padre.getFiltroAcual());
+		
+		tagComboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String filtroCad = String.valueOf(tagComboBox.getSelectedItem());
+				switch (filtroCad) {
+				case "No filtro":
+					padre.cambiaFiltro(new NoFiltro());
+					break;
+				case "Mis listas":
+					padre.cambiaFiltro(new FiltroMisListas());
+					break;
+				case "Impopulares":
+					padre.cambiaFiltro(new FiltroImpopulares());
+					break;
+				case "Adultos":
+					padre.cambiaFiltro(new FiltroAdultos());
+					break;
+				default:
+					break;
+				}
+				
+				removeAll();
+				
+				generateTableVideos();
+				add(searchPanel, BorderLayout.NORTH);
+				add(scrollPanel, BorderLayout.CENTER);
+				
+				revalidate();
+				repaint();
+				
+			}
+		});
 
 		GridBagConstraints gbc_tagComboBox = new GridBagConstraints();
 		gbc_tagComboBox.anchor = GridBagConstraints.NORTHWEST;
@@ -151,6 +223,7 @@ public class JPanelTablaVideos extends JPanel {
 		panelBtn.setBackground(new Color(50, 50, 50));
 
 		JButton btnEtiquetas = new JButton("Etiquetas"); // Boton de las etiquetas
+		btnEtiquetas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEtiquetas.setForeground(new Color(0, 0, 0));
 		btnEtiquetas.addMouseListener(new MouseAdapter() {
 
@@ -162,12 +235,14 @@ public class JPanelTablaVideos extends JPanel {
 		panelBtn.add(btnEtiquetas);
 
 		JButton btnRefrescar = new JButton("Refrescar"); // Boton para refrescar la pantalla
+		btnRefrescar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnRefrescar.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) { // Refresca la pantalla
 				System.out.println(getClass());
 				removeAll();
+				
 				generateTableVideos();
 				add(searchPanel, BorderLayout.NORTH);
 				add(scrollPanel, BorderLayout.CENTER);
@@ -180,6 +255,7 @@ public class JPanelTablaVideos extends JPanel {
 		panelBtn.add(btnRefrescar);
 
 		GridBagConstraints gbc_panelBtn = new GridBagConstraints();
+		gbc_panelBtn.gridwidth = 2;
 		gbc_panelBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_panelBtn.gridx = 2;
 		gbc_panelBtn.gridy = 3;
@@ -296,20 +372,20 @@ public class JPanelTablaVideos extends JPanel {
 		gbc_panel.gridy = 3;
 		vistaVideo.add(panel, gbc_panel);
 
-		JButton btnReproducir = new JButton("Reproducir");
-		panel.add(btnReproducir);
 
-		JButton btnParar = new JButton("Añadir a");
-		btnParar.addMouseListener(new MouseAdapter() {
+		JButton btnAnadirA = new JButton("Añadir a");
+		btnAnadirA.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnAnadirA.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				VentanaListas vl = new VentanaListas(label.getName());
 			}
 		});
-		panel.add(btnParar);
+		panel.add(btnAnadirA);
 
 		JButton btnVolver = new JButton("Volver");
+		btnVolver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnVolver.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -392,6 +468,7 @@ public class JPanelTablaVideos extends JPanel {
 		btnAnadirEtiq.setBackground(null);
 		btnAnadirEtiq.setBorderPainted(false);
 		btnAnadirEtiq.setIcon(new ImageIcon(AppFrame.class.getResource("/sources/addEtiq.png")));
+		btnAnadirEtiq.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAnadirEtiq.addActionListener(new ActionListener() {
 
 			@Override

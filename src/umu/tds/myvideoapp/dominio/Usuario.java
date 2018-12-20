@@ -1,10 +1,18 @@
 package umu.tds.myvideoapp.dominio;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class Usuario {
 	
@@ -14,31 +22,35 @@ public class Usuario {
 	private String password;
 	private String nombre;
 	private String apellidos;
-	//private Date fechaNac;
+	private Date fechaNac;
 	private String email;
 	private List<ListaVideos> listasVideos;
 	private ListaVideos recientes;
+	private ITest<Video> filtro;
 
 	
-	public Usuario(String username, String password, String nombre, String apellidos, String email) {
+	public Usuario(String username, String password, String nombre, String apellidos, String email, Date fechaNac) {
 		this.codigo = 0;
 		this.premium = false;
 		this.username = username;
 		this.password = password;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
-		//this.fechaNac = fechaNac;
+		this.fechaNac = fechaNac;
 		this.email = email;
 		this.listasVideos = new LinkedList<ListaVideos>();
 		this.recientes = new ListaVideos("Recientes");
+		this.filtro = new NoFiltro();
+		System.out.println(fechaNac.toString());
 	}
 	
 	public Usuario(Boolean premium, String username, String password, String nombre, String apellidos, String email,
-			List<ListaVideos> listasVideos, ListaVideos recientes) {
-		this(username, password, nombre, apellidos, email);
+			Date fechaNac, List<ListaVideos> listasVideos, ListaVideos recientes, ITest<Video> filtro) {
+		this(username, password, nombre, apellidos, email, fechaNac);
 		this.premium = premium;
 		this.listasVideos = listasVideos;
 		this.recientes = recientes;
+		this.filtro = filtro;
 	}
 
 	public void addListaVideos(String nombreLista) {
@@ -83,9 +95,9 @@ public class Usuario {
 	public String getApellidos() {
 		return apellidos;
 	}
-	/*public Date getFechaNac() {
+	public Date getFechaNac() {
 		return fechaNac;
-	}*/
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -131,6 +143,29 @@ public class Usuario {
 
 	public ListaVideos getRecientes() {
 		return recientes;
+	}
+	
+	public ITest<Video> getFiltro() {
+		return filtro;
+	}
+	
+	public void setFiltro(ITest<Video> filtro) {
+		this.filtro = filtro;
+	}
+
+	public void listasToPDF(String nombre) throws FileNotFoundException, DocumentException {
+		FileOutputStream archivo;
+		archivo = new FileOutputStream(nombre + ".pdf");
+		Document documento = new Document();
+		PdfWriter.getInstance(documento, archivo);
+		documento.open();
+		documento.add(new Paragraph("  "));
+		for (ListaVideos listaVideos : listasVideos) {
+			documento.add(listaVideos.nombreToParagraph());
+			documento.add(listaVideos.videosToParagraph());
+		}
+		documento.close();
+		
 	}
 	
 }

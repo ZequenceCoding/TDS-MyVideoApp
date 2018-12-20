@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.swing.JLabel;
 
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
 public class ListaVideos {
 
@@ -97,6 +100,20 @@ public class ListaVideos {
 		}
 
 		return tab;
+	}
+
+
+	public Paragraph nombreToParagraph() {
+		return new Paragraph(nombreLista);
+	}
+
+
+	public Paragraph videosToParagraph() {
+		String cadVideos = "";
+		for (Video video : videos) {
+			cadVideos += "      Titulo video: " + video.getTitulo() + "      Numero de reproducciones: " + video.getNumReproducciones() + "\n";
+		}
+		return new Paragraph(cadVideos);
 	}
 	
 	
