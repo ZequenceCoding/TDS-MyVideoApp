@@ -16,7 +16,6 @@ import umu.tds.myvideoapp.dominio.Usuario;
 import umu.tds.myvideoapp.dominio.Video;
 import umu.tds.myvideoapp.dominio.ITest;
 import umu.tds.myvideoapp.dominio.ListaVideos;
-import umu.tds.myvideoapp.dominio.NoFiltro;
 import beans.Entidad;
 import beans.Propiedad;
 

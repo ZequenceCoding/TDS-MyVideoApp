@@ -1,43 +1,16 @@
 package umu.tds.myvideoapp.vista;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-
-import javafx.scene.control.Cell;
-import javafx.scene.layout.Border;
-import tds.video.VideoWeb;
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
-import umu.tds.myvideoapp.dominio.CatalogoVideos;
-import umu.tds.myvideoapp.dominio.Etiqueta;
 import umu.tds.myvideoapp.dominio.Video;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class JPanelMiListaVideos extends JPanelListaVideos {
 

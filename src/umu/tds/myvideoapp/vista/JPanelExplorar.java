@@ -3,7 +3,6 @@ package umu.tds.myvideoapp.vista;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -13,7 +12,6 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import jdk.nashorn.internal.runtime.regexp.joni.SearchAlgorithm;
 import pulsador.IEncendidoListener;
 import pulsador.Luz;
 import tds.video.VideoWeb;
@@ -23,10 +21,7 @@ import umu.tds.myvideoapp.dominio.Etiqueta;
 import umu.tds.myvideoapp.dominio.FiltroAdultos;
 import umu.tds.myvideoapp.dominio.FiltroImpopulares;
 import umu.tds.myvideoapp.dominio.FiltroMisListas;
-import umu.tds.myvideoapp.dominio.ITest;
 import umu.tds.myvideoapp.dominio.NoFiltro;
-import umu.tds.myvideoapp.dominio.Video;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;

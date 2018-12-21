@@ -6,41 +6,19 @@
 package umu.tds.myvideoapp.vista;
 
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.util.EventObject;
-import java.util.List;
-
-import pulsador.IEncendidoListener;
-import pulsador.Luz;
-import tds.video.VideoWeb;
-import umu.tds.componente.BuscadorVideos;
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
-import umu.tds.myvideoapp.dominio.Etiqueta;
 import umu.tds.myvideoapp.dominio.ITest;
 import umu.tds.myvideoapp.dominio.ListaVideos;
-import umu.tds.myvideoapp.dominio.NoFiltro;
 import umu.tds.myvideoapp.dominio.Video;
 
 import javax.swing.JTable;
-import javax.swing.ListCellRenderer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-
-import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
-
-import javafx.scene.Cursor;
-import jdk.nashorn.internal.scripts.JO;
-
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.BorderLayout;
@@ -49,22 +27,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.Icon;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ImageIcon;
-import javax.swing.border.MatteBorder;
-import javax.swing.plaf.OptionPaneUI;
 import javax.swing.border.EtchedBorder;
 
 /**
@@ -83,6 +51,9 @@ public class AppFrame extends javax.swing.JFrame {
 	 */
 	public AppFrame() {
 		initComponents();
+		if (ControladorMyVideoApp.getUnicaInstancia().isBirthday()) {
+			System.out.println("FELIZ CUMPLEA—OS");		
+		}
 	}
 
 	/**
@@ -238,15 +209,15 @@ public class AppFrame extends javax.swing.JFrame {
 
 				if (!ControladorMyVideoApp.getUnicaInstancia().isPremium()) {
 
-					JOptionPane.showMessageDialog(thisFrame, "Necesitas ser premium para ver los m√°s vistos",
-							"M√°s Vistos", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(thisFrame, "Necesitas ser premium para ver los m·s vistos",
+							"M·s Vistos", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
 
 				rightPanel.removeAll();
 				ControladorMyVideoApp.getUnicaInstancia().stopVideo();
 
-				rightPanel.add(new JPanelMasVistos("M√°s Vistos", thisFrame), BorderLayout.CENTER);
+				rightPanel.add(new JPanelMasVistos("M·s Vistos", thisFrame), BorderLayout.CENTER);
 
 				revalidate();
 				repaint();

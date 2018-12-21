@@ -1,14 +1,8 @@
 package umu.tds.myvideoapp.vista;
 
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
-
 import javax.swing.JFrame;
 import java.awt.Color;
-import java.awt.GridBagLayout;
-import javax.swing.JRadioButton;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,13 +10,10 @@ import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
-import javax.swing.ScrollPaneConstants;
-
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
 import umu.tds.myvideoapp.dominio.Etiqueta;
 
 import java.awt.Dimension;
-import javax.swing.JButton;
 
 public class VentanaEtiquetas {
 

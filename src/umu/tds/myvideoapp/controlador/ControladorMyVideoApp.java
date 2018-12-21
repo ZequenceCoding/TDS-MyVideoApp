@@ -2,8 +2,8 @@ package umu.tds.myvideoapp.controlador;
 
 import java.awt.Color;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -13,11 +13,9 @@ import java.util.Set;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
+import org.eclipse.persistence.annotations.TimeOfDay;
 
+import com.itextpdf.text.DocumentException;
 import tds.video.VideoWeb;
 import umu.tds.componente.VideosEvent;
 import umu.tds.componente.VideosListener;
@@ -330,6 +328,26 @@ public class ControladorMyVideoApp implements VideosListener {
 
 	public void listasToPDF(String nombre) throws FileNotFoundException, DocumentException {
 		usuarioActual.listasToPDF(nombre);
+	}
+
+	@SuppressWarnings("deprecation")
+	public boolean isBirthday() {
+		Date hoy = new Date();
+		System.out.println(usuarioActual.getFechaNac());
+		System.out.println(hoy);
+		System.out.println(usuarioActual.getFechaNac().getDay()==hoy.getDay());
+		System.out.println(usuarioActual.getFechaNac().getDay());
+		System.out.println(hoy.getDay());
+		
+		System.out.println(usuarioActual.getFechaNac().getMonth() == hoy.getMonth());
+		System.out.println(usuarioActual.getFechaNac().getMonth());
+		System.out.println(hoy.getMonth());
+		if (usuarioActual.getFechaNac().getDay() == hoy.getDay() && usuarioActual.getFechaNac().getMonth() == hoy.getMonth()) {
+			System.out.println("pato");
+			return true;
+		}
+		
+		return false;
 	}
 
 

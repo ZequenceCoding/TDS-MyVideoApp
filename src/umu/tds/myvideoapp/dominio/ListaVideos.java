@@ -6,10 +6,10 @@ import java.util.List;
 
 import javax.swing.JLabel;
 
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
+
 public class ListaVideos {
 
 	private String nombreLista;
