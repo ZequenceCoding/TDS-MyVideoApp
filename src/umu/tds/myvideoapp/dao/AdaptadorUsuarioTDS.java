@@ -205,12 +205,12 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 	}
 
 	private String obtenerStringDeFecha(Date fechaNac) {
-		DateFormat df = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		return df.format(fechaNac);
 	}
 	
 	private Date obtenerFechaDeString(String fecha) {
-		DateFormat df = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			return df.parse(fecha);
 		} catch (ParseException e) {

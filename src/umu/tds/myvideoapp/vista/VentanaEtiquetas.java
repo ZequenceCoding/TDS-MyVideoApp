@@ -2,6 +2,8 @@ package umu.tds.myvideoapp.vista;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +16,11 @@ import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
 import umu.tds.myvideoapp.dominio.Etiqueta;
 
 import java.awt.Dimension;
+<<<<<<< HEAD
+=======
+import javax.swing.JButton;
+import java.awt.ComponentOrientation;
+>>>>>>> branch 'master' of https://github.com/ZequenceCoding/TDS-MyVideoApp
 
 public class VentanaEtiquetas {
 
@@ -47,23 +54,20 @@ public class VentanaEtiquetas {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.getContentPane().setMinimumSize(new Dimension(300, 0));
-		frame.getContentPane().setMaximumSize(new Dimension(300, 2147483647));
+		frame.getContentPane().setMinimumSize(new Dimension(200, 0));
+		frame.getContentPane().setMaximumSize(new Dimension(200, 2147483647));
+		frame.setSize(new Dimension(210, 308));
 		frame.getContentPane().setBackground(new Color(51, 51, 51));
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		frame.setResizable(false);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setSize(new Dimension(300, 0));
-		scrollPane.setPreferredSize(new Dimension(300, 4));
-		scrollPane.setMinimumSize(new Dimension(300, 23));
-		scrollPane.setMaximumSize(new Dimension(300, 32767));
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		frame.getContentPane().add(scrollPane);
 		
 		JPanel panel = new JPanel();
-		panel.setMinimumSize(new Dimension(300, 10));
-		panel.setSize(new Dimension(300, 0));
-		panel.setPreferredSize(new Dimension(300, 10));
-		panel.setMaximumSize(new Dimension(300, 32767));
+		panel.setPreferredSize(new Dimension(200, 10));
+		panel.setBackground(new Color(51, 51, 51));
 		for (Etiqueta etiqueta : ControladorMyVideoApp.getUnicaInstancia().getEtiquetas()) {
 			JCheckBox checkBoxEtiqueta = new JCheckBox(etiqueta.getNombre());
 			checkBoxEtiqueta.setSelected(ControladorMyVideoApp.getUnicaInstancia().isEtiquetasSeleccionada(etiqueta.getNombre()));
@@ -75,11 +79,12 @@ public class VentanaEtiquetas {
 					
 				}
 			});
-			//checkBoxEtiqueta.addAction
+			checkBoxEtiqueta.setForeground(Color.WHITE);
 			panel.add(checkBoxEtiqueta);
 		}
+
 		scrollPane.setViewportView(panel);
-		frame.setBounds(100, 100, 300, 364);
+		frame.setBounds(100, 100, 200, 308);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
 	}
