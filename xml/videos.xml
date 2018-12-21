@@ -15,5 +15,46 @@
 		<etiqueta nombre="rap"/>
 		<etiqueta nombre="spanish"/>
 	</video>
+	<video titulo="JÄGGER ROYALE - PELICULA COMPLETA" url="https://www.youtube.com/watch?v=yFb07srQS64" >
+		<etiqueta nombre="pelicula"/>
+		<etiqueta nombre="masterpiece"/>
+		<etiqueta nombre="spanish"/>
+		<etiqueta nombre="Adultos"/>
+	</video>
+	<video titulo="VOX y su Programa Electoral" url="https://www.youtube.com/watch?v=66vwt4G-mRM" >
+		<etiqueta nombre="politica"/>
+		<etiqueta nombre="entrevista"/>
+		<etiqueta nombre="spanish"/>
+		<etiqueta nombre="Adultos"/>
+		<etiqueta nombre="actualidad"/>
+	</video>
+	<video titulo="Queen - Don't Stop Me Now (Official Video)" url="https://www.youtube.com/watch?v=HgzGwKwLmgM" >
+		<etiqueta nombre="Queen"/>
+		<etiqueta nombre="music"/>
+		<etiqueta nombre="masterpiece"/>
+	</video>
+	<video titulo="Los tios del Eclipse (HQ Enhaced Audio)" url="https://www.youtube.com/watch?v=MeWGJWZ_jVo" >
+		<etiqueta nombre="actualidad"/>
+		<etiqueta nombre="gracioso"/>
+		<etiqueta nombre="masterpiece"/>
+		<etiqueta nombre="Adultos"/>
+	</video>
+	<video titulo="Lionel Messi ● Ultimate Messiah Skills 2018 ● Paranormal Goals ● Skills Show ● HD" url="https://www.youtube.com/watch?v=rZ3f4tAvgIE" >
+		<etiqueta nombre="deportes"/>
+		<etiqueta nombre="futbol"/>
+		<etiqueta nombre="masterpiece"/>
+		<etiqueta nombre="messi"/>
+	</video>
+	<video titulo="Dos ratas peleando por un churro con musica de fondo de linkin park HD 60fps" url="https://www.youtube.com/watch?v=EhVB22S1Zqk" >
+		<etiqueta nombre="gracioso"/>
+		<etiqueta nombre="Adultos"/>
+		<etiqueta nombre="music"/>
+	</video>
+	<video titulo="MMMM So good and tasty" url="https://www.youtube.com/watch?v=-FrpuPLYnvY" >
+		<etiqueta nombre="gracioso"/>
+		<etiqueta nombre="Adultos"/>
+		<etiqueta nombre="cocina"/>
+	</video>
+
 
 </videos>
