@@ -1,26 +1,20 @@
 package umu.tds.myvideoapp.vista;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JScrollPane;
-import java.awt.BorderLayout;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
 import umu.tds.myvideoapp.dominio.Etiqueta;
-
-import java.awt.Dimension;
-<<<<<<< HEAD
-=======
-import javax.swing.JButton;
-import java.awt.ComponentOrientation;
->>>>>>> branch 'master' of https://github.com/ZequenceCoding/TDS-MyVideoApp
 
 public class VentanaEtiquetas {
 

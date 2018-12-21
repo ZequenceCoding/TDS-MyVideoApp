@@ -50,10 +50,13 @@ public class AppFrame extends javax.swing.JFrame {
 	 * Creates new form AppFrame
 	 */
 	public AppFrame() {
-		initComponents();
 		if (ControladorMyVideoApp.getUnicaInstancia().isBirthday()) {
 			System.out.println("FELIZ CUMPLEAÑOS");		
+			BirthdayFrame ventanaFelicitacion = new BirthdayFrame();
+			ventanaFelicitacion.getFrame().setVisible(true);
 		}
+		initComponents();
+		setLocationRelativeTo(null);
 	}
 
 	/**

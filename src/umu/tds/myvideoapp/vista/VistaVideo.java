@@ -31,7 +31,7 @@ public class VistaVideo {
 			public void run() {
 				try {
 					VistaVideo window = new VistaVideo();
-					window.frame.setVisible(true);
+					window.getFrame().setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -50,15 +50,15 @@ public class VistaVideo {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.getContentPane().setMinimumSize(new Dimension(60, 0));
-		frame.getContentPane().setBackground(new Color(51, 51, 51));
+		setFrame(new JFrame());
+		getFrame().getContentPane().setMinimumSize(new Dimension(60, 0));
+		getFrame().getContentPane().setBackground(new Color(51, 51, 51));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{60, 0, 60, 0};
 		gridBagLayout.rowHeights = new int[]{30, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		frame.getContentPane().setLayout(gridBagLayout);
+		getFrame().getContentPane().setLayout(gridBagLayout);
 		
 		VideoWeb videoWeb = new VideoWeb();
 		GridBagConstraints gbc_videoWeb = new GridBagConstraints();
@@ -66,7 +66,7 @@ public class VistaVideo {
 		gbc_videoWeb.fill = GridBagConstraints.BOTH;
 		gbc_videoWeb.gridx = 1;
 		gbc_videoWeb.gridy = 1;
-		frame.getContentPane().add(videoWeb, gbc_videoWeb);
+		getFrame().getContentPane().add(videoWeb, gbc_videoWeb);
 		
 		JPanel panel = new JPanel(new FlowLayout());
 		panel.setBackground(new Color(51, 51, 51));
@@ -75,7 +75,7 @@ public class VistaVideo {
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 3;
-		frame.getContentPane().add(panel, gbc_panel);
+		getFrame().getContentPane().add(panel, gbc_panel);
 		
 		JButton btnReproducir = new JButton("Reproducir");
 		btnReproducir.setIcon(new ImageIcon(VistaVideo.class.getResource("/sources/addEtiq.png")));
@@ -111,7 +111,7 @@ public class VistaVideo {
 		gbc_panel_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_1.gridx = 0;
 		gbc_panel_1.gridy = 4;
-		frame.getContentPane().add(panel_1, gbc_panel_1);
+		getFrame().getContentPane().add(panel_1, gbc_panel_1);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{30, 420, 0};
 		gbl_panel_1.rowHeights = new int[]{0, 0, 0};
@@ -171,8 +171,16 @@ public class VistaVideo {
 				videoWeb.playVideo("https://www.youtube.com/watch?v=ATkyIB8JcTY");
 			}
 		});
-		frame.setBounds(100, 100, 500, 397);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getFrame().setBounds(100, 100, 500, 397);
+		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
 	}
 
 }
