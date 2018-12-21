@@ -204,6 +204,7 @@ public class JPanelExplorar extends JPanel {
 				add(searchPanel, BorderLayout.NORTH);
 				add(scrollPanel, BorderLayout.CENTER);
 				
+				ControladorMyVideoApp.getUnicaInstancia().stopVideo();
 				revalidate();
 				repaint();
 				

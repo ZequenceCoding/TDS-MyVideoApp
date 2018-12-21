@@ -279,6 +279,7 @@ public class ControladorMyVideoApp implements VideosListener {
 			return false;
 		catalogoVideos.anadirEtiq(url, etiq);
 		etiquetas.add(new Etiqueta(etiq));
+		adaptadorVideo.modificarVideo(catalogoVideos.getVideo(url));
 		return true;
 	}
 
