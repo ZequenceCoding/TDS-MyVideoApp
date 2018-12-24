@@ -167,5 +167,11 @@ public class Usuario {
 		documento.close();
 		
 	}
+
+	@SuppressWarnings("deprecation")
+	public boolean mayorEdad() {
+		Date hoy = new Date();
+		return fechaNac.before(new Date(hoy.getYear()-18, hoy.getMonth(), hoy.getDate()));
+	}
 	
 }

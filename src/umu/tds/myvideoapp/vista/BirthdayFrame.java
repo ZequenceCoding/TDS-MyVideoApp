@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import java.awt.Color;
 import java.awt.GridBagLayout;
 import tds.video.VideoWeb;
+import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JButton;
@@ -61,7 +63,7 @@ public class BirthdayFrame {
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		getFrame().getContentPane().setLayout(gridBagLayout);
 		
-		VideoWeb videoWeb = new VideoWeb();
+		VideoWeb videoWeb = ControladorMyVideoApp.getUnicaInstancia().getVideoWeb();
 		GridBagConstraints gbc_videoWeb = new GridBagConstraints();
 		gbc_videoWeb.insets = new Insets(0, 0, 5, 5);
 		gbc_videoWeb.fill = GridBagConstraints.BOTH;
@@ -86,7 +88,7 @@ public class BirthdayFrame {
 		btnGracias.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				videoWeb.cancel();
+				ControladorMyVideoApp.getUnicaInstancia().stopVideo();
 				frame.dispose();
 			}
 		});
@@ -97,7 +99,7 @@ public class BirthdayFrame {
 		frame.getContentPane().add(btnGracias, gbc_btnGracias);
 		
 		frame.setVisible(true);
-		videoWeb.playVideo("https://www.youtube.com/watch?v=tznBgIGSi98");
+		ControladorMyVideoApp.getUnicaInstancia().verVideoCumple();
 
 		getFrame().setBounds(100, 100, 500, 397);
 		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

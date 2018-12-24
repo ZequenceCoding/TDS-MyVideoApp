@@ -6,7 +6,8 @@ public class FiltroAdultos implements ITest<Video>{
 	
 	@Override
 	public boolean test(Video o) {
-		//if(ControladorMyVideoApp.getUnicaInstancia().getUsuarioActualFechaNac())
+		if(ControladorMyVideoApp.getUnicaInstancia().usuarioMayorEdad())
+			return true;
 		for (Etiqueta etiqueta : o.getEtiquetas()) {
 			if(etiqueta.getNombre().equals("Adultos"))
 				return false;

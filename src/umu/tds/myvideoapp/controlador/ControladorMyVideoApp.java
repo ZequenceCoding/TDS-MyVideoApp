@@ -339,5 +339,14 @@ public class ControladorMyVideoApp implements VideosListener {
 		return false;
 	}
 
+	public void verVideoCumple() {
+		videoWeb.playVideo("https://www.youtube.com/watch?v=tznBgIGSi98");
+		
+	}
+
+	public boolean usuarioMayorEdad() {
+		return usuarioActual.mayorEdad();
+	}
+
 
 }

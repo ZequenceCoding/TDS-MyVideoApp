@@ -50,11 +50,6 @@ public class AppFrame extends javax.swing.JFrame {
 	 * Creates new form AppFrame
 	 */
 	public AppFrame() {
-		if (ControladorMyVideoApp.getUnicaInstancia().isBirthday()) {
-			System.out.println("FELIZ CUMPLEAÑOS");		
-			BirthdayFrame ventanaFelicitacion = new BirthdayFrame();
-			ventanaFelicitacion.getFrame().setVisible(true);
-		}
 		initComponents();
 		setLocationRelativeTo(null);
 	}
@@ -212,15 +207,15 @@ public class AppFrame extends javax.swing.JFrame {
 
 				if (!ControladorMyVideoApp.getUnicaInstancia().isPremium()) {
 
-					JOptionPane.showMessageDialog(thisFrame, "Necesitas ser premium para ver los más vistos",
-							"Más Vistos", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(thisFrame, "Necesitas ser premium para ver los mï¿½s vistos",
+							"Mï¿½s Vistos", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
 
 				rightPanel.removeAll();
 				ControladorMyVideoApp.getUnicaInstancia().stopVideo();
 
-				rightPanel.add(new JPanelMasVistos("Más Vistos", thisFrame), BorderLayout.CENTER);
+				rightPanel.add(new JPanelMasVistos("Mï¿½s Vistos", thisFrame), BorderLayout.CENTER);
 
 				revalidate();
 				repaint();
@@ -449,6 +444,12 @@ public class AppFrame extends javax.swing.JFrame {
 				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(framePanel,
 						javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 
+		if (ControladorMyVideoApp.getUnicaInstancia().isBirthday()) {
+			System.out.println("FELIZ CUMPLEAï¿½OS");		
+			BirthdayFrame ventanaFelicitacion = new BirthdayFrame();
+			ventanaFelicitacion.getFrame().setVisible(true);
+			ventanaFelicitacion.getFrame().setAlwaysOnTop(true);
+		}
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 

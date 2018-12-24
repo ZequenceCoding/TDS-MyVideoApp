@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -175,6 +176,12 @@ public class JPanelExplorar extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(!ControladorMyVideoApp.getUnicaInstancia().isPremium()) {
+					JOptionPane.showMessageDialog(padre, "Necesitas ser premium para usar filtros", "Filtros", JOptionPane.INFORMATION_MESSAGE);
+					tagComboBox.setSelectedItem("No filtro");
+					return;
+				}
+				
 				String filtroCad = String.valueOf(tagComboBox.getSelectedItem());
 				switch (filtroCad) {
 				case "No filtro":
