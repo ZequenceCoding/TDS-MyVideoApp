@@ -5,7 +5,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
-import umu.tds.myvideoapp.dominio.Video;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -57,8 +56,10 @@ public class JPanelMiListaVideos extends JPanelListaVideos {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				/*****
 				String tiempo = (JOptionPane.showInputDialog(padre,
 						"¿Cuantos sugundos por video?", "Play all", JOptionPane.QUESTION_MESSAGE));
+			
 				if(tiempo != null && !tiempo.equals("")) {
 					int intTiempo = 0;
 					try {
@@ -83,6 +84,7 @@ public class JPanelMiListaVideos extends JPanelListaVideos {
 
 					
 				}
+				*/
 			}
 		});
 		getPanelBotones().add(btnPlay);

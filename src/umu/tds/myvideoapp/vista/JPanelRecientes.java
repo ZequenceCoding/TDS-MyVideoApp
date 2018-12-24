@@ -14,6 +14,9 @@ import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
 public class JPanelRecientes extends JPanelListaVideos{
 
 	
+
+	private static final long serialVersionUID = 1L;
+
 	public JPanelRecientes(String tituloLista, AppFrame padre) {
 		super(tituloLista, padre);
 	}

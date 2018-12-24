@@ -66,7 +66,11 @@ public class VentanaListas {
 			frame.getContentPane().add(jCheckBox);
 		}
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	}
+
+	public void setVisible() {
 		frame.setVisible(true);
+		
 	}
 
 }

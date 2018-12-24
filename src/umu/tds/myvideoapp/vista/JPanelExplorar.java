@@ -233,6 +233,7 @@ public class JPanelExplorar extends JPanel {
 			@Override
 			public void mouseReleased(MouseEvent e) { // Abre la pestaña para seleccionar etiquetas
 				VentanaEtiquetas ventanaEtiquetas = new VentanaEtiquetas();
+				ventanaEtiquetas.setVisible();
 			}
 		});
 		panelBtn.add(btnEtiquetas);
@@ -383,6 +384,7 @@ public class JPanelExplorar extends JPanel {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				VentanaListas vl = new VentanaListas(label.getName());
+				vl.setVisible();
 			}
 		});
 		panel.add(btnAnadirA);

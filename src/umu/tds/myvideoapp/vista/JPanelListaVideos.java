@@ -190,6 +190,7 @@ public abstract class JPanelListaVideos extends JPanel {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				VentanaListas vl = new VentanaListas(label.getName());
+				vl.setVisible();
 			}
 		});
 		panel.add(btnAnadirA);

@@ -80,6 +80,9 @@ public class VentanaEtiquetas {
 		scrollPane.setViewportView(panel);
 		frame.setBounds(100, 100, 200, 308);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	}
+	
+	public void setVisible() {
 		frame.setVisible(true);
 	}
 
