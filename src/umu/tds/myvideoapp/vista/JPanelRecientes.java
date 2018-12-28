@@ -44,4 +44,9 @@ public class JPanelRecientes extends JPanelListaVideos{
 		return ControladorMyVideoApp.getUnicaInstancia().recientesToArray();
 	}
 
+	@Override
+	protected void volverVideo() {
+		return;
+	}
+
 }

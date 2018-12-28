@@ -181,10 +181,9 @@ public abstract class JPanelListaVideos extends JPanel {
 		gbc_panel.gridy = 3;
 		vistaVideo.add(panel, gbc_panel);
 
-		JButton btnReproducir = new JButton("Reproducir");
-		panel.add(btnReproducir);
 
 		JButton btnAnadirA = new JButton("Añadir a");
+		btnAnadirA.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR));
 		btnAnadirA.addMouseListener(new MouseAdapter() {
 			
 			@Override
@@ -196,9 +195,13 @@ public abstract class JPanelListaVideos extends JPanel {
 		panel.add(btnAnadirA);
 
 		JButton btnVolver = new JButton("Volver");
+		btnVolver.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR));
 		btnVolver.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				
+				volverVideo();
+				
 				removeAll();
 				ControladorMyVideoApp.getUnicaInstancia().stopVideo();
 				generateTableVideos();
@@ -300,6 +303,8 @@ public abstract class JPanelListaVideos extends JPanel {
 		
 		return vistaVideo;
 	}
+
+	protected abstract void volverVideo();
 
 	public JPanel getPanelBotones() {
 		return panelBotones;

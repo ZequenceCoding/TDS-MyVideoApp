@@ -348,5 +348,9 @@ public class ControladorMyVideoApp implements VideosListener {
 		return usuarioActual.mayorEdad();
 	}
 
+	public Video getSigVideo(String tituloLista, Video v) {
+		return usuarioActual.getSigVideo(tituloLista, v);
+	}
+
 
 }

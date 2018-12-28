@@ -1,8 +1,14 @@
 package umu.tds.myvideoapp.vista;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 import umu.tds.myvideoapp.controlador.ControladorMyVideoApp;
 
@@ -50,8 +56,20 @@ public class VentanaListas {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		frame.getContentPane().setMinimumSize(new Dimension(200, 0));
+		frame.getContentPane().setMaximumSize(new Dimension(200, 2147483647));
+		frame.setSize(new Dimension(210, 308));
+		frame.getContentPane().setBackground(new Color(51, 51, 51));
+		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		frame.setResizable(false);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		frame.getContentPane().add(scrollPane);
 		
+		JPanel panel = new JPanel();
+		panel.setPreferredSize(new Dimension(200, 10));
+		panel.setBackground(new Color(51, 51, 51));
 		
 		LinkedList<JCheckBox> list = ControladorMyVideoApp.getUnicaInstancia().getAnadirA(url);
 		for (JCheckBox jCheckBox : list) {
@@ -63,8 +81,10 @@ public class VentanaListas {
 					
 				}
 			});
-			frame.getContentPane().add(jCheckBox);
+			panel.add(jCheckBox);
 		}
+		
+		scrollPane.setViewportView(panel);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 

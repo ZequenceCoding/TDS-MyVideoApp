@@ -1,5 +1,6 @@
 package umu.tds.myvideoapp.dominio;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Date;
@@ -119,6 +120,7 @@ public class Usuario {
 			JCheckBox checkBox = new JCheckBox();
 			checkBox.setText(listaVideos.getNombreLista());
 			checkBox.setName(listaVideos.getNombreLista());
+			checkBox.setForeground(Color.white);
 			checkBox.setSelected(listaVideos.getVideo(url) != null);
 			lista.add(checkBox);
 			
@@ -172,6 +174,10 @@ public class Usuario {
 	public boolean mayorEdad() {
 		Date hoy = new Date();
 		return fechaNac.before(new Date(hoy.getYear()-18, hoy.getMonth(), hoy.getDate()));
+	}
+
+	public Video getSigVideo(String tituloLista, Video v) {
+		return getListaVideos(tituloLista).getSigVid(v);
 	}
 	
 }

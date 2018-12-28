@@ -115,6 +115,23 @@ public class ListaVideos {
 		}
 		return new Paragraph(cadVideos);
 	}
+
+
+	public Video getSigVid(Video v) {
+		LinkedList<Video> aux = (LinkedList<Video>) videos;
+		if(v == null) {
+			return aux.getFirst();
+		}
+		for (Video video : aux) {
+			if(video.getUrl().equals(v.getUrl())) {
+				int index = aux.indexOf(video)+1;
+				if(index < aux.size())
+					return aux.get(index);
+				break;
+			}	
+		}
+		return null;
+	}
 	
 	
 }

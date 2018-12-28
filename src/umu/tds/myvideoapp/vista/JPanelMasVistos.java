@@ -42,4 +42,9 @@ public class JPanelMasVistos extends JPanelListaVideos {
 		return ControladorMyVideoApp.getUnicaInstancia().topToArray();
 	}
 
+	@Override
+	protected void volverVideo() {
+		return;
+	}
+
 }
