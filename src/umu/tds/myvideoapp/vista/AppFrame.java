@@ -27,6 +27,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.Font;
 import javax.swing.JOptionPane;
 import javax.swing.GroupLayout.Alignment;
@@ -389,7 +391,7 @@ public class AppFrame extends javax.swing.JFrame {
 
 		usernameLabel.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
 		usernameLabel.setForeground(new java.awt.Color(0, 153, 204));
-		usernameLabel.setText("Hola " + ControladorMyVideoApp.getUnicaInstancia().getUsuarioActualName());
+		usernameLabel.setText("Hola " + ControladorMyVideoApp.getUnicaInstancia().getUsuarioActualUsername());
 		GridBagConstraints gbc_usernameLabel = new GridBagConstraints();
 		gbc_usernameLabel.anchor = GridBagConstraints.NORTHWEST;
 		gbc_usernameLabel.insets = new Insets(0, 0, 5, 5);
@@ -528,10 +530,16 @@ public class AppFrame extends javax.swing.JFrame {
 
 	public void addEtiq(String url) {
 		String etiq = JOptionPane.showInputDialog(thisFrame, "Ponga un nuevo nombre de etiqueta");
-		if (etiq != null && etiq != "") {
+		Pattern pattern = Pattern.compile("\\s");
+		Matcher matcher = pattern.matcher(etiq);
+		if (etiq != null && !etiq.isEmpty() && !matcher.find()) {
 			if (!ControladorMyVideoApp.getUnicaInstancia().registrarEtiq(url, etiq))
 				JOptionPane.showMessageDialog(thisFrame, "Este video ya tiene esa etiqueta", "Error",
 						JOptionPane.ERROR_MESSAGE);
+		} else {
+			if(etiq != null && !etiq.isEmpty())
+				JOptionPane.showMessageDialog(thisFrame, "Etiqueta no valida", "Error",
+					JOptionPane.ERROR_MESSAGE);
 		}
 
 	}

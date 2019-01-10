@@ -257,8 +257,8 @@ public class ControladorMyVideoApp implements VideosListener {
 		return new HashSet<Etiqueta>(etiquetas);
 	}
 
-	public String getUsuarioActualName() {
-		return usuarioActual.getNombre();
+	public String getUsuarioActualUsername() {
+		return usuarioActual.getUsername();
 	}
 
 	public Object[] getListasUsuario() {
