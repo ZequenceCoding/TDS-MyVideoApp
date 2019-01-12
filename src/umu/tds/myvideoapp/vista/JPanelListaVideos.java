@@ -42,7 +42,7 @@ public abstract class JPanelListaVideos extends JPanel {
 	
 	public JPanelListaVideos(String tituloLista, AppFrame padre) {
 		this.setTituloLista(tituloLista);
-		this.padre = padre;
+		this.setPadre(padre);
 		
 		setBackground(new Color(50, 50, 50));
 		setLayout(new BorderLayout(0, 0));
@@ -287,7 +287,7 @@ public abstract class JPanelListaVideos extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				padre.addEtiq(label.getName());
+				getPadre().addEtiq(label.getName());
 				
 				removeAll();
 				createVistaVideo(label);
@@ -336,6 +336,14 @@ public abstract class JPanelListaVideos extends JPanel {
 
 	public void setScrollPanel(JScrollPane scrollPanel) {
 		this.scrollPanel = scrollPanel;
+	}
+
+	public AppFrame getPadre() {
+		return padre;
+	}
+
+	public void setPadre(AppFrame padre) {
+		this.padre = padre;
 	}
 
 }

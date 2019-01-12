@@ -34,6 +34,7 @@ import javax.swing.JOptionPane;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.Timer;
 import javax.swing.ImageIcon;
 import javax.swing.border.EtchedBorder;
 
@@ -190,6 +191,7 @@ public class AppFrame extends javax.swing.JFrame {
 				ControladorMyVideoApp.getUnicaInstancia().stopVideo();
 
 				rightPanel.add(new JPanelRecientes("Recientes", thisFrame), BorderLayout.CENTER);
+				stopTimer();
 
 				revalidate();
 				repaint();
@@ -216,6 +218,7 @@ public class AppFrame extends javax.swing.JFrame {
 
 				rightPanel.removeAll();
 				ControladorMyVideoApp.getUnicaInstancia().stopVideo();
+				stopTimer();
 
 				rightPanel.add(new JPanelMasVistos("M�s Vistos", thisFrame), BorderLayout.CENTER);
 
@@ -423,6 +426,8 @@ public class AppFrame extends javax.swing.JFrame {
 				if(JOptionPane.showConfirmDialog(thisFrame, "¿Seguro que quieres salir?", "Log out", JOptionPane.YES_NO_OPTION) == 0) {
 					LaunchFrame ventanaLogin = new LaunchFrame();
         			ventanaLogin.setVisible(true);
+        			ControladorMyVideoApp.getUnicaInstancia().stopVideo();
+        			stopTimer();
         			dispose();
 				}
 			}
@@ -471,6 +476,7 @@ public class AppFrame extends javax.swing.JFrame {
 						rightPanel.removeAll();
 						ControladorMyVideoApp.getUnicaInstancia().stopVideo();
 
+						stopTimer();
 						rightPanel.add(new JPanelMiListaVideos(label.getText(), thisFrame));
 
 						rightPanel.revalidate();
@@ -556,6 +562,17 @@ public class AppFrame extends javax.swing.JFrame {
 		return ControladorMyVideoApp.getUnicaInstancia().getFiltroActual();
 	}
 
+	public void setTimer(int tiempo, ActionListener actionListener) {
+		timer = new Timer(tiempo * 1000, actionListener);
+		timer.setRepeats(false);
+		timer.start();
+	}
+	public void stopTimer() {
+		if(timer == null)
+			return;
+		timer.stop();
+	}
+	
 	/**
 	 * @param args
 	 *            the command line arguments
@@ -623,4 +640,5 @@ public class AppFrame extends javax.swing.JFrame {
 	private JButton btnNewButton;
 	private JButton button_1;
 	private JButton outButton;
+	private Timer timer;
 }

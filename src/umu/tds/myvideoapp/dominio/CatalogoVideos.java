@@ -137,7 +137,7 @@ public class CatalogoVideos {
 		int k = 0;
 		for (int i = 0; i < nFilas; i++) {
 			for (int j = 0; j < 3; j++) {
-				if(k >= videos.size())
+				if(k >= videosOrdenados.size())
 					break;
 				tab[i][j] = new JLabel();
 				tab[i][j].setIcon(ControladorMyVideoApp.getUnicaInstancia().getVideoWeb().getThumb(videosOrdenados.get(k).getUrl()));

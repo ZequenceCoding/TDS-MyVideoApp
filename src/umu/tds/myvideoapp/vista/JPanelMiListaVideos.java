@@ -26,8 +26,7 @@ import java.awt.Cursor;
 public class JPanelMiListaVideos extends JPanelListaVideos {
 
 	private static final long serialVersionUID = 1L;
-	
-	private Timer timer = new Timer(0, null);
+
 
 	public JPanelMiListaVideos(String tituloLista, AppFrame padre) {
 		super(tituloLista, padre);
@@ -105,9 +104,7 @@ public class JPanelMiListaVideos extends JPanelListaVideos {
 						}
 					};
 
-					timer = new Timer(tiempo * 1000, actionListener);
-					timer.setRepeats(false);
-					timer.start();
+					padre.setTimer(tiempo, actionListener);
 				} else {
 					removeAll();
 					ControladorMyVideoApp.getUnicaInstancia().stopVideo();
@@ -136,8 +133,7 @@ public class JPanelMiListaVideos extends JPanelListaVideos {
 
 	@Override
 	protected void volverVideo() {
-		timer.stop();
-		
+		getPadre().stopTimer();
 	}
 
 }
