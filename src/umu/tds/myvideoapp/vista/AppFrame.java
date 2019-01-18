@@ -452,7 +452,6 @@ public class AppFrame extends javax.swing.JFrame {
 						javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 
 		if (ControladorMyVideoApp.getUnicaInstancia().isBirthday()) {
-			System.out.println("FELIZ CUMPLEA�OS");		
 			BirthdayFrame ventanaFelicitacion = new BirthdayFrame();
 			ventanaFelicitacion.getFrame().setVisible(true);
 			ventanaFelicitacion.getFrame().setAlwaysOnTop(true);
@@ -464,14 +463,12 @@ public class AppFrame extends javax.swing.JFrame {
 		table_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// VistaVideo vistaVideo = new VistaVideo();
 				int column = table_1.getColumnModel().getColumnIndexAtX(e.getX());
 				int row = e.getY() / table_1.getRowHeight();
 
 				if (row < table_1.getRowCount() && row >= 0 && column < table_1.getColumnCount() && column >= 0) {
 					Object value = table_1.getValueAt(row, column);
 					if (value instanceof JLabel) {
-						System.out.println("click lista");
 						JLabel label = (JLabel) value;
 						rightPanel.removeAll();
 						ControladorMyVideoApp.getUnicaInstancia().stopVideo();
@@ -586,7 +583,6 @@ public class AppFrame extends javax.swing.JFrame {
 		 * look and feel. For details see
 		 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
 		 */
-		System.out.println("Entra en AppFrame");
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {

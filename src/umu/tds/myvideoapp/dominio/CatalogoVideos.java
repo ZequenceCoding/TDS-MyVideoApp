@@ -102,7 +102,6 @@ public class CatalogoVideos {
 
 	public List<Video> getVideosConEtiquetasTextoYFiltro(Set<Etiqueta> etiquetasSeleccionadas, String text, ITest<Video> filtro) {
 		List<Video> videosConEtiquetasYTexto = new LinkedList<Video>();
-		System.out.println(filtro.getClass());
 		for (Video video : videos.values()) {
 			if (video.contieneEtiqueta(etiquetasSeleccionadas) && video.getTitulo().contains(text) && filtro.test(video)) {
 					videosConEtiquetasYTexto.add(video);

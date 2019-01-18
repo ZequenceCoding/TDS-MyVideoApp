@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -213,7 +215,7 @@ public abstract class JPanelListaVideos extends JPanel {
 			}
 		});
 		panel.add(btnVolver);
-
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(51, 51, 51));
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();

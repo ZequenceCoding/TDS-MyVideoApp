@@ -146,7 +146,6 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 				recientes = AdaptadorListaVideosTDS.getUnicaInstancia().recuperarListaVideos(
 						Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eUsuario, "recientes")));
 				try {
-					System.out.println(servPersistencia.recuperarPropiedadEntidad(eUsuario, "filtro"));
 					filtro = (ITest<Video>) Class.forName(servPersistencia.recuperarPropiedadEntidad(eUsuario, "filtro")).newInstance();
 				} catch (InstantiationException e) {
 					// TODO Auto-generated catch block

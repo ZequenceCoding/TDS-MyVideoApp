@@ -45,7 +45,6 @@ public class ControladorMyVideoApp implements VideosListener {
 
 
 	public ControladorMyVideoApp() {
-		System.out.println("Crea el controlador");
 		inicializarAdaptadores();
 		inicializarCatalogos();
 		etiquetas = catalogoVideos.getEtiquetas();
@@ -60,10 +59,11 @@ public class ControladorMyVideoApp implements VideosListener {
 	}
 
 	public void registrarUsuario(String username, String password, String nombre, String apellidos, String email, Date date) {
-		System.out.println(DateFormat.getDateInstance().format(date));
+		if(catalogoUsuarios.getUsuario(username) != null)
+			return;
 		Usuario usuario = new Usuario(username, password, nombre, apellidos, email, date);
-		adaptadorUsuario.registrarUsuario(usuario);
 		catalogoUsuarios.addUsuario(usuario);
+		adaptadorUsuario.registrarUsuario(usuario);
 	}
 
 	public void registrarVideo(String url, String titulo, List<Etiqueta> etiquetas) {
@@ -100,7 +100,6 @@ public class ControladorMyVideoApp implements VideosListener {
 			return false;
 		if (usuario.getPassword().equals(password)) {
 			usuarioActual = usuario;
-			System.out.println(usuario.getListasVideos());
 			return true;
 		}
 		return false;
@@ -109,13 +108,11 @@ public class ControladorMyVideoApp implements VideosListener {
 	public void anadirVideoALista(String url, String nombreLista) {
 		usuarioActual.anadirVideoALista(catalogoVideos.getVideo(url), nombreLista);
 		adaptadorListaVideos.modificarListaVideos(usuarioActual.getListaVideos(nombreLista));
-		adaptadorUsuario.modificarUsuario(usuarioActual);
 	}
 
 	public void verVideo(String url) {
 		catalogoVideos.verVideo(url);
 		usuarioActual.verVideo(catalogoVideos.getVideo(url));
-		adaptadorUsuario.modificarUsuario(usuarioActual);
 		adaptadorListaVideos.modificarListaVideos(usuarioActual.getRecientes());
 		adaptadorVideo.modificarVideo(catalogoVideos.getVideo(url));
 		videoWeb.playVideo(url);
@@ -127,27 +124,20 @@ public class ControladorMyVideoApp implements VideosListener {
 	
 	/* Funciones auxiliares */
 	private void inicializarAdaptadores() {
-		System.out.println("Inicializa los adaptadores");
 		FactoriaDAO factoria = null;
 		try {
 			factoria = FactoriaDAO.getInstancia(FactoriaDAO.DAO_TDS);
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Adaptador Video");
 		adaptadorVideo = factoria.getVideoDAO();
-		System.out.println("Adaptador Lista Videos");
 		adaptadorListaVideos = factoria.getListaVideosDAO();
-		System.out.println("Adaptador Usuario");
 		adaptadorUsuario = factoria.getUsuarioDAO();
 
 	}
 
 	private void inicializarCatalogos() {
-		System.out.println("Inicializa los catalogos");
-		System.out.println("Catalogo videos");
 		catalogoVideos = CatalogoVideos.getUnicaInstancia();
-		System.out.println("Catalogo Usuario");
 		catalogoUsuarios = CatalogoUsuarios.getUnicaInstancia();
 
 	}
@@ -233,7 +223,6 @@ public class ControladorMyVideoApp implements VideosListener {
 	
 	@Override
 	public void enteradoCambioVideos(VideosEvent evento) {
-		System.out.println("Luz pulsado");
 		if(evento == null)
 			return;
 		for (umu.tds.componente.Video video : evento.getNewVideo().getVideo()) {
@@ -246,7 +235,6 @@ public class ControladorMyVideoApp implements VideosListener {
 			}
 		}
 		etiquetas = catalogoVideos.getEtiquetas();
-		System.out.println("Videos Registrados");
 	}
 
 	public List<Etiqueta> getEtiquetasVideo(String url) {
@@ -292,10 +280,6 @@ public class ControladorMyVideoApp implements VideosListener {
 
 	public String getTextoBusqueda() {
 		return textoBusqueda;
-	}
-
-	public void reproducirTodos(String tituloLista, int tiempo) {
-		
 	}
 
 	public List<Video> getVideosLista(String tituloLista) {

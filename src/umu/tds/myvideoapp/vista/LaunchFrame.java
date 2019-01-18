@@ -624,7 +624,6 @@ public class LaunchFrame extends javax.swing.JFrame {
 			repeatPassLabel.setForeground(new java.awt.Color(190, 0, 0));
 			ok = false;
 		}
-		System.out.println(ok);
 		return ok;
 	}
 	

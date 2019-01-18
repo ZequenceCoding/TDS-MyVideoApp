@@ -42,7 +42,6 @@ public class Usuario {
 		this.listasVideos = new LinkedList<ListaVideos>();
 		this.recientes = new ListaVideos("Recientes");
 		this.filtro = new NoFiltro();
-		System.out.println(fechaNac.toString());
 	}
 	
 	public Usuario(Boolean premium, String username, String password, String nombre, String apellidos, String email,

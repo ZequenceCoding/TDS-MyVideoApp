@@ -78,7 +78,6 @@ public class ListaVideos {
 
 
 	public JLabel[][] toArray() {
-		System.out.println("Llega");
 		int nFilas = (int) (Math.ceil(videos.size()/3.0));
 		JLabel tab[][] = new JLabel[nFilas][3];
 		int k = 0;
@@ -89,8 +88,6 @@ public class ListaVideos {
 				tab[i][j] = new JLabel();
 				tab[i][j].setIcon(ControladorMyVideoApp.getUnicaInstancia().getVideoWeb().getThumb(videos.get(k).getUrl()));
 				tab[i][j].setText(videos.get(k).getTitulo());
-				System.out.println(videos.get(k).getTitulo());
-				System.out.println("Hola");
 				tab[i][j].setHorizontalTextPosition(JLabel.CENTER);
 				tab[i][j].setVerticalTextPosition(JLabel.BOTTOM);
 				tab[i][j].setForeground(Color.WHITE);

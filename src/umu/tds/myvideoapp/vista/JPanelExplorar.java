@@ -244,7 +244,6 @@ public class JPanelExplorar extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) { // Refresca la pantalla
-				System.out.println(getClass());
 				removeAll();
 				
 				generateTableVideos();
