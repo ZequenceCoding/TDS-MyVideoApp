@@ -394,6 +394,13 @@ public class LaunchFrame extends javax.swing.JFrame {
         passwordLoginField.setBorder(null);
         
         forgotLabel = new JLabel("<HTML><U>Forgot your password? </U></HTML>");
+        forgotLabel.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseReleased(MouseEvent arg0) {
+        		PasswordFrame recuperarPassword = new PasswordFrame();
+        		recuperarPassword.setVisible(true);
+        	}
+        });
         forgotLabel.setForeground(new java.awt.Color(0, 153, 204));
 
         javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);

@@ -335,5 +335,17 @@ public class ControladorMyVideoApp implements VideosListener {
 		return usuarioActual.getSigVideo(tituloLista, v);
 	}
 
+	public boolean cambiarPassword(String nombre, String email, String username, String password) {
+		Usuario usuario = catalogoUsuarios.getUsuario(username);
+		if (usuario == null)
+			return false;
+		if (usuario.getNombre().equals(nombre) && usuario.getEmail().equals(email)) {
+			usuario.setPassword(password);
+			adaptadorUsuario.modificarUsuario(usuario);
+			return true;
+		}
+		return false;
+	}
+
 
 }
