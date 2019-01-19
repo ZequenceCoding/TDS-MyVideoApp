@@ -36,7 +36,6 @@ import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.Timer;
 import javax.swing.ImageIcon;
-import javax.swing.border.EtchedBorder;
 
 /**
  *
@@ -263,55 +262,74 @@ public class AppFrame extends javax.swing.JFrame {
 		});
 
 		javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
-		leftPanelLayout.setHorizontalGroup(leftPanelLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(leftPanelLayout.createSequentialGroup().addGroup(leftPanelLayout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(leftPanelLayout.createSequentialGroup().addGap(32).addGroup(leftPanelLayout
-								.createParallelGroup(Alignment.LEADING)
-								.addGroup(leftPanelLayout.createSequentialGroup().addComponent(mostSeenLabel)
-										.addPreferredGap(ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-										.addComponent(topButton).addGap(35))
-								.addComponent(jSeparator1, GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-								.addGroup(leftPanelLayout.createSequentialGroup().addComponent(myListsLabel)
-										.addPreferredGap(ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-										.addComponent(button_1).addGap(32))
-								.addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
+		leftPanelLayout.setHorizontalGroup(
+			leftPanelLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(leftPanelLayout.createSequentialGroup()
+					.addGroup(leftPanelLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(leftPanelLayout.createSequentialGroup()
+							.addGap(32)
+							.addGroup(leftPanelLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(leftPanelLayout.createSequentialGroup()
+									.addComponent(mostSeenLabel)
+									.addPreferredGap(ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+									.addComponent(topButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+									.addGap(38))
+								.addComponent(jSeparator1, GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+								.addGroup(leftPanelLayout.createSequentialGroup()
+									.addComponent(myListsLabel)
+									.addPreferredGap(ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+									.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+									.addGap(32))
+								.addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
-								.addGroup(leftPanelLayout.createSequentialGroup().addComponent(newListLabel)
-										.addPreferredGap(ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-										.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 28,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(39))
-								.addGroup(leftPanelLayout.createSequentialGroup().addComponent(recentLabel)
-										.addPreferredGap(ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-										.addComponent(historyButton, GroupLayout.PREFERRED_SIZE, 34,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(37))
+								.addGroup(leftPanelLayout.createSequentialGroup()
+									.addComponent(newListLabel)
+									.addPreferredGap(ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+									.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+									.addGap(35))
+								.addGroup(leftPanelLayout.createSequentialGroup()
+									.addComponent(recentLabel)
+									.addPreferredGap(ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+									.addComponent(historyButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+									.addGap(36))
 								.addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE))
-								.addGap(16))
-						.addGroup(leftPanelLayout.createSequentialGroup().addGap(64).addComponent(myListsPanel,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.addGap(32)));
-		leftPanelLayout.setVerticalGroup(leftPanelLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(leftPanelLayout.createSequentialGroup().addGap(25)
-						.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING).addComponent(mostSeenLabel)
-								.addComponent(topButton))
-						.addGap(4).addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING).addComponent(recentLabel)
-								.addComponent(historyButton))
-						.addGap(4).addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-						.addGap(7)
-						.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING).addComponent(newListLabel)
-								.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
-						.addGap(4).addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING).addComponent(myListsLabel)
-								.addComponent(button_1))
-						.addGap(4).addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(myListsPanel, GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE).addGap(32)));
+							.addGap(16))
+						.addGroup(leftPanelLayout.createSequentialGroup()
+							.addGap(64)
+							.addComponent(myListsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(32))
+		);
+		leftPanelLayout.setVerticalGroup(
+			leftPanelLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(leftPanelLayout.createSequentialGroup()
+					.addGap(25)
+					.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(mostSeenLabel)
+						.addComponent(topButton))
+					.addGap(4)
+					.addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(recentLabel)
+						.addComponent(historyButton))
+					.addGap(4)
+					.addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+					.addGap(7)
+					.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(newListLabel)
+						.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+					.addGap(4)
+					.addComponent(jSeparator3, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(leftPanelLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(myListsLabel)
+						.addComponent(button_1))
+					.addGap(4)
+					.addComponent(jSeparator4, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(myListsPanel, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+					.addGap(32))
+		);
 		leftPanel.setLayout(leftPanelLayout);
 
 		javax.swing.GroupLayout framePanelLayout = new javax.swing.GroupLayout(framePanel);
@@ -354,7 +372,7 @@ public class AppFrame extends javax.swing.JFrame {
 		userIconLabel = new javax.swing.JLabel();
 		userIconLabel.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
 		userIconLabel
-				.setBorder(new EtchedBorder(EtchedBorder.RAISED, new Color(0, 153, 204), new Color(255, 255, 255)));
+				.setBorder(null);
 		userIconLabel.setIcon(new ImageIcon(AppFrame.class.getResource("/sources/userIcon64.png")));
 		GridBagConstraints gbc_userIconLabel = new GridBagConstraints();
 		gbc_userIconLabel.insets = new Insets(0, 0, 0, 5);
@@ -368,13 +386,16 @@ public class AppFrame extends javax.swing.JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (ControladorMyVideoApp.getUnicaInstancia().isPremium()) {
-					JOptionPane.showMessageDialog(thisFrame, "Ya eres premium", "Usuario Premium",
+					if (JOptionPane.showConfirmDialog(thisFrame, "¿Seguro que querieres cancelar tu suscripción premium?",
+							"Usuario Premium", JOptionPane.YES_NO_OPTION) == 0)
+						ControladorMyVideoApp.getUnicaInstancia().doPremium();
+					JOptionPane.showMessageDialog(thisFrame, "Se ha cancelado la suscripción premium.", "Usuario Premium",
 							JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					if (JOptionPane.showConfirmDialog(thisFrame, "¿Seguro que querieres hacerte premium?",
 							"Usuario Premium", JOptionPane.YES_NO_OPTION) == 0)
 						ControladorMyVideoApp.getUnicaInstancia().doPremium();
-					JOptionPane.showMessageDialog(thisFrame, "¡Enhorabuena, Ya eres premium!", "Usuario Premium",
+					JOptionPane.showMessageDialog(thisFrame, "¡Enhorabuena, ya eres premium!", "Usuario Premium",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
@@ -391,16 +412,16 @@ public class AppFrame extends javax.swing.JFrame {
 		gbc_btnNewButton.gridy = 0;
 		topPanel.add(btnNewButton, gbc_btnNewButton);
 		usernameLabel = new javax.swing.JLabel();
-
-		usernameLabel.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
-		usernameLabel.setForeground(new java.awt.Color(0, 153, 204));
-		usernameLabel.setText("Hola " + ControladorMyVideoApp.getUnicaInstancia().getUsuarioActualUsername());
-		GridBagConstraints gbc_usernameLabel = new GridBagConstraints();
-		gbc_usernameLabel.anchor = GridBagConstraints.NORTHWEST;
-		gbc_usernameLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_usernameLabel.gridx = 4;
-		gbc_usernameLabel.gridy = 2;
-		topPanel.add(usernameLabel, gbc_usernameLabel);
+		
+				usernameLabel.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
+				usernameLabel.setForeground(new java.awt.Color(0, 153, 204));
+				usernameLabel.setText("Hola " + ControladorMyVideoApp.getUnicaInstancia().getUsuarioActualUsername());
+				GridBagConstraints gbc_usernameLabel = new GridBagConstraints();
+				gbc_usernameLabel.anchor = GridBagConstraints.NORTH;
+				gbc_usernameLabel.insets = new Insets(0, 0, 5, 5);
+				gbc_usernameLabel.gridx = 4;
+				gbc_usernameLabel.gridy = 2;
+				topPanel.add(usernameLabel, gbc_usernameLabel);
 		deployableUserPanel = new javax.swing.JButton();
 
 		deployableUserPanel.setBorder(null);
@@ -433,6 +454,7 @@ public class AppFrame extends javax.swing.JFrame {
 			}
 		});
 		GridBagConstraints gbc_outButton = new GridBagConstraints();
+		gbc_outButton.anchor = GridBagConstraints.NORTH;
 		gbc_outButton.insets = new Insets(0, 0, 5, 0);
 		gbc_outButton.gridx = 6;
 		gbc_outButton.gridy = 2;
