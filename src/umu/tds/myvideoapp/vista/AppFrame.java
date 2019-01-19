@@ -339,7 +339,7 @@ public class AppFrame extends javax.swing.JFrame {
 		GridBagLayout gbl_topPanel = new GridBagLayout();
 		gbl_topPanel.columnWidths = new int[] { 32, 64, 460, 64, 145, 16, 0, 0 };
 		gbl_topPanel.rowHeights = new int[] { 20, 20, 44, 0 };
-		gbl_topPanel.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_topPanel.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		gbl_topPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		topPanel.setLayout(gbl_topPanel);
 

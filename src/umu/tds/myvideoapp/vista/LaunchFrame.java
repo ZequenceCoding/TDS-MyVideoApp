@@ -51,7 +51,6 @@ public class LaunchFrame extends javax.swing.JFrame {
 
         mainPanel = new javax.swing.JPanel();
         registerPanel = new javax.swing.JPanel();
-        separatorPanel = new javax.swing.JPanel();
         registerButton = new javax.swing.JButton();
         registerButton.addMouseListener(new MouseAdapter() {
         	@Override
@@ -98,9 +97,11 @@ public class LaunchFrame extends javax.swing.JFrame {
         usernameLabel = new javax.swing.JLabel();
         passwordLabel = new javax.swing.JLabel();
         userTextField = new javax.swing.JTextField();
+        userTextField.setToolTipText("Username");
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         passwordLoginField = new javax.swing.JPasswordField();
+        passwordLoginField.setToolTipText("Password");
         loginButton = new javax.swing.JButton();
         loginButton.addMouseListener(new MouseAdapter() {
         	@Override
@@ -122,7 +123,7 @@ public class LaunchFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MyVideoApp");
-        setBackground(new java.awt.Color(102, 102, 102));
+        setBackground(new java.awt.Color(50, 50, 50));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setIconImages(null);
         setMaximumSize(new java.awt.Dimension(882, 580));
@@ -132,22 +133,9 @@ public class LaunchFrame extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(882, 580));
         setResizable(false);
 
-        mainPanel.setBackground(new java.awt.Color(79, 79, 79));
+        mainPanel.setBackground(new java.awt.Color(45, 45, 45));
 
         registerPanel.setBackground(new java.awt.Color(65, 65, 65));
-
-        separatorPanel.setBackground(new java.awt.Color(36, 36, 36));
-
-        javax.swing.GroupLayout separatorPanelLayout = new javax.swing.GroupLayout(separatorPanel);
-        separatorPanel.setLayout(separatorPanelLayout);
-        separatorPanelLayout.setHorizontalGroup(
-            separatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 8, Short.MAX_VALUE)
-        );
-        separatorPanelLayout.setVerticalGroup(
-            separatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
 
         registerButton.setText("Registrarme");
         registerButton.addActionListener(new java.awt.event.ActionListener() {
@@ -266,7 +254,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         				.addGroup(registerPanelLayout.createSequentialGroup()
         					.addGap(42)
         					.addComponent(titleLabel)
-        					.addPreferredGap(ComponentPlacement.RELATED, 335, Short.MAX_VALUE))
+        					.addPreferredGap(ComponentPlacement.RELATED, 308, Short.MAX_VALUE))
         				.addGroup(registerPanelLayout.createSequentialGroup()
         					.addGroup(registerPanelLayout.createParallelGroup(Alignment.TRAILING)
         						.addGroup(registerPanelLayout.createSequentialGroup()
@@ -274,10 +262,10 @@ public class LaunchFrame extends javax.swing.JFrame {
         							.addGroup(registerPanelLayout.createParallelGroup(Alignment.LEADING)
         								.addComponent(infoLabel)
         								.addGroup(registerPanelLayout.createSequentialGroup()
-        									.addGap(0, 251, Short.MAX_VALUE)
+        									.addGap(0, 218, Short.MAX_VALUE)
         									.addComponent(registerButton))))
         						.addGroup(registerPanelLayout.createSequentialGroup()
-        							.addContainerGap(75, Short.MAX_VALUE)
+        							.addContainerGap(34, Short.MAX_VALUE)
         							.addGroup(registerPanelLayout.createParallelGroup(Alignment.LEADING)
         								.addGroup(registerPanelLayout.createSequentialGroup()
         									.addGroup(registerPanelLayout.createParallelGroup(Alignment.TRAILING)
@@ -309,11 +297,10 @@ public class LaunchFrame extends javax.swing.JFrame {
         									.addPreferredGap(ComponentPlacement.UNRELATED)
         									.addComponent(termsAndCondsLabel, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)))))
         					.addGap(141)))
-        			.addComponent(separatorPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addGap(8))
         );
         registerPanelLayout.setVerticalGroup(
         	registerPanelLayout.createParallelGroup(Alignment.LEADING)
-        		.addComponent(separatorPanel, GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
         		.addGroup(registerPanelLayout.createSequentialGroup()
         			.addGap(64)
         			.addComponent(titleLabel)
@@ -368,7 +355,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         					.addComponent(registerButton)
         					.addComponent(termsAndCondsLabel))
         				.addComponent(termsAndCondsCheckBox))
-        			.addContainerGap(102, Short.MAX_VALUE))
+        			.addContainerGap(120, Short.MAX_VALUE))
         );
         registerPanel.setLayout(registerPanelLayout);
 
@@ -391,7 +378,6 @@ public class LaunchFrame extends javax.swing.JFrame {
 
         userTextField.setBackground(new java.awt.Color(51, 51, 51));
         userTextField.setForeground(new java.awt.Color(153, 153, 153));
-        userTextField.setText("Username");
         userTextField.setBorder(null);
         userTextField.setDisabledTextColor(new java.awt.Color(102, 102, 102));
         userTextField.setSelectionColor(new java.awt.Color(0, 153, 204));
@@ -405,7 +391,6 @@ public class LaunchFrame extends javax.swing.JFrame {
         passwordLoginField.setBackground(new java.awt.Color(50, 50, 50));
         passwordLoginField.setForeground(new java.awt.Color(153, 153, 153));
         passwordLoginField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        passwordLoginField.setText("yourpassword");
         passwordLoginField.setBorder(null);
         
         forgotLabel = new JLabel("<HTML><U>Forgot your password? </U></HTML>");
@@ -560,7 +545,6 @@ public class LaunchFrame extends javax.swing.JFrame {
     private javax.swing.JPanel registerPanel;
     private javax.swing.JLabel repeatPassLabel;
     private javax.swing.JPasswordField repeatPasswordField;
-    private javax.swing.JPanel separatorPanel;
     private javax.swing.JTextField surnameField;
     private javax.swing.JLabel surnameLabel;
     private javax.swing.JCheckBox termsAndCondsCheckBox;
