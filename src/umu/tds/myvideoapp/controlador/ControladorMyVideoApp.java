@@ -2,7 +2,6 @@ package umu.tds.myvideoapp.controlador;
 
 import java.awt.Color;
 import java.io.FileNotFoundException;
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
