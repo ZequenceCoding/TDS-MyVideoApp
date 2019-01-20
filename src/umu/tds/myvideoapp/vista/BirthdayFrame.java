@@ -17,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import java.awt.Cursor;
 
 public class BirthdayFrame {
 
@@ -82,6 +83,7 @@ public class BirthdayFrame {
 		panel.add(lblElEquipoDe);
 		
 		JButton btnGracias = new JButton("Gracias");
+		btnGracias.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnGracias.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {

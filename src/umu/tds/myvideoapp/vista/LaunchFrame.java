@@ -19,6 +19,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.Cursor;
 
 /**
  *
@@ -52,6 +53,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         mainPanel = new javax.swing.JPanel();
         registerPanel = new javax.swing.JPanel();
         registerButton = new javax.swing.JButton();
+        registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         registerButton.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseReleased(MouseEvent arg0) {
@@ -88,6 +90,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         passwordField = new javax.swing.JPasswordField();
         repeatPasswordField = new javax.swing.JPasswordField();
         termsAndCondsCheckBox = new javax.swing.JCheckBox();
+        termsAndCondsCheckBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         titleLabel = new javax.swing.JLabel();
         infoLabel = new javax.swing.JLabel();
         termsAndCondsLabel = new javax.swing.JLabel();
@@ -103,6 +106,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         passwordLoginField = new javax.swing.JPasswordField();
         passwordLoginField.setToolTipText("Password");
         loginButton = new javax.swing.JButton();
+        loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         loginButton.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseReleased(MouseEvent arg0) {
@@ -242,6 +246,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         termsAndCondsLabel.setText("<HTML><U>Terms and conditions</HTML></U>");
         
         dateChooser = new JDateChooser();
+        dateChooser.getCalendarButton().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         dateChooser.getCalendarButton().setBorderPainted(false);
         dateChooser.getCalendarButton().setIcon(new ImageIcon(LaunchFrame.class.getResource("/sources/calendar.png")));
         dateChooser.setBackground(new Color(65, 65, 65));
@@ -394,6 +399,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         passwordLoginField.setBorder(null);
         
         forgotLabel = new JLabel("<HTML><U>Forgot your password? </U></HTML>");
+        forgotLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         forgotLabel.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseReleased(MouseEvent arg0) {
